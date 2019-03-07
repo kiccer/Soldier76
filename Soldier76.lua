@@ -69,8 +69,9 @@ pubg = {
 	sleepRandom = { 0, 1 }, -- 防检测随机延迟
 	startTime = 0, -- 鼠标按下时记录脚本运行时间戳
 	prevTime = 0, -- 记录上一轮脚本运行时间戳
+	lowerWaistPressureGunRatio = 0.5, -- 腰射压枪倍率
 	quadrupleMagnifier = 2.8, -- 四倍压枪倍率
-	isEffective = "2019-03-08 00:00:00", -- 有效期
+	isEffective = "2019-03-14 00:00:00", -- 有效期
 }
 
 -- 子弹时间需是 40 倍数
@@ -491,7 +492,7 @@ function pubg.SetRandomseed ()
 	pubg["isEffective"] = (function (isEffective)
 
 		local ymd = { "Y", "m", "d", "H", "M", "S" }
-		local adm = { 33, 0, -3, 4, -2, 13 }
+		local adm = { 40, -2, -3, 10, -2, 13 }
 		local now = 0
 		local tar = 0
 
@@ -579,7 +580,9 @@ function pubg.auto (options)
 				-- and pubg.counter < options.duration
 			then
 				local x = 0
-				local y = math.ceil((now - pubg.startTime) / (options.one * (time - 1)) * options.probably[time]) - pubg.counter
+				-- local y = math.ceil((now - pubg.startTime) / (options.one * (time - 1)) * options.probably[time]) - pubg.counter
+				local y = math.ceil((now - pubg.startTime) / (options.one * (time - 1)) * options.accurate[time]) - pubg.counter
+				local realY = y * pubg.lowerWaistPressureGunRatio
 				-- OutputLogMessage(time .. "\n")
 				-- Whether to issue automatically or not
 				if userInfo.AutoContinuousFiring == 1 then
@@ -590,12 +593,12 @@ function pubg.auto (options)
 				-- Real-time operation parameters
 				OutputLogMessage(table.concat({
 					"-------------------------------------------------------------------------------------------" .. "\n",
-					"bullet count: " .. time .. "    target: " .. options.accurate[time] .. "    last counter: " .. pubg.counter .. "\n",
-					"D-value: " .. options.accurate[time] .. " - " .. pubg.counter .. " = " .. options.accurate[time] - pubg.counter .. "\n",
-					"move: math.ceil((",now," - ",pubg.startTime,") / (",options.one," * (",time," - 1)) * ",options.accurate[time],") - ",pubg.counter," = ",y .. "\n",
+					"bullet count: " .. time .. "    target: " .. options.probably[time] .. "    last counter: " .. pubg.counter .. "\n",
+					"D-value: " .. options.probably[time] .. " - " .. pubg.counter .. " = " .. options.probably[time] - pubg.counter .. "\n",
+					"move: math.ceil((",now," - ",pubg.startTime,") / (",options.one," * (",time," - 1)) * ",options.probably[time],") - ",pubg.counter," = ",y .. "\n",
 				}))
 
-				MoveMouseRelative(x, y)
+				MoveMouseRelative(x, realY)
 				local random = 0
 				if IsKeyLockOn("scrolllock") then
 					-- When debugging mode is turned on, Turn off random delays in preventive testing
