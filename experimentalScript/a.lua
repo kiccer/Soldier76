@@ -105,6 +105,8 @@
 --   print(a.b)
 -- end
 
+-- test push
+
 isEffective = "123145341"
 
 function isEffectiveTest ()
