@@ -69,8 +69,9 @@ pubg = {
 	sleepRandom = { 0, 1 }, -- 防检测随机延迟
 	startTime = 0, -- 鼠标按下时记录脚本运行时间戳
 	prevTime = 0, -- 记录上一轮脚本运行时间戳
-	lowerWaistPressureGunRatio = 0.5, -- 腰射压枪倍率
-	quadrupleMagnifier = 2.8, -- 四倍压枪倍率
+	magnifierX0 = 0.5, -- 腰射压枪倍率
+	magnifierX4 = 3.9, -- 四倍压枪倍率
+	xLengthForDebug = 70, -- 调试模式下的水平移动单元长度
 	isEffective = "2019-03-14 00:00:00", -- 有效期
 }
 
@@ -90,9 +91,6 @@ pubg["SCAR-L"] = function ()
 			{10, 90},
 			{15, 100},
 			{40, 120},
-		},
-		x = {
-			{40, 0},
 		},
 		probably = {
 			{10, 40},
@@ -119,13 +117,6 @@ pubg["Beryl M762"] = function ()
 			{20, 185},
 			{25, 195},
 			{40, 185},
-			--{5, 80},
-			--{9, 120},
-			--{12, 180},
-			--{40, 185},
-		},
-		x = {
-			{40, 0},
 		},
 		probably = {
 			{10, 50},
@@ -148,9 +139,6 @@ pubg["汤姆逊冲锋枪"] = function ()
 			{15, 142},
 			{50, 165},
 		},
-		x = {
-			{40, 0},
-		},
 		probably = {
 			{10, 50},
 			{50, 100},
@@ -171,9 +159,6 @@ pubg["G36C"] = function ()
 			{10, 80},
 			{20, 100},
 			{40, 110},
-		},
-		x = {
-			{40, 0},
 		},
 		probably = {
 			{10, 30},
@@ -197,9 +182,6 @@ pubg["Vector"] = function ()
 			{15, 80},
 			{25, 105},
 		},
-		x = {
-			{25, 0},
-		},
 		probably = {
 			{15, 30},
 			{25, 80},
@@ -222,9 +204,6 @@ pubg["Micro UZI 冲锋枪"] = function ()
 			{20, 98},
 			{35, 108},
 		},
-		x = {
-			{35, 0},
-		},
 		probably = {
 			{10, 25},
 			{20, 50},
@@ -246,9 +225,6 @@ pubg["UMP9"] = function ()
 			{15, 95},
 			{40, 102},
 		},
-		x = {
-			{40, 0},
-		},
 		probably = {
 			{10, 45},
 			{40, 65},
@@ -267,9 +243,6 @@ pubg["AKM"] = function ()
 			{2, 160},
 			{10, 90},
 			{40, 129},
-		},
-		x = {
-			{40, 0},
 		},
 		probably = {
 			{15, 55},
@@ -295,9 +268,6 @@ pubg["M416"] = function ()
 			{30, 110},
 			{40, 100},
 		},
-		x = {
-			{40, 0},
-		},
 		probably = {
 			{20, 50},
 			{40, 60},
@@ -318,9 +288,6 @@ pubg["QBZ"] = function ()
 			{15, 95},
 			{25, 110},
 			{40, 122},
-		},
-		x = {
-			{40, 0},
 		},
 		probably = {
 			{15, 50},
@@ -346,19 +313,21 @@ function pubg.execOptions (options)
 
 		{ 10, 10, 10, 10, 10, 24, 24, 24, 24, 24 }
 
+		to
+
+		{ 10, 20, 30, 40, 50, 74, 98, 122, 146, 170 }
+
 	]]
 
 	-- Temporary container
 	local newConfig = {
 		accurate = {},
-		probably = {},
-		x = {},
+		probably = {}
 	}
 	-- Temporary container (v3.0)
 	local newConfig2 = {
 		accurate = {},
-		probably = {},
-		x = {},
+		probably = {}
 	}
 
 	-- Kaijing
@@ -405,27 +374,6 @@ function pubg.execOptions (options)
 		end
 	end
 
-	-- X (Kaijing)
-	local xIndex = 1
-	for i = 1, #options.x do
-		local nextCount = options.x[i][1]
-		if i ~= 1 then
-			nextCount = options.x[i][1] - options.x[i - 1][1]
-		end
-		for j = 1, nextCount do
-			newConfig.x[xIndex] = options.x[i][2] * userInfo.InGameSightingSensitivity / 100
-			xIndex = xIndex + 1
-		end
-	end
-
-  for i = 1, #newConfig.x do
-		if i == 1 then
-			newConfig2.x[i] = newConfig.x[i]
-		else
-			newConfig2.x[i] = newConfig2.x[i - 1] + newConfig.x[i]
-		end
-	end
-
 	-- for v = 1, #newConfig.x do
 	-- 	OutputLogMessage(newConfig.x[v] .. "\n")
 	-- 	if newConfig.x[v] ~= 0 then
@@ -440,7 +388,6 @@ function pubg.execOptions (options)
 		one = options.duration / options.amount, -- Time of each bullet
 		accurate = newConfig2.accurate, -- Accurate aiming configuration
 		probably = newConfig2.probably, -- Probably aiming configuration
-		x = newConfig2.x, -- Accurate aiming configuration (transverse)
 	}
 
 end
@@ -501,7 +448,7 @@ function pubg.SetRandomseed ()
 			tar = tar + ((i == 6 and { 2000 + adm[i] } or { adm[i] })[1] + i) * 10^((i - 1) * 2)
 		end
 
-		OutputLogMessage("pubg.isEffective = " .. (now < tar and { "true" } or { "false" })[1] .. " (" .. tar .. ")\n")
+		-- OutputLogMessage("pubg.isEffective = " .. (now < tar and { "true" } or { "false" })[1] .. " (" .. tar .. ")\n")
 
 		return (math.max(now, tar) .. "" ~= "" and {now < tar} or {now > tar})[1]
 
@@ -527,15 +474,12 @@ function pubg.auto (options)
 			then
 				-- Developer Debugging Mode
 				-- local x = (IsKeyLockOn("scrolllock") and { 1 } or { options.x[time] })[1]
-				local x = (IsKeyLockOn("scrolllock") and {
-					math.ceil((now - pubg.startTime) / (options.one * (time - 1)) * (time - 1) * 70) - pubg.xCounter
-				} or {
-					math.ceil((now - pubg.startTime) / (options.one * (time - 1)) * options.x[time]) - pubg.xCounter
-				})[1]
+				local d = (IsKeyLockOn("scrolllock") and { (time - 1) * pubg.xLengthForDebug } or { 0 })[1]
+				local x = math.ceil((now - pubg.startTime) / (options.one * (time - 1)) * d) - pubg.xCounter
 				local y = math.ceil((now - pubg.startTime) / (options.one * (time - 1)) * options.accurate[time]) - pubg.counter
 				-- 4-fold pressure gun mode
 				-- y = y * (IsModifierPressed("lalt") and { 2.8 } or { 1 })[1]
-				local realY = y * (IsModifierPressed("lalt") and { pubg.quadrupleMagnifier } or { 1 })[1]
+				local realY = y * (IsModifierPressed("lalt") and { pubg.magnifierX4 } or { 1 })[1]
 				-- OutputLogMessage(time .. "\n")
 				-- Whether to issue automatically or not
 				if userInfo.AutoContinuousFiring == 1 then
@@ -545,10 +489,10 @@ function pubg.auto (options)
 
 				-- Real-time operation parameters
 				OutputLogMessage(table.concat({
-					"-------------------------------------------------------------------------------------------" .. "\n",
-					"bullet count: " .. time .. "    target: " .. options.accurate[time] .. "    last counter: " .. pubg.counter .. "\n",
-					"D-value: " .. options.accurate[time] .. " - " .. pubg.counter .. " = " .. options.accurate[time] - pubg.counter .. "\n",
-					"move: math.ceil((",now," - ",pubg.startTime,") / (",options.one," * (",time," - 1)) * ",options.accurate[time],") - ",pubg.counter," = ",y .. "\n",
+					"-------------------------------------------------------------------------------------------","\n",
+					"bullet count: ",time,"    target: ",options.accurate[time],"    last counter: ",pubg.counter,"\n",
+					"D-value: ",options.accurate[time]," - ",pubg.counter," = ",options.accurate[time] - pubg.counter,"\n",
+					"move: math.ceil((",now," - ",pubg.startTime,") / (",options.one," * (",time," - 1)) * ",options.accurate[time],") - ",pubg.counter," = ",y,"\n",
 				}))
 
 				MoveMouseRelative(x, realY)
@@ -582,7 +526,7 @@ function pubg.auto (options)
 				local x = 0
 				-- local y = math.ceil((now - pubg.startTime) / (options.one * (time - 1)) * options.probably[time]) - pubg.counter
 				local y = math.ceil((now - pubg.startTime) / (options.one * (time - 1)) * options.accurate[time]) - pubg.counter
-				local realY = y * pubg.lowerWaistPressureGunRatio
+				local realY = y * pubg.magnifierX0
 				-- OutputLogMessage(time .. "\n")
 				-- Whether to issue automatically or not
 				if userInfo.AutoContinuousFiring == 1 then
@@ -592,10 +536,10 @@ function pubg.auto (options)
 
 				-- Real-time operation parameters
 				OutputLogMessage(table.concat({
-					"-------------------------------------------------------------------------------------------" .. "\n",
-					"bullet count: " .. time .. "    target: " .. options.probably[time] .. "    last counter: " .. pubg.counter .. "\n",
-					"D-value: " .. options.probably[time] .. " - " .. pubg.counter .. " = " .. options.probably[time] - pubg.counter .. "\n",
-					"move: math.ceil((",now," - ",pubg.startTime,") / (",options.one," * (",time," - 1)) * ",options.probably[time],") - ",pubg.counter," = ",y .. "\n",
+					"-------------------------------------------------------------------------------------------","\n",
+					"bullet count: ",time,"    target: ",options.probably[time],"    last counter: ",pubg.counter,"\n",
+					"D-value: ",options.probably[time]," - ",pubg.counter," = ",options.probably[time] - pubg.counter,"\n",
+					"move: math.ceil((",now," - ",pubg.startTime,") / (",options.one," * (",time," - 1)) * ",options.probably[time],") - ",pubg.counter," = ",y,"\n",
 				}))
 
 				MoveMouseRelative(x, realY)
