@@ -1,0 +1,40 @@
+<script>
+
+  let data1 = Array(40).fill(0).map(n => 65 + parseInt(Math.random() * 10)) // 数据库
+  let data2 = []
+
+  let A = Date.now() // 开始
+  let B = 0 // 当前
+  let C = 3700 / 39 // 每枪时间
+  let D = 0 // 第几枪
+  let a = 0 // 总压px
+  let b = 0 // 该次px
+  let d = 0 // 目标px
+
+  data1.forEach((n, i) => {
+    if (i) {
+      data2[i] = data2[i - 1] + data1[i]
+    } else {
+      data2[i] = 0
+    }
+  })
+
+  console.log(data2)
+
+  function auto () {
+    B = Date.now()
+    D = Math.ceil((B - A) / C)
+    d = data2[D]
+    // console.log(d)
+    b = Math.round((B - A) / (C * D) * d) - a
+    a = a + b
+    // console.log(A, B, C, D, a, b, d)
+    console.log(D, b, a)
+    if (D < 40) {
+      setTimeout(auto, 1)
+    }
+  }
+
+  setTimeout(auto, 1)
+
+</script>
