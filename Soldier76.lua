@@ -313,7 +313,7 @@ function pubg.execOptions (options)
 		duration = options.duration, -- Time of duration
 		amount = options.amount, -- Number of bullets
 		one = options.duration / options.amount, -- Time of each bullet
-		ballistic = newConfig2.ballistic, -- ballistic data
+		ballistic = ballisticConfig2, -- ballistic data
 	}
 
 end
