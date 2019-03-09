@@ -275,13 +275,9 @@ function pubg.execOptions (options)
 	]]
 
 	-- Temporary container
-	local newConfig = {
-		ballistic = {}
-	}
+	local ballisticConfig1 = {}
 	-- Temporary container (v3.0)
-	local newConfig2 = {
-		ballistic = {}
-	}
+	local ballisticConfig2 = {}
 
 	-- Kaijing
 	local ballisticIndex = 1
@@ -291,17 +287,17 @@ function pubg.execOptions (options)
 			nextCount = options.ballistic[i][1] - options.ballistic[i - 1][1]
 		end
 		for j = 1, nextCount do
-			newConfig.ballistic[ballisticIndex] =
+			ballisticConfig1[ballisticIndex] =
 				options.ballistic[i][2] * userInfo.InGameSightingSensitivity / 100
 			ballisticIndex = ballisticIndex + 1
 		end
 	end
 
-	for i = 1, #newConfig.ballistic do
+	for i = 1, #ballisticConfig1 do
 		if i == 1 then
-			newConfig2.ballistic[i] = newConfig.ballistic[i]
+			ballisticConfig2[i] = ballisticConfig1[i]
 		else
-			newConfig2.ballistic[i] = newConfig2.ballistic[i - 1] + newConfig.ballistic[i]
+			ballisticConfig2[i] = ballisticConfig2[i - 1] + ballisticConfig1[i]
 		end
 	end
 
