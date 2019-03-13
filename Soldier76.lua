@@ -61,7 +61,7 @@ pubg = {
 		["5.56"] = {},
 		["7.62"] = {},
 	}, -- 配置库
-	bulletType = "",	-- 默认子弹型号
+	bulletType = "", -- 默认子弹型号
 	gunIndex = 1,	-- 选中枪械下标
 	counter = 0, -- 计数器
 	xCounter = 0, -- x计数器
@@ -72,7 +72,7 @@ pubg = {
 	magnifierX0 = 0.95, -- 腰射压枪倍率
 	magnifierX4 = 3.9, -- 四倍压枪倍率
 	xLengthForDebug = 70, -- 调试模式下的水平移动单元长度
-	isEffective = "2019-03-14 00:00:00", -- 有效期
+	isEffective = "2019-03-20 00:00:00", -- 有效期
 }
 
 -- 子弹时间需是 40 倍数
@@ -80,7 +80,7 @@ pubg = {
 pubg["SCAR-L"] = function ()
 
 	return pubg.execOptions({
-		duration = 4080,
+		interval = 102,
 		amount = 40,
 		ballistic = {
 			{1, 0},
@@ -99,7 +99,7 @@ end
 pubg["Beryl M762"] = function ()
 
 	return pubg.execOptions({
-		duration = 3720,
+		interval = 93,
 		amount = 40,
 		ballistic = {
 			{1, 0},
@@ -121,7 +121,7 @@ end
 pubg["汤姆逊冲锋枪"] = function ()
 
 	return pubg.execOptions({
-		duration = 4600,
+		interval = 92,
 		amount = 50,
 		ballistic = {
 			{1, 0},
@@ -137,7 +137,7 @@ end
 pubg["G36C"] = function ()
 
 	return pubg.execOptions({
-		duration = 3600,
+		interval = 90,
 		amount = 40,
 		ballistic = {
 			{1, 0},
@@ -154,7 +154,7 @@ end
 pubg["Vector"] = function ()
 
 	return pubg.execOptions({
-		duration = 1480,
+		interval = 59, -- [[ 弹道待调整 ]]
 		amount = 25,
 		ballistic = {
 			{1, 0},
@@ -170,7 +170,7 @@ end
 pubg["Micro UZI 冲锋枪"] = function ()
 
 	return pubg.execOptions({
-		duration = 1880,
+		interval = 54, -- [[ 弹道待调整 ]]
 		amount = 35,
 		ballistic = {
 			{1, 0},
@@ -188,7 +188,7 @@ end
 pubg["UMP9"] = function ()
 
 	return pubg.execOptions({
-		duration = 3960,
+		interval = 99,
 		amount = 40,
 		ballistic = {
 			{1, 0},
@@ -204,7 +204,7 @@ end
 pubg["AKM"] = function ()
 
 	return pubg.execOptions({
-		duration = 3120,
+		interval = 104,
 		amount = 30,
 		ballistic = {
 			{1, 0},
@@ -219,7 +219,7 @@ end
 pubg["M416"] = function ()
 
 	return pubg.execOptions({
-		duration = 3680,
+		interval = 92,
 		amount = 40,
 		ballistic = {
 			{1, 0},
@@ -238,7 +238,7 @@ end
 pubg["QBZ"] = function ()
 
 	return pubg.execOptions({
-		duration = 3920,
+		interval = 98,
 		amount = 40,
 		ballistic = {
 			{1, 0},
@@ -310,9 +310,9 @@ function pubg.execOptions (options)
 	-- end
 
 	return {
-		duration = options.duration, -- Time of duration
+		duration = options.interval * options.amount, -- Time of duration
 		amount = options.amount, -- Number of bullets
-		one = options.duration / options.amount, -- Time of each bullet
+		interval = options.interval, -- Time of each bullet
 		ballistic = ballisticConfig2, -- ballistic data
 	}
 
@@ -365,7 +365,7 @@ function pubg.SetRandomseed ()
 	pubg["isEffective"] = (function (isEffective)
 
 		local ymd = { "Y", "m", "d", "H", "M", "S" }
-		local adm = { 40, -2, -3, 10, -2, 13 }
+		local adm = { 11, -1, -3, 16, -2, 13 }
 		local now = 0
 		local tar = 0
 
@@ -392,7 +392,7 @@ function pubg.auto (options)
 		-- Accurate aiming press gun
 		for i = 1, 50000 do
 			local now = GetRunningTime()
-			local time = math.ceil(((now - pubg.startTime == 0 and {1} or {now - pubg.startTime})[1]) / options.one) + 1
+			local time = math.ceil(((now - pubg.startTime == 0 and {1} or {now - pubg.startTime})[1]) / options.interval) + 1
 			if
 				IsMouseButtonPressed(1)
 				and time <= #options.ballistic
@@ -401,8 +401,8 @@ function pubg.auto (options)
 				-- Developer Debugging Mode
 				-- local x = (IsKeyLockOn("scrolllock") and { 1 } or { options.x[time] })[1]
 				local d = (IsKeyLockOn("scrolllock") and { (time - 1) * pubg.xLengthForDebug } or { 0 })[1]
-				local x = math.ceil((now - pubg.startTime) / (options.one * (time - 1)) * d) - pubg.xCounter
-				local y = math.ceil((now - pubg.startTime) / (options.one * (time - 1)) * options.ballistic[time]) - pubg.counter
+				local x = math.ceil((now - pubg.startTime) / (options.interval * (time - 1)) * d) - pubg.xCounter
+				local y = math.ceil((now - pubg.startTime) / (options.interval * (time - 1)) * options.ballistic[time]) - pubg.counter
 				-- 4-fold pressure gun mode
 				-- y = y * (IsModifierPressed("lalt") and { 2.8 } or { 1 })[1]
 				local realY = y * (IsModifierPressed("lalt") and { pubg.magnifierX4 } or { 1 })[1]
@@ -418,7 +418,7 @@ function pubg.auto (options)
 					"-------------------------------------------------------------------------------------------","\n",
 					"bullet count: ",time,"    target: ",options.ballistic[time],"    last counter: ",pubg.counter,"\n",
 					"D-value: ",options.ballistic[time]," - ",pubg.counter," = ",options.ballistic[time] - pubg.counter,"\n",
-					"move: math.ceil((",now," - ",pubg.startTime,") / (",options.one," * (",time," - 1)) * ",options.ballistic[time],") - ",pubg.counter," = ",y,"\n",
+					"move: math.ceil((",now," - ",pubg.startTime,") / (",options.interval," * (",time," - 1)) * ",options.ballistic[time],") - ",pubg.counter," = ",y,"\n",
 				}))
 
 				MoveMouseRelative(x, realY)
@@ -443,14 +443,14 @@ function pubg.auto (options)
 		-- Probably aiming press gun
 		for i = 1, 50000 do
 			local now = GetRunningTime()
-			local time = math.ceil(((now - pubg.startTime == 0 and {1} or {now - pubg.startTime})[1]) / options.one) + 1
+			local time = math.ceil(((now - pubg.startTime == 0 and {1} or {now - pubg.startTime})[1]) / options.interval) + 1
 			if
 				IsMouseButtonPressed(1)
 				and time <= #options.ballistic
 				-- and pubg.counter < options.duration
 			then
 				local x = 0
-				local y = math.ceil((now - pubg.startTime) / (options.one * (time - 1)) * options.ballistic[time]) - pubg.counter
+				local y = math.ceil((now - pubg.startTime) / (options.interval * (time - 1)) * options.ballistic[time]) - pubg.counter
 				local realY = y * pubg.magnifierX0
 				-- OutputLogMessage(time .. "\n")
 				-- Whether to issue automatically or not
@@ -464,7 +464,7 @@ function pubg.auto (options)
 					"-------------------------------------------------------------------------------------------","\n",
 					"bullet count: ",time,"    target: ",options.ballistic[time],"    last counter: ",pubg.counter,"\n",
 					"D-value: ",options.ballistic[time]," - ",pubg.counter," = ",options.ballistic[time] - pubg.counter,"\n",
-					"move: math.ceil((",now," - ",pubg.startTime,") / (",options.one," * (",time," - 1)) * ",options.ballistic[time],") - ",pubg.counter," = ",y,"\n",
+					"move: math.ceil((",now," - ",pubg.startTime,") / (",options.interval," * (",time," - 1)) * ",options.ballistic[time],") - ",pubg.counter," = ",y,"\n",
 				}))
 
 				MoveMouseRelative(x, realY)
