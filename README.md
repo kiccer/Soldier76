@@ -7,7 +7,7 @@ PUBG - G502鼠标宏自动压枪脚本使用说明
 ---
 
 ### 下载脚本
-* 选择<a href="https://github.com/kiccer/Soldier76/releases" targer="_blank">下载</a>版本
+* 选择<a href="https://github.com/kiccer/Soldier76/releases" target="_blank">下载</a>版本
 * 版本号由**a.b.c**三个部分组成
 * **a**是大版本号，此版本号改动时，将可能会造成操作方式上的改变
 * **b**是次版本号，通常表示有新功能上线
