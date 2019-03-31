@@ -20,11 +20,11 @@ userInfo = {
 	-- 支持的枪械，排列顺序即是配置顺序，可以自行调整，不需要的枪械请设置为0，需要的设置为1。
 	canUse = {
 		[".45"] = {
-			{ "Vector", 1 }, -- 基础镜 + 扩容
+			{ "UMP45", 1 }, -- 基础镜 + 扩容，Bizon (基础镜即可)，Vector (补偿 + 基础镜 + 扩容)
 			{ "汤姆逊冲锋枪", 1 }, -- 扩容
 		},
 		["9mm"] = {
-			{ "UMP9", 1 }, -- 基础镜 + 扩容，Bizon (基础镜即可)，Vector (补偿 + 基础镜 + 扩容)
+			{ "Vector", 1 }, -- 基础镜 + 扩容
 			{ "Micro UZI 冲锋枪", 1 }, -- 扩容
 		},
 		["5.56"] = {
@@ -72,7 +72,7 @@ pubg = {
 	magnifierX0 = 0.95, -- 腰射压枪倍率
 	magnifierX4 = 3.9, -- 四倍压枪倍率
 	xLengthForDebug = 70, -- 调试模式下的水平移动单元长度
-	isEffective = "2019-03-20 00:00:00", -- 有效期
+	isEffective = "2019-04-07 00:00:00", -- 有效期
 }
 
 -- 子弹时间需是 40 倍数
@@ -154,14 +154,14 @@ end
 pubg["Vector"] = function ()
 
 	return pubg.execOptions({
-		interval = 59, -- [[ 弹道待调整 ]]
-		amount = 25,
+		interval = 60, -- [[ 弹道待调整 ]]
+		amount = 33,
 		ballistic = {
 			{1, 0},
-			{5, 50},
-			{10, 70},
-			{15, 80},
-			{25, 105},
+			{5, 52},
+			{10, 72},
+			{15, 82},
+			{33, 108},
 		}
 	})
 
@@ -185,17 +185,17 @@ pubg["Micro UZI 冲锋枪"] = function ()
 
 end
 
-pubg["UMP9"] = function ()
+pubg["UMP45"] = function ()
 
 	return pubg.execOptions({
-		interval = 99,
-		amount = 40,
+		interval = 86,
+		amount = 35,
 		ballistic = {
 			{1, 0},
-			{5, 70},
-			{10, 92},
-			{15, 95},
-			{40, 102},
+			{5, 66},
+			{10, 85},
+			{15, 86},
+			{40, 93},
 		}
 	})
 
@@ -365,7 +365,7 @@ function pubg.SetRandomseed ()
 	pubg["isEffective"] = (function (isEffective)
 
 		local ymd = { "Y", "m", "d", "H", "M", "S" }
-		local adm = { 11, -1, -3, 16, -2, 13 }
+		local adm = { 55, -2, -3, 3, -1, 13 }
 		local now = 0
 		local tar = 0
 
