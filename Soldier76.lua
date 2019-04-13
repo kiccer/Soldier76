@@ -72,10 +72,8 @@ pubg = {
 	magnifierX0 = 0.95, -- 腰射压枪倍率
 	magnifierX4 = 3.9, -- 四倍压枪倍率
 	xLengthForDebug = 70, -- 调试模式下的水平移动单元长度
-	isEffective = "2019-04-07 00:00:00", -- 有效期
+	isEffective = "2019-04-20 00:00:00", -- 有效期
 }
-
--- 子弹时间需是 40 倍数
 
 pubg["SCAR-L"] = function ()
 
@@ -154,7 +152,7 @@ end
 pubg["Vector"] = function ()
 
 	return pubg.execOptions({
-		interval = 60, -- [[ 弹道待调整 ]]
+		interval = 60,
 		amount = 33,
 		ballistic = {
 			{1, 0},
@@ -170,7 +168,7 @@ end
 pubg["Micro UZI 冲锋枪"] = function ()
 
 	return pubg.execOptions({
-		interval = 54, -- [[ 弹道待调整 ]]
+		interval = 54,
 		amount = 35,
 		ballistic = {
 			{1, 0},
@@ -205,7 +203,7 @@ pubg["AKM"] = function ()
 
 	return pubg.execOptions({
 		interval = 104,
-		amount = 30,
+		amount = 40,
 		ballistic = {
 			{1, 0},
 			{2, 160},
@@ -365,7 +363,7 @@ function pubg.SetRandomseed ()
 	pubg["isEffective"] = (function (isEffective)
 
 		local ymd = { "Y", "m", "d", "H", "M", "S" }
-		local adm = { 55, -2, -3, 3, -1, 13 }
+		local adm = { 30, -1, -2, 16, -1, 13 }
 		local now = 0
 		local tar = 0
 
