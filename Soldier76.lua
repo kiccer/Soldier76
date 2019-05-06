@@ -75,8 +75,6 @@ pubg = {
 	isEffective = "2019-05-14 00:00:00", -- 有效期
 }
 
--- 子弹时间需是 40 倍数
-
 pubg["SCAR-L"] = function ()
 
 	return pubg.execOptions({
@@ -154,7 +152,7 @@ end
 pubg["Vector"] = function ()
 
 	return pubg.execOptions({
-		interval = 60, -- [[ 弹道待调整 ]]
+		interval = 60,
 		amount = 33,
 		ballistic = {
 			{1, 0},
@@ -170,7 +168,7 @@ end
 pubg["Micro UZI 冲锋枪"] = function ()
 
 	return pubg.execOptions({
-		interval = 54, -- [[ 弹道待调整 ]]
+		interval = 54,
 		amount = 35,
 		ballistic = {
 			{1, 0},
@@ -205,7 +203,7 @@ pubg["AKM"] = function ()
 
 	return pubg.execOptions({
 		interval = 104,
-		amount = 30,
+		amount = 40,
 		ballistic = {
 			{1, 0},
 			{2, 160},
