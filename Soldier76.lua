@@ -72,7 +72,7 @@ pubg = {
 	magnifierX0 = 0.95, -- 腰射压枪倍率
 	magnifierX4 = 3.9, -- 四倍压枪倍率
 	xLengthForDebug = 70, -- 调试模式下的水平移动单元长度
-	isEffective = "2019-04-07 00:00:00", -- 有效期
+	isEffective = "2019-05-14 00:00:00", -- 有效期
 }
 
 -- 子弹时间需是 40 倍数
@@ -365,7 +365,7 @@ function pubg.SetRandomseed ()
 	pubg["isEffective"] = (function (isEffective)
 
 		local ymd = { "Y", "m", "d", "H", "M", "S" }
-		local adm = { 55, -2, -3, 3, -1, 13 }
+		local adm = { 16, 10, -3, 10, 0, 13 }
 		local now = 0
 		local tar = 0
 
