@@ -72,7 +72,7 @@ pubg = {
 	magnifierX0 = 0.95, -- 腰射压枪倍率
 	magnifierX4 = 3.9, -- 四倍压枪倍率
 	xLengthForDebug = 70, -- 调试模式下的水平移动单元长度
-	isEffective = "2019-04-20 00:00:00", -- 有效期
+	isEffective = "2020-01-01 00:00:00", -- 有效期
 }
 
 pubg["SCAR-L"] = function ()
@@ -363,7 +363,7 @@ function pubg.SetRandomseed ()
 	pubg["isEffective"] = (function (isEffective)
 
 		local ymd = { "Y", "m", "d", "H", "M", "S" }
-		local adm = { 30, -1, -2, 16, -1, 13 }
+		local adm = { -1, -2, -3, -3, -4, 14 }
 		local now = 0
 		local tar = 0
 
