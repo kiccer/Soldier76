@@ -79,7 +79,7 @@ pubg["SCAR-L"] = function ()
 
 	return pubg.execOptions({
 		interval = 102,
-		amount = 40,
+		-- amount = 40,
 		ballistic = {
 			{1, 0},
 			{2, 140},
@@ -98,7 +98,7 @@ pubg["Beryl M762"] = function ()
 
 	return pubg.execOptions({
 		interval = 93,
-		amount = 40,
+		-- amount = 40,
 		ballistic = {
 			{1, 0},
 			{2, 140},
@@ -120,7 +120,7 @@ pubg["汤姆逊冲锋枪"] = function ()
 
 	return pubg.execOptions({
 		interval = 92,
-		amount = 50,
+		-- amount = 50,
 		ballistic = {
 			{1, 0},
 			{5, 71},
@@ -136,7 +136,7 @@ pubg["G36C"] = function ()
 
 	return pubg.execOptions({
 		interval = 90,
-		amount = 40,
+		-- amount = 40,
 		ballistic = {
 			{1, 0},
 			{2, 135},
@@ -153,7 +153,7 @@ pubg["Vector"] = function ()
 
 	return pubg.execOptions({
 		interval = 60,
-		amount = 33,
+		-- amount = 33,
 		ballistic = {
 			{1, 0},
 			{5, 52},
@@ -169,7 +169,7 @@ pubg["Micro UZI 冲锋枪"] = function ()
 
 	return pubg.execOptions({
 		interval = 54,
-		amount = 35,
+		-- amount = 35,
 		ballistic = {
 			{1, 0},
 			{2, 80},
@@ -187,7 +187,7 @@ pubg["UMP45"] = function ()
 
 	return pubg.execOptions({
 		interval = 100,
-		amount = 35,
+		-- amount = 35,
 		ballistic = {
 			{1, 0},
 			{5, 68},
@@ -203,7 +203,7 @@ pubg["AKM"] = function ()
 
 	return pubg.execOptions({
 		interval = 104,
-		amount = 40,
+		-- amount = 40,
 		ballistic = {
 			{1, 0},
 			{2, 160},
@@ -218,7 +218,7 @@ pubg["M416"] = function ()
 
 	return pubg.execOptions({
 		interval = 92,
-		amount = 40,
+		-- amount = 40,
 		ballistic = {
 			{1, 0},
 			{2, 130},
@@ -237,7 +237,7 @@ pubg["QBZ"] = function ()
 
 	return pubg.execOptions({
 		interval = 98,
-		amount = 40,
+		-- amount = 40,
 		ballistic = {
 			{1, 0},
 			{2, 120},
@@ -308,8 +308,8 @@ function pubg.execOptions (options)
 	-- end
 
 	return {
-		duration = options.interval * options.amount, -- Time of duration
-		amount = options.amount, -- Number of bullets
+		duration = options.interval * #ballisticConfig2, -- Time of duration
+		amount = #ballisticConfig2, -- Number of bullets
 		interval = options.interval, -- Time of each bullet
 		ballistic = ballisticConfig2, -- ballistic data
 	}
@@ -382,108 +382,184 @@ function pubg.SetRandomseed ()
 
 end
 
---[[ Automatic press gun ]]
+--[[ Before automatic press gun ]]
 function pubg.auto (options)
 
 	if IsMouseButtonPressed(3) then
 
+		pubg.fire(options)
+
 		-- Accurate aiming press gun
-		for i = 1, 50000 do
-			local now = GetRunningTime()
-			local time = math.ceil(((now - pubg.startTime == 0 and {1} or {now - pubg.startTime})[1]) / options.interval) + 1
-			if
-				IsMouseButtonPressed(1)
-				and time <= #options.ballistic
-				-- and pubg.counter < options.duration
-			then
-				-- Developer Debugging Mode
-				-- local x = (IsKeyLockOn("scrolllock") and { 1 } or { options.x[time] })[1]
-				local d = (IsKeyLockOn("scrolllock") and { (time - 1) * pubg.xLengthForDebug } or { 0 })[1]
-				local x = math.ceil((now - pubg.startTime) / (options.interval * (time - 1)) * d) - pubg.xCounter
-				local y = math.ceil((now - pubg.startTime) / (options.interval * (time - 1)) * options.ballistic[time]) - pubg.counter
-				-- 4-fold pressure gun mode
-				-- y = y * (IsModifierPressed("lalt") and { 2.8 } or { 1 })[1]
-				local realY = y * (IsModifierPressed("lalt") and { pubg.magnifierX4 } or { 1 })[1]
-				-- OutputLogMessage(time .. "\n")
-				-- Whether to issue automatically or not
-				if userInfo.AutoContinuousFiring == 1 then
-					-- PressAndReleaseMouseButton(1)
-					PressAndReleaseKey(userInfo.FireKeySetting)
-				end
-
-				-- Real-time operation parameters
-				OutputLogMessage(table.concat({
-					"-------------------------------------------------------------------------------------------","\n",
-					"bullet count: ",time,"    target: ",options.ballistic[time],"    last counter: ",pubg.counter,"\n",
-					"D-value: ",options.ballistic[time]," - ",pubg.counter," = ",options.ballistic[time] - pubg.counter,"\n",
-					"move: math.ceil((",now," - ",pubg.startTime,") / (",options.interval," * (",time," - 1)) * ",options.ballistic[time],") - ",pubg.counter," = ",y,"\n",
-				}))
-
-				MoveMouseRelative(x, realY)
-				local random = 0
-				if IsKeyLockOn("scrolllock") then
-					-- When debugging mode is turned on, Turn off random delays in preventive testing
-					random = math.random(pubg.sleep, pubg.sleep)
-				else
-					random = math.random(pubg.sleepRandom[1], pubg.sleepRandom[2])
-				end
-				pubg.xCounter = pubg.xCounter + x
-				pubg.counter = pubg.counter + y
-				-- Sleep(10)
-				Sleep(random)
-			else
-				break
-			end
-		end
+		-- for i = 1, 50000 do
+		-- 	local now = GetRunningTime()
+		-- 	local time = math.ceil(((now - pubg.startTime == 0 and {1} or {now - pubg.startTime})[1]) / options.interval) + 1
+		-- 	if
+		-- 		IsMouseButtonPressed(1)
+		-- 		and time <= #options.ballistic
+		-- 		-- and pubg.counter < options.duration
+		-- 	then
+		-- 		-- Developer Debugging Mode
+		-- 		-- local x = (IsKeyLockOn("scrolllock") and { 1 } or { options.x[time] })[1]
+		-- 		local d = (IsKeyLockOn("scrolllock") and { (time - 1) * pubg.xLengthForDebug } or { 0 })[1]
+		-- 		local x = math.ceil((now - pubg.startTime) / (options.interval * (time - 1)) * d) - pubg.xCounter
+		-- 		local y = math.ceil((now - pubg.startTime) / (options.interval * (time - 1)) * options.ballistic[time]) - pubg.counter
+		-- 		-- 4-fold pressure gun mode
+		-- 		-- y = y * (IsModifierPressed("lalt") and { 2.8 } or { 1 })[1]
+		-- 		local realY = y * (IsModifierPressed("lalt") and { pubg.magnifierX4 } or { 1 })[1]
+		-- 		-- OutputLogMessage(time .. "\n")
+		-- 		-- Whether to issue automatically or not
+		-- 		if userInfo.AutoContinuousFiring == 1 then
+		-- 			-- PressAndReleaseMouseButton(1)
+		-- 			PressAndReleaseKey(userInfo.FireKeySetting)
+		-- 		end
+		--
+		-- 		-- Real-time operation parameters
+		-- 		OutputLogMessage(table.concat({
+		-- 			"-------------------------------------------------------------------------------------------","\n",
+		-- 			"bullet count: ",time,"    target: ",options.ballistic[time],"    last counter: ",pubg.counter,"\n",
+		-- 			"D-value: ",options.ballistic[time]," - ",pubg.counter," = ",options.ballistic[time] - pubg.counter,"\n",
+		-- 			"move: math.ceil((",now," - ",pubg.startTime,") / (",options.interval," * (",time," - 1)) * ",options.ballistic[time],") - ",pubg.counter," = ",y,"\n",
+		-- 		}))
+		--
+		-- 		MoveMouseRelative(x, realY)
+		-- 		local random = 0
+		-- 		if IsKeyLockOn("scrolllock") then
+		-- 			-- When debugging mode is turned on, Turn off random delays in preventive testing
+		-- 			random = math.random(pubg.sleep, pubg.sleep)
+		-- 		else
+		-- 			random = math.random(pubg.sleepRandom[1], pubg.sleepRandom[2])
+		-- 		end
+		-- 		pubg.xCounter = pubg.xCounter + x
+		-- 		pubg.counter = pubg.counter + y
+		-- 		-- Sleep(10)
+		-- 		Sleep(random)
+		-- 	else
+		-- 		break
+		-- 	end
+		-- end
 
 	elseif userInfo.AimAutoControl == 1 and IsModifierPressed("lctrl") then
 
+		pubg.fire(options)
+
 		-- Probably aiming press gun
-		for i = 1, 50000 do
-			local now = GetRunningTime()
-			local time = math.ceil(((now - pubg.startTime == 0 and {1} or {now - pubg.startTime})[1]) / options.interval) + 1
-			if
-				IsMouseButtonPressed(1)
-				and time <= #options.ballistic
-				-- and pubg.counter < options.duration
-			then
-				local x = 0
-				local y = math.ceil((now - pubg.startTime) / (options.interval * (time - 1)) * options.ballistic[time]) - pubg.counter
-				local realY = y * pubg.magnifierX0
-				-- OutputLogMessage(time .. "\n")
-				-- Whether to issue automatically or not
-				if userInfo.AutoContinuousFiring == 1 then
-					-- PressAndReleaseMouseButton(1)
-					PressAndReleaseKey(userInfo.FireKeySetting)
-				end
-
-				-- Real-time operation parameters
-				OutputLogMessage(table.concat({
-					"-------------------------------------------------------------------------------------------","\n",
-					"bullet count: ",time,"    target: ",options.ballistic[time],"    last counter: ",pubg.counter,"\n",
-					"D-value: ",options.ballistic[time]," - ",pubg.counter," = ",options.ballistic[time] - pubg.counter,"\n",
-					"move: math.ceil((",now," - ",pubg.startTime,") / (",options.interval," * (",time," - 1)) * ",options.ballistic[time],") - ",pubg.counter," = ",y,"\n",
-				}))
-
-				MoveMouseRelative(x, realY)
-				local random = 0
-				if IsKeyLockOn("scrolllock") then
-					-- When debugging mode is turned on, Turn off random delays in preventive testing
-					random = math.random(pubg.sleep, pubg.sleep)
-				else
-					random = math.random(pubg.sleepRandom[1], pubg.sleepRandom[2])
-				end
-				pubg.counter = pubg.counter + y
-				-- Sleep(10)
-				Sleep(random)
-			else
-				break
-			end
-		end
+		-- for i = 1, 50000 do
+		-- 	local now = GetRunningTime()
+		-- 	local time = math.ceil(((now - pubg.startTime == 0 and {1} or {now - pubg.startTime})[1]) / options.interval) + 1
+		-- 	if
+		-- 		IsMouseButtonPressed(1)
+		-- 		and time <= #options.ballistic
+		-- 		-- and pubg.counter < options.duration
+		-- 	then
+		-- 		local x = 0
+		-- 		local y = math.ceil((now - pubg.startTime) / (options.interval * (time - 1)) * options.ballistic[time]) - pubg.counter
+		-- 		local realY = y * pubg.magnifierX0
+		-- 		-- OutputLogMessage(time .. "\n")
+		-- 		-- Whether to issue automatically or not
+		-- 		if userInfo.AutoContinuousFiring == 1 then
+		-- 			-- PressAndReleaseMouseButton(1)
+		-- 			PressAndReleaseKey(userInfo.FireKeySetting)
+		-- 		end
+		--
+		-- 		-- Real-time operation parameters
+		-- 		OutputLogMessage(table.concat({
+		-- 			"-------------------------------------------------------------------------------------------","\n",
+		-- 			"bullet count: ",time,"    target: ",options.ballistic[time],"    last counter: ",pubg.counter,"\n",
+		-- 			"D-value: ",options.ballistic[time]," - ",pubg.counter," = ",options.ballistic[time] - pubg.counter,"\n",
+		-- 			"move: math.ceil((",now," - ",pubg.startTime,") / (",options.interval," * (",time," - 1)) * ",options.ballistic[time],") - ",pubg.counter," = ",y,"\n",
+		-- 		}))
+		--
+		-- 		MoveMouseRelative(x, realY)
+		-- 		local random = 0
+		-- 		if IsKeyLockOn("scrolllock") then
+		-- 			-- When debugging mode is turned on, Turn off random delays in preventive testing
+		-- 			random = math.random(pubg.sleep, pubg.sleep)
+		-- 		else
+		-- 			random = math.random(pubg.sleepRandom[1], pubg.sleepRandom[2])
+		-- 		end
+		-- 		pubg.counter = pubg.counter + y
+		-- 		-- Sleep(10)
+		-- 		Sleep(random)
+		-- 	else
+		-- 		break
+		-- 	end
+		-- end
 
 	end
 
 end
+
+--[[ Automatic press gun ]]
+function pubg.fire (options)
+
+	-- Accurate aiming press gun
+	for i = 1, 50000 do
+		local now = GetRunningTime()
+		local time = math.ceil(((now - pubg.startTime == 0 and {1} or {now - pubg.startTime})[1]) / options.interval) + 1
+		if
+			IsMouseButtonPressed(1)
+			and time <= options.amount
+			-- and pubg.counter < options.duration
+		then
+			-- Developer Debugging Mode
+			-- local x = (IsKeyLockOn("scrolllock") and { 1 } or { options.x[time] })[1]
+			local d = (IsKeyLockOn("scrolllock") and { (time - 1) * pubg.xLengthForDebug } or { 0 })[1]
+			local x = math.ceil((now - pubg.startTime) / (options.interval * (time - 1)) * d) - pubg.xCounter
+			local y = math.ceil((now - pubg.startTime) / (options.interval * (time - 1)) * options.ballistic[time]) - pubg.counter
+			-- 4-fold pressure gun mode
+			-- y = y * (IsModifierPressed("lalt") and { 2.8 } or { 1 })[1]
+			local realY = pubg.getRealY(y)
+			-- OutputLogMessage(time .. "\n")
+			-- Whether to issue automatically or not
+			if userInfo.AutoContinuousFiring == 1 then
+				-- PressAndReleaseMouseButton(1)
+				PressAndReleaseKey(userInfo.FireKeySetting)
+			end
+
+			-- Real-time operation parameters
+			OutputLogMessage(table.concat({
+				"-------------------------------------------------------------------------------------------","\n",
+				"bullet count: ",time,"    target: ",options.ballistic[time],"    last counter: ",pubg.counter,"\n",
+				"D-value: ",options.ballistic[time]," - ",pubg.counter," = ",options.ballistic[time] - pubg.counter,"\n",
+				"move: math.ceil((",now," - ",pubg.startTime,") / (",options.interval," * (",time," - 1)) * ",options.ballistic[time],") - ",pubg.counter," = ",y,"\n",
+			}))
+
+			MoveMouseRelative(x, realY)
+			local random = 0
+			if IsKeyLockOn("scrolllock") then
+				-- When debugging mode is turned on, Turn off random delays in preventive testing
+				random = math.random(pubg.sleep, pubg.sleep)
+			else
+				random = math.random(pubg.sleepRandom[1], pubg.sleepRandom[2])
+			end
+			pubg.xCounter = pubg.xCounter + x
+			pubg.counter = pubg.counter + y
+			-- Sleep(10)
+			Sleep(random)
+		else
+			break
+		end
+	end
+
+end
+
+--[[ Listener method ]]
+function pubg.getRealY (y)
+
+	local realY = y
+
+	if IsMouseButtonPressed(3) then
+		realY = y * (IsModifierPressed("lalt") and { pubg.magnifierX4 } or { 1 })[1]
+
+	elseif userInfo.AimAutoControl == 1 and IsModifierPressed("lctrl") then
+		realY = y * pubg.magnifierX0
+
+	end
+
+	return realY
+
+end
+
 
 --[[ Listener method ]]
 function OnEvent (event, arg, family)
