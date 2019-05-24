@@ -573,6 +573,7 @@ function OnEvent (event, arg, family)
 	if event == "MOUSE_BUTTON_PRESSED" and arg == 1 and family == "mouse" then
 		ClearLog()
 		pubg.counter = 0 -- Initialization counter
+		pubg.xCounter = 0 -- Initialization xCounter
 		pubg.auto(pubg.gunOptions[pubg.bulletType][pubg.gunIndex]) -- Injecting Firearms Data into Automatic Pressure Gun Function
 		pubg.SetRandomseed() -- Reset random number seeds
 	end
