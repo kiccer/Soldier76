@@ -3,10 +3,10 @@
 ------------------------------------------ [[ 玩家自定义 ]] ------------------------------------------
 userInfo = {
 	-- “开镜”压枪灵敏度微调
-	InGameSightingSensitivity = 100,
+	InGameSightingSensitivity = 103,
 
 	-- “腰射”压枪灵敏度微调
-	InGameAimSensitivity = 100,
+	InGameAimSensitivity = 103,
 
 	-- 是否腰射压枪 (腰射开启自动压枪 1 - 开启， 0 - 关闭)
 	AimAutoControl = 1,
@@ -21,11 +21,11 @@ userInfo = {
 	canUse = {
 		[".45"] = {
 			{ "UMP45", 1 }, -- 基础镜 + 扩容，Bizon (基础镜即可)，Vector (补偿 + 基础镜 + 扩容)
-			{ "汤姆逊冲锋枪", 1 }, -- 扩容
+			{ "Tommy Gun", 1 }, -- 扩容
 		},
 		["9mm"] = {
 			{ "Vector", 1 }, -- 基础镜 + 扩容
-			{ "Micro UZI 冲锋枪", 1 }, -- 扩容
+			{ "Micro UZI", 1 }, -- 扩容
 		},
 		["5.56"] = {
 			{ "M416", 1 }, -- 补偿 + 基础镜 + 直角 + 枪托 + 扩容
@@ -36,6 +36,7 @@ userInfo = {
 		["7.62"] = {
 			{ "AKM", 1 }, -- 补偿 + 基础镜 + 扩容
 			{ "Beryl M762", 1 }, -- 补偿 + 基础镜 + 直角 + 扩容
+			{ "DP-28", 1 }, -- 基础镜
 		},
 	},
 	-- G键自定义绑定
@@ -98,7 +99,6 @@ pubg["SCAR-L"] = function ()
 
 	return pubg.execOptions({
 		interval = 102,
-		-- amount = 40,
 		ballistic = {
 			{1, 0},
 			{2, 140},
@@ -117,7 +117,6 @@ pubg["Beryl M762"] = function ()
 
 	return pubg.execOptions({
 		interval = 93,
-		-- amount = 40,
 		ballistic = {
 			{1, 0},
 			{2, 140},
@@ -135,11 +134,10 @@ pubg["Beryl M762"] = function ()
 
 end
 
-pubg["汤姆逊冲锋枪"] = function ()
+pubg["Tommy Gun"] = function ()
 
 	return pubg.execOptions({
 		interval = 92,
-		-- amount = 50,
 		ballistic = {
 			{1, 0},
 			{5, 71},
@@ -155,7 +153,6 @@ pubg["G36C"] = function ()
 
 	return pubg.execOptions({
 		interval = 90,
-		-- amount = 40,
 		ballistic = {
 			{1, 0},
 			{2, 135},
@@ -172,7 +169,6 @@ pubg["Vector"] = function ()
 
 	return pubg.execOptions({
 		interval = 60,
-		-- amount = 33,
 		ballistic = {
 			{1, 0},
 			{5, 52},
@@ -184,11 +180,10 @@ pubg["Vector"] = function ()
 
 end
 
-pubg["Micro UZI 冲锋枪"] = function ()
+pubg["Micro UZI"] = function ()
 
 	return pubg.execOptions({
 		interval = 54,
-		-- amount = 35,
 		ballistic = {
 			{1, 0},
 			{2, 80},
@@ -206,7 +201,6 @@ pubg["UMP45"] = function ()
 
 	return pubg.execOptions({
 		interval = 100,
-		-- amount = 35,
 		ballistic = {
 			{1, 0},
 			{5, 68},
@@ -222,7 +216,6 @@ pubg["AKM"] = function ()
 
 	return pubg.execOptions({
 		interval = 104,
-		-- amount = 40,
 		ballistic = {
 			{1, 0},
 			{2, 160},
@@ -237,7 +230,6 @@ pubg["M416"] = function ()
 
 	return pubg.execOptions({
 		interval = 92,
-		-- amount = 40,
 		ballistic = {
 			{1, 0},
 			{2, 130},
@@ -256,7 +248,6 @@ pubg["QBZ"] = function ()
 
 	return pubg.execOptions({
 		interval = 98,
-		-- amount = 40,
 		ballistic = {
 			{1, 0},
 			{2, 120},
@@ -264,6 +255,22 @@ pubg["QBZ"] = function ()
 			{15, 95},
 			{25, 110},
 			{40, 122},
+		}
+	})
+
+end
+
+pubg["DP-28"] = function ()
+
+	return pubg.execOptions({
+		interval = 116,
+		ballistic = {
+			{1, 0},
+			{7, 100},
+			{10, 160},
+			{20, 190},
+			{40, 195},
+			{47, 200},
 		}
 	})
 
@@ -296,7 +303,6 @@ function pubg.execOptions (options)
 	-- Temporary container (v3.0)
 	local ballisticConfig2 = {}
 
-	-- Kaijing
 	local ballisticIndex = 1
 	for i = 1, #options.ballistic do
 		local nextCount = options.ballistic[i][1]
@@ -317,14 +323,6 @@ function pubg.execOptions (options)
 			ballisticConfig2[i] = ballisticConfig2[i - 1] + ballisticConfig1[i]
 		end
 	end
-
-	-- for v = 1, #newConfig.x do
-	-- 	OutputLogMessage(newConfig.x[v] .. "\n")
-	-- 	if newConfig.x[v] ~= 0 then
-	-- 		OutputLogMessage(options.duration .. "\n")
-	-- 		break
-	-- 	end
-	-- end
 
 	return {
 		duration = options.interval * #ballisticConfig2, -- Time of duration
@@ -370,9 +368,35 @@ function pubg.init ()
 	-- 	OutputLogMessage(pubg.gun[i] .. "\n")
 	-- end
 
+	-- console options
+	pubg.outPutLogGunInfo()
 	-- for k,v in pairs(pubg.gunOptions) do
-	-- 	OutputLogMessage(v.duration .. "\n")
+	-- 	OutputLogMessage("\n" .. k .. "\n")
+	-- 	for i = 1, #pubg.gunOptions[k] do
+	-- 		local gunName = pubg.gun[k][i]
+	-- 		OutputLogMessage("        " .. gunName .. ": { ")
+	-- 		for j = 1, #pubg.gunOptions[k][i].ballistic do
+	-- 			local num = pubg.gunOptions[k][i].ballistic[j]
+	-- 			OutputLogMessage(num .. ", ")
+	-- 		end
+	-- 		OutputLogMessage("}\n")
+	-- 	end
 	-- end
+
+end
+
+-- outPutLogGunInfo
+function pubg.outPutLogGunInfo ()
+
+	local k = pubg.bulletType
+	local i = pubg.gunIndex
+	local gunName = pubg.gun[k][i]
+	OutputLogMessage("Currently selected gun: " .. gunName .. "\n{ ")
+	for j = 1, #pubg.gunOptions[k][i].ballistic do
+		local num = pubg.gunOptions[k][i].ballistic[j]
+		OutputLogMessage(num .. ", ")
+	end
+	OutputLogMessage("}\n\n")
 
 end
 
@@ -506,6 +530,7 @@ function OnEvent (event, arg, family)
 		if arg == 6 or arg == 7 or arg == 8 or arg == 9 then
 			pubg.bulletType = userInfo.G_bind["G" .. arg]
 			pubg.gunIndex = 1
+			pubg.outPutLogGunInfo()
 		end
 	end
 
@@ -515,11 +540,13 @@ function OnEvent (event, arg, family)
 		if pubg.gunIndex > #pubg.gun[pubg.bulletType] then
 			pubg.gunIndex = 1
 		end
+		pubg.outPutLogGunInfo()
 	end
 
 	-- Switch to the last configuration
 	if event == "MOUSE_BUTTON_PRESSED" and arg == 10 and family == "mouse" then
 		pubg.gunIndex = #pubg.gun[pubg.bulletType]
+		pubg.outPutLogGunInfo()
 	end
 
 end
