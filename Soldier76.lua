@@ -20,22 +20,23 @@ userInfo = {
 	-- 支持的枪械，排列顺序即是配置顺序，可以自行调整，不需要的枪械请设置为0，需要的设置为1。
 	canUse = {
 		[".45"] = {
-			{ "UMP45", 1 }, -- 基础镜 + 扩容，Bizon (基础镜即可)，Vector (补偿 + 基础镜 + 扩容)
-			{ "汤姆逊冲锋枪", 1 }, -- 扩容
+			{ "UMP45", 0 }, -- 基础镜 + 扩容，Bizon (基础镜即可)，Vector (补偿 + 基础镜 + 扩容)
+			{ "汤姆逊冲锋枪", 0 }, -- 扩容
 		},
 		["9mm"] = {
-			{ "Vector", 1 }, -- 基础镜 + 扩容
-			{ "Micro UZI 冲锋枪", 1 }, -- 扩容
+			{ "Vector", 0 }, -- 基础镜 + 扩容
+			{ "Micro UZI 冲锋枪", 0 }, -- 扩容
 		},
 		["5.56"] = {
-			{ "M416", 1 }, -- 补偿 + 基础镜 + 直角 + 枪托 + 扩容
-			{ "SCAR-L", 1 }, -- 补偿 + 基础镜 + 直角 + 扩容
-			{ "QBZ", 1 }, -- 补偿 + 基础镜 + 直角 + 扩容
-			{ "G36C", 1 }, -- 补偿 + 基础镜 + 直角 + 扩容
+			{ "M416", 0 }, -- 补偿 + 基础镜 + 直角 + 枪托 + 扩容
+			{ "SCAR-L", 0 }, -- 补偿 + 基础镜 + 直角 + 扩容
+			{ "QBZ", 0 }, -- 补偿 + 基础镜 + 直角 + 扩容
+			{ "G36C", 0 }, -- 补偿 + 基础镜 + 直角 + 扩容
 		},
 		["7.62"] = {
-			{ "AKM", 1 }, -- 补偿 + 基础镜 + 扩容
-			{ "Beryl M762", 1 }, -- 补偿 + 基础镜 + 直角 + 扩容
+			{ "AKM", 0 }, -- 补偿 + 基础镜 + 扩容
+			{ "Beryl M762", 0 }, -- 补偿 + 基础镜 + 直角 + 扩容
+			{ "DP-28", 1 }, -- 基础镜
 		},
 	},
 	-- G键自定义绑定
@@ -79,7 +80,7 @@ pubg["SCAR-L"] = function ()
 
 	return pubg.execOptions({
 		interval = 102,
-		amount = 40,
+		-- amount = 40,
 		ballistic = {
 			{1, 0},
 			{2, 140},
@@ -98,7 +99,7 @@ pubg["Beryl M762"] = function ()
 
 	return pubg.execOptions({
 		interval = 93,
-		amount = 40,
+		-- amount = 40,
 		ballistic = {
 			{1, 0},
 			{2, 140},
@@ -120,7 +121,7 @@ pubg["汤姆逊冲锋枪"] = function ()
 
 	return pubg.execOptions({
 		interval = 92,
-		amount = 50,
+		-- amount = 50,
 		ballistic = {
 			{1, 0},
 			{5, 71},
@@ -136,7 +137,7 @@ pubg["G36C"] = function ()
 
 	return pubg.execOptions({
 		interval = 90,
-		amount = 40,
+		-- amount = 40,
 		ballistic = {
 			{1, 0},
 			{2, 135},
@@ -153,7 +154,7 @@ pubg["Vector"] = function ()
 
 	return pubg.execOptions({
 		interval = 60,
-		amount = 33,
+		-- amount = 33,
 		ballistic = {
 			{1, 0},
 			{5, 52},
@@ -169,7 +170,7 @@ pubg["Micro UZI 冲锋枪"] = function ()
 
 	return pubg.execOptions({
 		interval = 54,
-		amount = 35,
+		-- amount = 35,
 		ballistic = {
 			{1, 0},
 			{2, 80},
@@ -187,7 +188,7 @@ pubg["UMP45"] = function ()
 
 	return pubg.execOptions({
 		interval = 100,
-		amount = 35,
+		-- amount = 35,
 		ballistic = {
 			{1, 0},
 			{5, 68},
@@ -203,7 +204,7 @@ pubg["AKM"] = function ()
 
 	return pubg.execOptions({
 		interval = 104,
-		amount = 40,
+		-- amount = 40,
 		ballistic = {
 			{1, 0},
 			{2, 160},
@@ -218,7 +219,7 @@ pubg["M416"] = function ()
 
 	return pubg.execOptions({
 		interval = 92,
-		amount = 40,
+		-- amount = 40,
 		ballistic = {
 			{1, 0},
 			{2, 130},
@@ -237,7 +238,7 @@ pubg["QBZ"] = function ()
 
 	return pubg.execOptions({
 		interval = 98,
-		amount = 40,
+		-- amount = 40,
 		ballistic = {
 			{1, 0},
 			{2, 120},
@@ -245,6 +246,23 @@ pubg["QBZ"] = function ()
 			{15, 95},
 			{25, 110},
 			{40, 122},
+		}
+	})
+
+end
+
+pubg["DP-28"] = function ()
+
+	return pubg.execOptions({
+		interval = 100,
+		-- amount = 47,
+		ballistic = {
+			{1, 0},
+			-- {2, 120},
+			-- {5, 55},
+			-- {15, 95},
+			-- {25, 110},
+			{47, 200},
 		}
 	})
 
@@ -308,8 +326,8 @@ function pubg.execOptions (options)
 	-- end
 
 	return {
-		duration = options.interval * options.amount, -- Time of duration
-		amount = options.amount, -- Number of bullets
+		duration = options.interval * #ballisticConfig2, -- Time of duration
+		amount = #ballisticConfig2, -- Number of bullets
 		interval = options.interval, -- Time of each bullet
 		ballistic = ballisticConfig2, -- ballistic data
 	}
@@ -351,9 +369,19 @@ function pubg.init ()
 	-- 	OutputLogMessage(pubg.gun[i] .. "\n")
 	-- end
 
-	-- for k,v in pairs(pubg.gunOptions) do
-	-- 	OutputLogMessage(v.duration .. "\n")
-	-- end
+	-- console options
+	for k,v in pairs(pubg.gunOptions) do
+		OutputLogMessage("\n" .. k .. "\n")
+		for i = 1, #pubg.gunOptions[k] do
+			local gunName = pubg.gun[k][i]
+			OutputLogMessage("        " .. gunName .. ": { ")
+			for j = 1, #pubg.gunOptions[k][i].ballistic do
+				local num = pubg.gunOptions[k][i].ballistic[j]
+				OutputLogMessage(num .. ", ")
+			end
+			OutputLogMessage("}\n")
+		end
+	end
 
 end
 
@@ -393,8 +421,8 @@ function pubg.auto (options)
 			local time = math.ceil(((now - pubg.startTime == 0 and {1} or {now - pubg.startTime})[1]) / options.interval) + 1
 			if
 				IsMouseButtonPressed(1)
-				and time <= #options.ballistic
-				-- and pubg.counter < options.duration
+				and time <= options.amount
+				and pubg.counter < options.duration
 			then
 				-- Developer Debugging Mode
 				-- local x = (IsKeyLockOn("scrolllock") and { 1 } or { options.x[time] })[1]
@@ -444,8 +472,8 @@ function pubg.auto (options)
 			local time = math.ceil(((now - pubg.startTime == 0 and {1} or {now - pubg.startTime})[1]) / options.interval) + 1
 			if
 				IsMouseButtonPressed(1)
-				and time <= #options.ballistic
-				-- and pubg.counter < options.duration
+				and time <= options.amount
+				and pubg.counter < options.duration
 			then
 				local x = 0
 				local y = math.ceil((now - pubg.startTime) / (options.interval * (time - 1)) * options.ballistic[time]) - pubg.counter
