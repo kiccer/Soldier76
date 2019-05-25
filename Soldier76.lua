@@ -71,9 +71,28 @@ pubg = {
 	prevTime = 0, -- 记录上一轮脚本运行时间戳
 	magnifierX0 = 0.95, -- 腰射压枪倍率
 	magnifierX4 = 3.9, -- 四倍压枪倍率
-	xLengthForDebug = 70, -- 调试模式下的水平移动单元长度
+	xLengthForDebug = 60, -- 调试模式下的水平移动单元长度
 	isEffective = "2020-01-01 00:00:00", -- 有效期
 }
+
+-- 射击准备
+function pubg.isAimingState (modeIndex)
+	local switch = {
+
+		-- 开镜
+		[1] = function ()
+			return IsMouseButtonPressed(3)
+		end,
+
+		-- 腰射
+		[2] = function ()
+			return userInfo.AimAutoControl == 1 and IsModifierPressed("lctrl")
+		end,
+
+	}
+
+	return switch[modeIndex]()
+end
 
 pubg["SCAR-L"] = function ()
 
@@ -434,104 +453,6 @@ function pubg.auto (options)
 		end
 	end
 
-	-- if IsMouseButtonPressed(3) then
-	--
-	-- 	-- Accurate aiming press gun
-	-- 	for i = 1, 50000 do
-	-- 		local now = GetRunningTime()
-	-- 		local time = math.ceil(((now - pubg.startTime == 0 and {1} or {now - pubg.startTime})[1]) / options.interval) + 1
-	-- 		if
-	-- 			IsMouseButtonPressed(1)
-	-- 			and time <= #options.ballistic
-	-- 			-- and pubg.counter < options.duration
-	-- 		then
-	-- 			-- Developer Debugging Mode
-	-- 			-- local x = (IsKeyLockOn("scrolllock") and { 1 } or { options.x[time] })[1]
-	-- 			local d = (IsKeyLockOn("scrolllock") and { (time - 1) * pubg.xLengthForDebug } or { 0 })[1]
-	-- 			local x = math.ceil((now - pubg.startTime) / (options.interval * (time - 1)) * d) - pubg.xCounter
-	-- 			local y = math.ceil((now - pubg.startTime) / (options.interval * (time - 1)) * options.ballistic[time]) - pubg.counter
-	-- 			-- 4-fold pressure gun mode
-	-- 			-- y = y * (IsModifierPressed("lalt") and { 2.8 } or { 1 })[1]
-	-- 			local realY = y * (IsModifierPressed("lalt") and { pubg.magnifierX4 } or { 1 })[1]
-	-- 			-- OutputLogMessage(time .. "\n")
-	-- 			-- Whether to issue automatically or not
-	-- 			if userInfo.AutoContinuousFiring == 1 then
-	-- 				-- PressAndReleaseMouseButton(1)
-	-- 				PressAndReleaseKey(userInfo.FireKeySetting)
-	-- 			end
-	--
-	-- 			-- Real-time operation parameters
-	-- 			OutputLogMessage(table.concat({
-	-- 				"-------------------------------------------------------------------------------------------","\n",
-	-- 				"bullet count: ",time,"    target: ",options.ballistic[time],"    last counter: ",pubg.counter,"\n",
-	-- 				"D-value: ",options.ballistic[time]," - ",pubg.counter," = ",options.ballistic[time] - pubg.counter,"\n",
-	-- 				"move: math.ceil((",now," - ",pubg.startTime,") / (",options.interval," * (",time," - 1)) * ",options.ballistic[time],") - ",pubg.counter," = ",y,"\n",
-	-- 			}))
-	--
-	-- 			MoveMouseRelative(x, realY)
-	-- 			local random = 0
-	-- 			if IsKeyLockOn("scrolllock") then
-	-- 				-- When debugging mode is turned on, Turn off random delays in preventive testing
-	-- 				random = math.random(pubg.sleep, pubg.sleep)
-	-- 			else
-	-- 				random = math.random(pubg.sleepRandom[1], pubg.sleepRandom[2])
-	-- 			end
-	-- 			pubg.xCounter = pubg.xCounter + x
-	-- 			pubg.counter = pubg.counter + y
-	-- 			-- Sleep(10)
-	-- 			Sleep(random)
-	-- 		else
-	-- 			break
-	-- 		end
-	-- 	end
-	--
-	-- elseif userInfo.AimAutoControl == 1 and IsModifierPressed("lctrl") then
-	--
-	-- 	-- Probably aiming press gun
-	-- 	for i = 1, 50000 do
-	-- 		local now = GetRunningTime()
-	-- 		local time = math.ceil(((now - pubg.startTime == 0 and {1} or {now - pubg.startTime})[1]) / options.interval) + 1
-	-- 		if
-	-- 			IsMouseButtonPressed(1)
-	-- 			and time <= #options.ballistic
-	-- 			-- and pubg.counter < options.duration
-	-- 		then
-	-- 			local x = 0
-	-- 			local y = math.ceil((now - pubg.startTime) / (options.interval * (time - 1)) * options.ballistic[time]) - pubg.counter
-	-- 			local realY = y * pubg.magnifierX0
-	-- 			-- OutputLogMessage(time .. "\n")
-	-- 			-- Whether to issue automatically or not
-	-- 			if userInfo.AutoContinuousFiring == 1 then
-	-- 				-- PressAndReleaseMouseButton(1)
-	-- 				PressAndReleaseKey(userInfo.FireKeySetting)
-	-- 			end
-	--
-	-- 			-- Real-time operation parameters
-	-- 			OutputLogMessage(table.concat({
-	-- 				"-------------------------------------------------------------------------------------------","\n",
-	-- 				"bullet count: ",time,"    target: ",options.ballistic[time],"    last counter: ",pubg.counter,"\n",
-	-- 				"D-value: ",options.ballistic[time]," - ",pubg.counter," = ",options.ballistic[time] - pubg.counter,"\n",
-	-- 				"move: math.ceil((",now," - ",pubg.startTime,") / (",options.interval," * (",time," - 1)) * ",options.ballistic[time],") - ",pubg.counter," = ",y,"\n",
-	-- 			}))
-	--
-	-- 			MoveMouseRelative(x, realY)
-	-- 			local random = 0
-	-- 			if IsKeyLockOn("scrolllock") then
-	-- 				-- When debugging mode is turned on, Turn off random delays in preventive testing
-	-- 				random = math.random(pubg.sleep, pubg.sleep)
-	-- 			else
-	-- 				random = math.random(pubg.sleepRandom[1], pubg.sleepRandom[2])
-	-- 			end
-	-- 			pubg.counter = pubg.counter + y
-	-- 			-- Sleep(10)
-	-- 			Sleep(random)
-	-- 		else
-	-- 			break
-	-- 		end
-	-- 	end
-	--
-	-- end
-
 end
 
 --[[ get real y position ]]
@@ -539,10 +460,10 @@ function pubg.getRealY (y)
 
 	local realY = y
 
-	if IsMouseButtonPressed(3) then
+	if pubg.isAimingState(1) then
 		realY = y * (IsModifierPressed("lalt") and { pubg.magnifierX4 } or { 1 })[1]
 
-	elseif userInfo.AimAutoControl == 1 and IsModifierPressed("lctrl") then
+	elseif pubg.isAimingState(2) then
 		realY = y * pubg.magnifierX0
 
 	end
@@ -572,10 +493,12 @@ function OnEvent (event, arg, family)
 	-- Automatic press gun
 	if event == "MOUSE_BUTTON_PRESSED" and arg == 1 and family == "mouse" then
 		ClearLog()
-		pubg.counter = 0 -- Initialization counter
-		pubg.xCounter = 0 -- Initialization xCounter
-		pubg.auto(pubg.gunOptions[pubg.bulletType][pubg.gunIndex]) -- Injecting Firearms Data into Automatic Pressure Gun Function
-		pubg.SetRandomseed() -- Reset random number seeds
+		if pubg.isAimingState(1) or pubg.isAimingState(2) then
+			pubg.counter = 0 -- Initialization counter
+			pubg.xCounter = 0 -- Initialization xCounter
+			pubg.auto(pubg.gunOptions[pubg.bulletType][pubg.gunIndex]) -- Injecting Firearms Data into Automatic Pressure Gun Function
+			pubg.SetRandomseed() -- Reset random number seeds
+		end
 	end
 
 	-- Switching arsenals according to different types of ammunition
