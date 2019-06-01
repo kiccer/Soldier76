@@ -1,4 +1,4 @@
-# Soldier76 ![76_logo](./static/76_logo.png)
+# Soldier76 ![76_logo](./static/img/76_logo.png)
 
 PUBG - G502鼠标宏自动压枪脚本使用说明
 
@@ -59,7 +59,7 @@ G键 | 功能
 * **该脚本程序仅供学习交流，严禁使用于任何商业用途，若产生利益纠纷，概不负责。**
 
 ### 交流群
-* 欢迎加入技术交流QQ群：[![logitech 鼠标宏技术交流](https//pub.idqqimg.com/wpa/images/group.png)](https//shang.qq.com/wpa/qunwpa?idkey=50ba821dfa48ace4965375851706103b818a1120e6521efc30d740bc866302d4)
+* 欢迎加入技术交流QQ群：[![logitech 鼠标宏技术交流](./static/img/group.png)](./static/join_group.html)
 
 ### 关于宏
 * 宏就像是一个心灵手巧的瞎子
