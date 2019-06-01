@@ -59,7 +59,7 @@ G键 | 功能
 * **该脚本程序仅供学习交流，严禁使用于任何商业用途，若产生利益纠纷，概不负责。**
 
 ### 交流群
-* 欢迎加入技术交流QQ群：[![logitech 鼠标宏技术交流](./static/img/group.png)](./static/join_group.html)
+* 欢迎加入技术交流QQ群：[![logitech 鼠标宏技术交流](./static/img/group.png)](https://kiccer.github.io/Soldier76/static/join_group.html)
 
 ### 关于宏
 * 宏就像是一个心灵手巧的瞎子
