@@ -8,8 +8,8 @@
   Soldier76 <img src="./static/img/76_logo.png" alt="76_logo">
 </h1>
 <div align="center">PUBG - G502鼠标宏自动压枪脚本使用说明</div>
-<p align="center"><i><b>(务必...务必...务必...认真看完，使用说明写的很详细了)</b></i></p>
-<p align="center"><s>Ps: 如果认为游戏体验有提升的话，请给我一颗小星星:)</s></p>
+<div align="center"><i><b>(务必...务必...务必...认真看完，使用说明写的很详细了)</b></i></div>
+<div align="center"><s>Ps: 如果认为游戏体验有提升的话，请给我一颗小星星:)</s></div>
 <p align="center">
   <img src="https://img.shields.io/badge/lua-5.1-00007F.svg" alt="lua-5.1">
   <img src="https://img.shields.io/badge/version-3.x-56B6C2.svg" alt="version-3.x">
