@@ -8,9 +8,10 @@
   <h1>
     Soldier76 <img src="./static/img/76_logo.png" alt="76_logo">
   </h1>
-  PUBG - G502鼠标宏自动压枪脚本使用说明
-  ***(务必...务必...务必...认真看完，使用说明写的很详细了)***
-  ![lua-5.1](https://img.shields.io/badge/lua-5.1-00007F.svg) ![version-3.x](https://img.shields.io/badge/version-3.x-56B6C2.svg) ![g502-✔](https://img.shields.io/badge/g502-✔-98C379.svg) ![gpw-✖](https://img.shields.io/badge/gpw-✖-E06C75.svg)
+  <span>PUBG - G502鼠标宏自动压枪脚本使用说明</span>
+  <i><b>(务必...务必...务必...认真看完，使用说明写的很详细了)</b></i>
+  <img src="https://img.shields.io/badge/lua-5.1-00007F.svg" alt="lua-5.1"> <img src="https://img.shields.io/badge/version-3.x-56B6C2.svg" alt="version-3.x"> <img src="https://img.shields.io/badge/g502-✔-98C379.svg" alt="g502-✔"> <img src="https://img.shields.io/badge/gpw-✖-E06C75.svg" alt="gpw-✖">
+  <!-- ![lua-5.1](https://img.shields.io/badge/lua-5.1-00007F.svg) ![version-3.x](https://img.shields.io/badge/version-3.x-56B6C2.svg) ![g502-✔](https://img.shields.io/badge/g502-✔-98C379.svg) ![gpw-✖](https://img.shields.io/badge/gpw-✖-E06C75.svg) -->
 </div>
 
 ---
