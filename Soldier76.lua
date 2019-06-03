@@ -369,7 +369,7 @@ function pubg.init ()
 	-- end
 
 	-- console options
-	pubg.outPutLogGunInfo()
+	pubg.outputLogGunInfo()
 	-- for k,v in pairs(pubg.gunOptions) do
 	-- 	OutputLogMessage("\n" .. k .. "\n")
 	-- 	for i = 1, #pubg.gunOptions[k] do
@@ -385,8 +385,8 @@ function pubg.init ()
 
 end
 
--- outPutLogGunInfo
-function pubg.outPutLogGunInfo ()
+-- outputLogGunInfo
+function pubg.outputLogGunInfo ()
 
 	local k = pubg.bulletType
 	local i = pubg.gunIndex
@@ -530,7 +530,7 @@ function OnEvent (event, arg, family)
 		if arg == 6 or arg == 7 or arg == 8 or arg == 9 then
 			pubg.bulletType = userInfo.G_bind["G" .. arg]
 			pubg.gunIndex = 1
-			pubg.outPutLogGunInfo()
+			pubg.outputLogGunInfo()
 		end
 	end
 
@@ -540,13 +540,13 @@ function OnEvent (event, arg, family)
 		if pubg.gunIndex > #pubg.gun[pubg.bulletType] then
 			pubg.gunIndex = 1
 		end
-		pubg.outPutLogGunInfo()
+		pubg.outputLogGunInfo()
 	end
 
 	-- Switch to the last configuration
 	if event == "MOUSE_BUTTON_PRESSED" and arg == 10 and family == "mouse" then
 		pubg.gunIndex = #pubg.gun[pubg.bulletType]
-		pubg.outPutLogGunInfo()
+		pubg.outputLogGunInfo()
 	end
 
 end

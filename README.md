@@ -1,8 +1,17 @@
-# Soldier76 ![76_logo](./static/img/76_logo.png)
+<!-- # Soldier76 ![76_logo](./static/img/76_logo.png) -->
 
-PUBG - G502鼠标宏自动压枪脚本使用说明
+<!-- PUBG - G502鼠标宏自动压枪脚本使用说明 -->
 
-***(务必...务必...务必...认真看完，使用说明写的很详细了)***
+<!-- ***(务必...务必...务必...认真看完，使用说明写的很详细了)*** -->
+
+<div style="text-align: center">
+  <h1>
+    Soldier76 <img src="./static/img/76_logo.png" alt="76_logo">
+  </h1>
+  PUBG - G502鼠标宏自动压枪脚本使用说明
+  ***(务必...务必...务必...认真看完，使用说明写的很详细了)***
+  ![lua-5.1](https://img.shields.io/badge/lua-5.1-00007F.svg) ![version-3.x](https://img.shields.io/badge/version-3.x-56B6C2.svg) ![g502-✔](https://img.shields.io/badge/g502-✔-98C379.svg) ![gpw-✖](https://img.shields.io/badge/gpw-✖-E06C75.svg)
+</div>
 
 ---
 
@@ -13,9 +22,6 @@ PUBG - G502鼠标宏自动压枪脚本使用说明
 * **b**是次版本号，通常表示有新功能上线
 * **c**是修订号，通常表示修复了BUG，或是正在测试新的功能，不一定稳定
 * 下载时请尽量选择**a.b**形式的版本号，例如**v3.3**，这种是经过测试相对比较稳定的版本
-
-### 问题反馈
-* 使用脚本时有任何疑问，或脚本存在不足之处可以在 [`Issus`](https://github.com/kiccer/Soldier76/issues) 反馈给我
 
 ### 安装教程
 1. **以管理员方式**启动罗技驱动
@@ -51,8 +57,22 @@ G键 | 功能
 * 在左Ctrl键(腰射)按住的情况下，点击左键启动压枪宏
 * 开镜并按住左Alt键的情况下，点击左键启动4倍压枪宏
 
+### 初次使用
+1. 按照 [#安装教程](https://github.com/kiccer/Soldier76#%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B) 安装脚本
+2. 然后再更改游戏内设置，参考 [#游戏设置](https://github.com/kiccer/Soldier76#%E6%B8%B8%E6%88%8F%E8%AE%BE%E7%BD%AE)
+3. 修改脚本 `userInfo.canUse` 中的枪械，设置 `UMP45` 为 **1**，其他全部设置为 **0**。(**自动游戏检测时，切换窗口会导致脚本重启，因此不会记录上一次配置表的位置信息，将可用枪械限制为1个有利于调试，你也可以选择保留其他的枪**)
+4. 进入训练场，按照注释提示，给枪支安装指定配件。
+5. 开启 `CapsLock` 和 `ScrollLock`，面对墙壁，按住右键开镜，按住左键开火，你会发现准星自动往右偏移，请不要移动鼠标，直到子弹打光。
+6. 如果弹印不是一条水平线，则修改 `userInfo.InGameSightingSensitivity` 的数值，上下微调即可。
+7. 回到游戏感受弹道变化，重复以上修改操作，继续尝试，直到弹道变成一条水平线为止。
+8. 如果数值无论怎么修改都无法变成一条水平线，请尝试略微调整游戏内的鼠标灵敏度。
+9. 当弹道成功打成一条水平线时，关闭 `ScrollLock`，然后再次对着墙壁进行射击。如果没有意外，那么恭喜你，你的宏已经能够准确的自动压枪了！
+10. 修改脚本 `userInfo.canUse` 中的枪械，将你需要的枪械设置为 **1**
+11. `ctrl+s` 保存脚本后，可以在编辑器里尝试切换配置，切换配置时会有对应的文本信息输出，你可以在这里确认是否和心里预期的配置信息相同。
+12. 最后一步，寻找队友，然后尽情装逼吧~
+
 ### 硬件条件
-* 一只 G502 鼠标
+* 一只 G502 鼠标 (未来可能兼容更多 logitech 鼠标，如果你有非常需要的版本，请在 [`Issus`](https://github.com/kiccer/Soldier76/issues) 告诉我)
 * 游戏画面不卡顿，不频繁掉帧，必要时可以锁定帧数保证稳定性
 
 ### 免责声明
@@ -60,6 +80,9 @@ G键 | 功能
 
 ### 交流群
 * 欢迎加入技术交流QQ群：[![logitech 鼠标宏技术交流](./static/img/group.png)](https://kiccer.github.io/Soldier76/static/join_group.html)
+
+### 问题反馈
+* 使用脚本时有任何疑问，或脚本存在不足之处可以在 [`Issus`](https://github.com/kiccer/Soldier76/issues) 反馈给我
 
 ### 关于宏
 * 宏就像是一个心灵手巧的瞎子
