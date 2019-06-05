@@ -7,15 +7,14 @@
 <h1 align="center">
   Soldier76 <img src="./static/img/76_logo.png" alt="76_logo">
 </h1>
-<div align="center">PUBG - G502鼠标宏自动压枪脚本使用说明</div>
+<div align="center">PUBG - Logitech鼠标宏自动压枪脚本使用说明</div>
 <div align="center"><i><b>(务必...务必...务必...认真看完，使用说明写的很详细了)</b></i></div>
 <div align="center"><s>Ps: 如果认为游戏体验有提升的话，请给我一颗小星星:)</s></div>
 <br>
 <p align="center">
   <img src="https://img.shields.io/badge/lua-5.1-00007F.svg" alt="lua-5.1">
+  <img src="https://img.shields.io/badge/logitech-✔-98C379.svg" alt="logitech-✔">
   <img src="https://img.shields.io/badge/version-3.x-56B6C2.svg" alt="version-3.x">
-  <img src="https://img.shields.io/badge/g502-✔-98C379.svg" alt="g502-✔">
-  <img src="https://img.shields.io/badge/gpw-✖-E06C75.svg" alt="gpw-✖">
 </p>
 <!-- ![lua-5.1](https://img.shields.io/badge/lua-5.1-00007F.svg) ![version-3.x](https://img.shields.io/badge/version-3.x-56B6C2.svg) ![g502-✔](https://img.shields.io/badge/g502-✔-98C379.svg) ![gpw-✖](https://img.shields.io/badge/gpw-✖-E06C75.svg) -->
 
@@ -42,15 +41,25 @@
 * 如果使用腰射压枪功能，需要把腰射键改为**左ctrl**键，可选，推荐
 * 如果使用自动连发功能，需要把开火键改为键盘按键（例如：~键），可选，不推荐
 
-### G键功能
+### G键功能(默认)
 G键 | 功能
 :--: | ---
-**G6** | 切换至 **5.56** 枪械配置文件表，并使用**第一个**配置，可自定义
-**G7** | 切换至 **9mm** 枪械配置文件表，并使用**第一个**配置，可自定义
-**G8** | 切换至 **7.62** 枪械配置文件表，并使用**第一个**配置，可自定义
-**G9** | 切换至 **.45** 枪械配置文件表，并使用**第一个**配置，可自定义
+**G6** | 切换至 **5.56** 枪械配置文件表，并使用**第一个**配置
+**G7** | 切换至 **9mm** 枪械配置文件表，并使用**第一个**配置
+**G8** | 切换至 **7.62** 枪械配置文件表，并使用**第一个**配置
+**G9** | 切换至 **.45** 枪械配置文件表，并使用**第一个**配置
 **G10** | 切换至**最后一个**配置 (滚轮右偏)
 **G11** | 切换至**下一个**配置 (滚轮左偏)
+
+### 指令列表
+指令 | 功能
+:--: | ---
+**.45** | 切换至 **5.56** 系列枪械列表，并使用该列表下的第一把枪
+**9mm** | 切换至 **9mm** 系列枪械列表，并使用该列表下的第一把枪
+**5.56** | 切换至 **5.56** 系列枪械列表，并使用该列表下的第一把枪
+**7.62** | 切换至 **7.62** 系列枪械列表，并使用该列表下的第一把枪
+**next** | 切换至当前列表的下一把枪
+**last** | 切换至当前列表的最后一把枪
 
 ### 模式控制
 按键 | 功能
@@ -78,7 +87,7 @@ G键 | 功能
 12. 最后一步，寻找队友，然后尽情装逼吧~
 
 ### 硬件条件
-* 一只 G502 鼠标 (未来可能兼容更多 logitech 鼠标，如果你有非常需要的版本，请在 [`Issus`](https://github.com/kiccer/Soldier76/issues) 告诉我)
+* 一只可编程 Logitech 鼠标
 * 游戏画面不卡顿，不频繁掉帧，必要时可以锁定帧数保证稳定性
 
 ### 免责声明
