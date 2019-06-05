@@ -81,6 +81,36 @@ userInfo = {
 		["lshift + G9"] = "",
 		["lshift + G10"] = "",
 		["lshift + G11"] = "",
+		-- ralt + G
+		["ralt + G3"] = "",
+		["ralt + G4"] = "",
+		["ralt + G5"] = "",
+		["ralt + G6"] = "",
+		["ralt + G7"] = "",
+		["ralt + G8"] = "",
+		["ralt + G9"] = "",
+		["ralt + G10"] = "",
+		["ralt + G11"] = "",
+		-- rctrl + G
+		["rctrl + G3"] = "",
+		["rctrl + G4"] = "",
+		["rctrl + G5"] = "",
+		["rctrl + G6"] = "",
+		["rctrl + G7"] = "",
+		["rctrl + G8"] = "",
+		["rctrl + G9"] = "",
+		["rctrl + G10"] = "",
+		["rctrl + G11"] = "",
+		-- rshift + G
+		["rshift + G3"] = "",
+		["rshift + G4"] = "",
+		["rshift + G5"] = "",
+		["rshift + G6"] = "",
+		["rshift + G7"] = "",
+		["rshift + G8"] = "",
+		["rshift + G9"] = "",
+		["rshift + G10"] = "",
+		["rshift + G11"] = "",
 	},
 }
 
@@ -617,35 +647,18 @@ function OnEvent (event, arg, family)
 				modifier = "lctrl + " .. modifier
 			elseif IsModifierPressed("lshift") then
 				modifier = "lshift + " .. modifier
+			elseif IsModifierPressed("ralt") then
+				modifier = "ralt + " .. modifier
+			elseif IsModifierPressed("rctrl") then
+				modifier = "rctrl + " .. modifier
+			elseif IsModifierPressed("rshift") then
+				modifier = "rshift + " .. modifier
 			end
-
+			modifier = modifier .. arg
+			OutputLogMessage("\nEfficient operation: " .. modifier .. "\n")
 			pubg.runCmd(userInfo.G_bind[modifier])
 		end
 	end
-
-	-- Switching arsenals according to different types of ammunition
-	-- if event == "MOUSE_BUTTON_PRESSED" and family == "mouse" then
-	-- 	if arg == 6 or arg == 7 or arg == 8 or arg == 9 then
-	-- 		pubg.bulletType = userInfo.G_bind["G" .. arg]
-	-- 		pubg.gunIndex = 1
-	-- 		pubg.outputLogGunInfo()
-	-- 	end
-	-- end
-
-	-- Switch to the next configuration
-	-- if event == "MOUSE_BUTTON_PRESSED" and arg == 11 and family == "mouse" then
-	-- 	pubg.gunIndex = pubg.gunIndex + 1
-	-- 	if pubg.gunIndex > #pubg.gun[pubg.bulletType] then
-	-- 		pubg.gunIndex = 1
-	-- 	end
-	-- 	pubg.outputLogGunInfo()
-	-- end
-
-	-- Switch to the last configuration
-	-- if event == "MOUSE_BUTTON_PRESSED" and arg == 10 and family == "mouse" then
-	-- 	pubg.gunIndex = #pubg.gun[pubg.bulletType]
-	-- 	pubg.outputLogGunInfo()
-	-- end
 
 end
 
