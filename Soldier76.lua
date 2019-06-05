@@ -41,10 +41,46 @@ userInfo = {
 	},
 	-- G键自定义绑定
 	G_bind = {
-		G6 = "5.56",
-		G7 = "9mm",
-		G8 = "7.62",
-		G9 = ".45",
+		-- G
+		["G3"] = "",
+		["G4"] = "",
+		["G5"] = "",
+		["G6"] = "5.56",
+		["G7"] = "9mm",
+		["G8"] = "7.62",
+		["G9"] = ".45",
+		["G10"] = "last",
+		["G11"] = "next",
+		-- lalt + G
+		["lalt + G3"] = "",
+		["lalt + G4"] = "",
+		["lalt + G5"] = "",
+		["lalt + G6"] = "",
+		["lalt + G7"] = "",
+		["lalt + G8"] = "",
+		["lalt + G9"] = "",
+		["lalt + G10"] = "",
+		["lalt + G11"] = "",
+		-- lctrl + G
+		["lctrl + G3"] = "",
+		["lctrl + G4"] = "",
+		["lctrl + G5"] = "",
+		["lctrl + G6"] = "",
+		["lctrl + G7"] = "",
+		["lctrl + G8"] = "",
+		["lctrl + G9"] = "",
+		["lctrl + G10"] = "",
+		["lctrl + G11"] = "",
+		-- lshift + G
+		["lshift + G3"] = "",
+		["lshift + G4"] = "",
+		["lshift + G5"] = "",
+		["lshift + G6"] = "",
+		["lshift + G7"] = "",
+		["lshift + G8"] = "",
+		["lshift + G9"] = "",
+		["lshift + G10"] = "",
+		["lshift + G11"] = "",
 	},
 }
 
@@ -481,7 +517,6 @@ end
 
 --[[ get real y position ]]
 function pubg.getRealY (y)
-
 	local realY = y
 
 	if pubg.isAimingState(1) then
@@ -493,9 +528,56 @@ function pubg.getRealY (y)
 	end
 
 	return realY
-
 end
 
+--[[ G key function binding ]]
+function pubg.runCmd (cmd)
+	if cmd == "" then cmd = "none" end
+	local switch = {
+
+		["none"] = function () end,
+
+		[".45"] = function ()
+			pubg.bulletType = ".45"
+			pubg.gunIndex = 1
+			pubg.outputLogGunInfo()
+		end,
+
+		["9mm"] = function ()
+			pubg.bulletType = "9mm"
+			pubg.gunIndex = 1
+			pubg.outputLogGunInfo()
+		end,
+
+		["5.56"] = function ()
+			pubg.bulletType = "5.56"
+			pubg.gunIndex = 1
+			pubg.outputLogGunInfo()
+		end,
+
+		["7.62"] = function ()
+			pubg.bulletType = "7.62"
+			pubg.gunIndex = 1
+			pubg.outputLogGunInfo()
+		end,
+
+		["next"] = function ()
+			pubg.gunIndex = pubg.gunIndex + 1
+			if pubg.gunIndex > #pubg.gun[pubg.bulletType] then
+				pubg.gunIndex = 1
+			end
+			pubg.outputLogGunInfo()
+		end,
+
+		["last"] = function ()
+			pubg.gunIndex = #pubg.gun[pubg.bulletType]
+			pubg.outputLogGunInfo()
+		end,
+
+	}
+
+	switch[cmd]()
+end
 
 --[[ Listener method ]]
 function OnEvent (event, arg, family)
@@ -527,27 +609,43 @@ function OnEvent (event, arg, family)
 
 	-- Switching arsenals according to different types of ammunition
 	if event == "MOUSE_BUTTON_PRESSED" and family == "mouse" then
-		if arg == 6 or arg == 7 or arg == 8 or arg == 9 then
-			pubg.bulletType = userInfo.G_bind["G" .. arg]
-			pubg.gunIndex = 1
-			pubg.outputLogGunInfo()
+		if arg >=3 and arg <= 11 then
+			local modifier = "G"
+			if IsModifierPressed("lalt") then
+				modifier = "lalt + " .. modifier
+			elseif IsModifierPressed("lctrl") then
+				modifier = "lctrl + " .. modifier
+			elseif IsModifierPressed("lshift") then
+				modifier = "lshift + " .. modifier
+			end
+
+			pubg.runCmd(userInfo.G_bind[modifier])
 		end
 	end
+
+	-- Switching arsenals according to different types of ammunition
+	-- if event == "MOUSE_BUTTON_PRESSED" and family == "mouse" then
+	-- 	if arg == 6 or arg == 7 or arg == 8 or arg == 9 then
+	-- 		pubg.bulletType = userInfo.G_bind["G" .. arg]
+	-- 		pubg.gunIndex = 1
+	-- 		pubg.outputLogGunInfo()
+	-- 	end
+	-- end
 
 	-- Switch to the next configuration
-	if event == "MOUSE_BUTTON_PRESSED" and arg == 11 and family == "mouse" then
-		pubg.gunIndex = pubg.gunIndex + 1
-		if pubg.gunIndex > #pubg.gun[pubg.bulletType] then
-			pubg.gunIndex = 1
-		end
-		pubg.outputLogGunInfo()
-	end
+	-- if event == "MOUSE_BUTTON_PRESSED" and arg == 11 and family == "mouse" then
+	-- 	pubg.gunIndex = pubg.gunIndex + 1
+	-- 	if pubg.gunIndex > #pubg.gun[pubg.bulletType] then
+	-- 		pubg.gunIndex = 1
+	-- 	end
+	-- 	pubg.outputLogGunInfo()
+	-- end
 
 	-- Switch to the last configuration
-	if event == "MOUSE_BUTTON_PRESSED" and arg == 10 and family == "mouse" then
-		pubg.gunIndex = #pubg.gun[pubg.bulletType]
-		pubg.outputLogGunInfo()
-	end
+	-- if event == "MOUSE_BUTTON_PRESSED" and arg == 10 and family == "mouse" then
+	-- 	pubg.gunIndex = #pubg.gun[pubg.bulletType]
+	-- 	pubg.outputLogGunInfo()
+	-- end
 
 end
 
