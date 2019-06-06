@@ -428,26 +428,7 @@ function pubg.init ()
 
 	-- Initial setting of random number seeds
 	pubg.SetRandomseed()
-
-	-- OutputLogMessage(#pubg.gun .. "\n")
-	-- for i = 1, #pubg.gun do
-	-- 	OutputLogMessage(pubg.gun[i] .. "\n")
-	-- end
-
-	-- console options
 	pubg.outputLogGunInfo()
-	-- for k,v in pairs(pubg.gunOptions) do
-	-- 	OutputLogMessage("\n" .. k .. "\n")
-	-- 	for i = 1, #pubg.gunOptions[k] do
-	-- 		local gunName = pubg.gun[k][i]
-	-- 		OutputLogMessage("        " .. gunName .. ": { ")
-	-- 		for j = 1, #pubg.gunOptions[k][i].ballistic do
-	-- 			local num = pubg.gunOptions[k][i].ballistic[j]
-	-- 			OutputLogMessage(num .. ", ")
-	-- 		end
-	-- 		OutputLogMessage("}\n")
-	-- 	end
-	-- end
 
 end
 
@@ -539,6 +520,9 @@ function pubg.auto (options)
 			-- Sleep(10)
 			Sleep(random)
 		else
+			pubg.counter = 0 -- Initialization counter
+			pubg.xCounter = 0 -- Initialization xCounter
+			pubg.SetRandomseed() -- Reset random number seeds
 			break
 		end
 	end
@@ -630,10 +614,7 @@ function OnEvent (event, arg, family)
 	if event == "MOUSE_BUTTON_PRESSED" and arg == 1 and family == "mouse" then
 		ClearLog()
 		if pubg.isAimingState(1) or pubg.isAimingState(2) then
-			pubg.counter = 0 -- Initialization counter
-			pubg.xCounter = 0 -- Initialization xCounter
 			pubg.auto(pubg.gunOptions[pubg.bulletType][pubg.gunIndex]) -- Injecting Firearms Data into Automatic Pressure Gun Function
-			pubg.SetRandomseed() -- Reset random number seeds
 		end
 	end
 
