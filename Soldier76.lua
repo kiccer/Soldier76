@@ -148,7 +148,7 @@ function pubg.isAimingState (modeIndex)
 
 		-- 开镜
 		[1] = function ()
-			return IsMouseButtonPressed(3)
+			return IsMouseButtonPressed(3) and not IsModifierPressed("lshift")
 		end,
 
 		-- 腰射
