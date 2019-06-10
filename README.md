@@ -113,7 +113,7 @@ G键 | 功能
 * 我们也同样欢迎其他项目的小伙伴入住，一起交流技术话题
 
 ### 问题反馈
-* 使用脚本时有任何疑问，或脚本存在不足之处可以在 [`Issus`](https://github.com/kiccer/Soldier76/issues) 反馈给我
+* 使用脚本时有任何疑问，或脚本存在不足之处可以在 [`issues`](https://github.com/kiccer/Soldier76/issues) 反馈给我
 
 ### 关于宏
 * 宏就像是一个心灵手巧的瞎子
