@@ -1,6 +1,8 @@
 --[[ Script Start ]]
 
 ------------------------------------------ [[ 玩家自定义 ]] ------------------------------------------
+-- 推荐边查阅帮助文档，边对下列内容进行修改。
+-- 参考地址: https://github.com/kiccer/Soldier76#%E5%88%9D%E6%AC%A1%E4%BD%BF%E7%94%A8
 userInfo = {
 	-- “开镜”压枪灵敏度微调
 	InGameSightingSensitivity = 103,
@@ -39,7 +41,9 @@ userInfo = {
 			{ "DP-28", 1 }, -- 基础镜
 		},
 	},
+
 	-- G键自定义绑定
+	-- 可绑定指令请参考: https://github.com/kiccer/Soldier76#%E6%8C%87%E4%BB%A4%E5%88%97%E8%A1%A8
 	G_bind = {
 		-- G
 		["G3"] = "",
