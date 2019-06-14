@@ -548,42 +548,42 @@ function pubg.getRealY (y)
 	return realY
 end
 
---[[ G key function binding ]]
+--[[ set bullet type ]]
+function pubg.setBulletType (bulletType) {
+	pubg.bulletType = bulletType
+	pubg.gunIndex = 1
+	pubg.outputLogGunInfo()
+}
+
+--[[ G key command binding ]]
 function pubg.runCmd (cmd)
 	if cmd == "" then cmd = "none" end
 	local switch = {
 
 		["none"] = function () end,
 
-		[".45"] = function ()
-			pubg.bulletType = ".45"
-			pubg.gunIndex = 1
-			pubg.outputLogGunInfo()
-		end,
+		[".45"] = pubg.setBulletType,
 
-		["9mm"] = function ()
-			pubg.bulletType = "9mm"
-			pubg.gunIndex = 1
-			pubg.outputLogGunInfo()
-		end,
+		["9mm"] = pubg.setBulletType,
 
-		["5.56"] = function ()
-			pubg.bulletType = "5.56"
-			pubg.gunIndex = 1
-			pubg.outputLogGunInfo()
-		end,
+		["5.56"] = pubg.setBulletType,
 
-		["7.62"] = function ()
-			pubg.bulletType = "7.62"
+		["7.62"] = pubg.setBulletType,
+
+		["first"] = function ()
 			pubg.gunIndex = 1
 			pubg.outputLogGunInfo()
 		end,
 
 		["next"] = function ()
-			pubg.gunIndex = pubg.gunIndex + 1
-			if pubg.gunIndex > #pubg.gun[pubg.bulletType] then
-				pubg.gunIndex = 1
+			if pubg.gunIndex < #pubg.gun[pubg.bulletType] then
+				pubg.gunIndex = pubg.gunIndex + 1
 			end
+			-- 切换至底部将不再从头开始
+			-- pubg.gunIndex = pubg.gunIndex + 1
+			-- if pubg.gunIndex > #pubg.gun[pubg.bulletType] then
+			-- 	pubg.gunIndex = 1
+			-- end
 			pubg.outputLogGunInfo()
 		end,
 
@@ -594,7 +594,7 @@ function pubg.runCmd (cmd)
 
 	}
 
-	switch[cmd]()
+	switch[cmd](cmd)
 end
 
 --[[ Listener method ]]
