@@ -124,6 +124,7 @@ G键 | 功能
 
 ### Need help
 My English is not very good, and the translation results of translation software are usually very strange. So I need a translator to help me translate this document into other languages. If you can, please contact me.
+
 If you could directly `fork` the project and create a `README.[lang].md`, then `Pull Request` would be great for me.
 
 <!-- ~~Ps: 如果认为游戏体验有提升的话，请给我一颗小星星:)~~ -->
