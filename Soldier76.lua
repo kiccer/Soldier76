@@ -142,7 +142,7 @@ pubg = {
 	prevTime = 0, -- 记录上一轮脚本运行时间戳
 	magnifierX0 = 0.95, -- 腰射压枪倍率
 	magnifierX4 = 3.9, -- 四倍压枪倍率
-	xLengthForDebug = 60, -- 调试模式下的水平移动单元长度
+	xLengthForDebug = 60 * userInfo.InGameSightingSensitivity / 100, -- 调试模式下的水平移动单元长度
 	isEffective = "2020-01-01 00:00:00", -- 有效期
 }
 
