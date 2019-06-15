@@ -62,10 +62,10 @@ userInfo = {
 		["lalt + G3"] = "",
 		["lalt + G4"] = "",
 		["lalt + G5"] = "",
-		["lalt + G6"] = "",
-		["lalt + G7"] = "",
-		["lalt + G8"] = "",
-		["lalt + G9"] = "",
+		["lalt + G6"] = "magnifierX1",
+		["lalt + G7"] = "magnifierX8",
+		["lalt + G8"] = "magnifierX4",
+		["lalt + G9"] = "magnifierX2",
 		["lalt + G10"] = "",
 		["lalt + G11"] = "",
 		-- lctrl + G
@@ -144,7 +144,12 @@ pubg = {
 	startTime = 0, -- 鼠标按下时记录脚本运行时间戳
 	prevTime = 0, -- 记录上一轮脚本运行时间戳
 	magnifierX0 = 0.95, -- 腰射压枪倍率
+	magnifierX1 = 1, -- 开镜压枪倍率 (基瞄、红点、全息、侧瞄)
+	magnifierX2 = 0, -- 二倍压枪倍率
 	magnifierX4 = 3.9, -- 四倍压枪倍率
+	magnifierX6 = 0, -- 六倍压枪倍率
+	magnifierX8 = 0, -- 八倍压枪倍率
+	magnifier_current = "magnifierX1", -- 当前使用倍镜
 	xLengthForDebug = 60 * userInfo.InGameSightingSensitivity / 100, -- 调试模式下的水平移动单元长度
 	isEffective = "2020-01-01 00:00:00", -- 有效期
 }
@@ -557,7 +562,8 @@ function pubg.getRealY (y)
 	local realY = y
 
 	if pubg.isAimingState(1) then
-		realY = y * (IsModifierPressed("lalt") and { pubg.magnifierX4 } or { 1 })[1]
+		-- realY = y * (IsModifierPressed("lalt") and { pubg.magnifierX4 } or { 1 })[1]
+		realY = y * pubg[pubg.magnifier_current]
 
 	elseif pubg.isAimingState(2) then
 		realY = y * pubg.magnifierX0
@@ -574,6 +580,12 @@ function pubg.setBulletType (bulletType) {
 	pubg.outputLogGunInfo()
 }
 
+--[[ set current magnifier ]]
+function pubg.setMagnifier (magnifier) {
+	pubg.magnifier_current = magnifier
+	OutputLogMessage("\nCurrent magnifier: " .. magnifier .. "\n")
+}
+
 --[[ G key command binding ]]
 function pubg.runCmd (cmd)
 	if cmd == "" then cmd = "none" end
@@ -588,6 +600,14 @@ function pubg.runCmd (cmd)
 		["5.56"] = pubg.setBulletType,
 
 		["7.62"] = pubg.setBulletType,
+
+		["magnifierX1"] = pubg.setMagnifier,
+
+		["magnifierX2"] = pubg.setMagnifier,
+
+		["magnifierX4"] = pubg.setMagnifier,
+
+		["magnifierX8"] = pubg.setMagnifier,
 
 		["first"] = function ()
 			pubg.gunIndex = 1
