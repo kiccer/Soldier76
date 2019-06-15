@@ -119,7 +119,7 @@ G键 | 功能
 ### 交流群
 * 欢迎加入技术交流QQ群：[![logitech 鼠标宏技术交流](./static/img/group.png)](https://kiccer.github.io/Soldier76/static/join_group.html)
 * 十分欢迎愿意给本项目精调弹道的小伙伴
-* 我们也同样欢迎其他项目的小伙伴入住，一起交流技术话题
+* 我们也同样欢迎其他项目的小伙伴入驻，一起交流技术话题
 
 ### 问题反馈
 * 使用脚本时有任何疑问，或脚本存在不足之处可以在 [`issues`](https://github.com/kiccer/Soldier76/issues) 反馈给我
