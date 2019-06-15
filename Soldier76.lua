@@ -566,7 +566,7 @@ function pubg.getRealY (y)
 		realY = y * pubg[pubg.magnifier_current]
 
 	elseif pubg.isAimingState(2) then
-		realY = y * pubg.magnifierX0
+		realY = y * pubg.magnifierX0 * userInfo.InGameAimSensitivity / 100
 
 	end
 
