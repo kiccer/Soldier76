@@ -19,6 +19,9 @@ userInfo = {
 	-- 开火按键设置 (需设置为键盘上的按键) 默认 tilde -> ~ (注意，游戏内需要设置相同键位作为开火键)
 	FireKeySetting = "tilde",
 
+	-- 瞄准设置 (default - 使用游戏默认设置 | recommend - 使用脚本推荐设置 | custom - 自定义设置)
+	AimingSettings = "recommend",
+
 	-- 支持的枪械，排列顺序即是配置顺序，可以自行调整，不需要的枪械请设置为0，需要的设置为1。
 	canUse = {
 		[".45"] = {
@@ -152,12 +155,28 @@ function pubg.isAimingState (modeIndex)
 
 		-- 开镜
 		[1] = function ()
-			return IsMouseButtonPressed(3) and not IsModifierPressed("lshift")
+			if userInfo.AimingSettings == "recommend" then
+				return IsMouseButtonPressed(3) and not IsModifierPressed("lshift")
+			elseif userInfo.AimingSettings == "default" then
+				return not IsModifierPressed("lshift")
+			elseif userInfo.AimingSettings == "custom" then
+				-- 自定义设置判断条件 (布尔型)
+				-- Customize Setting Judgment Conditions...{Type: Boolean}
+				return false -- or true
+			end
 		end,
 
 		-- 腰射
 		[2] = function ()
-			return userInfo.AimAutoControl == 1 and IsModifierPressed("lctrl")
+			if userInfo.AimingSettings == "recommend" then
+				return userInfo.AimAutoControl == 1 and IsModifierPressed("lctrl")
+			elseif userInfo.AimingSettings == "default" then
+				return IsMouseButtonPressed(3)
+			elseif userInfo.AimingSettings == "custom" then
+				-- 自定义设置判断条件 (布尔型)
+				-- Customize Setting Judgment Conditions...{Type: Boolean}
+				return false -- or true
+			end
 		end,
 
 	}
