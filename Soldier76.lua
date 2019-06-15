@@ -574,17 +574,17 @@ function pubg.getRealY (y)
 end
 
 --[[ set bullet type ]]
-function pubg.setBulletType (bulletType) {
+function pubg.setBulletType (bulletType)
 	pubg.bulletType = bulletType
 	pubg.gunIndex = 1
 	pubg.outputLogGunInfo()
-}
+end
 
 --[[ set current magnifier ]]
-function pubg.setMagnifier (magnifier) {
+function pubg.setMagnifier (magnifier)
 	pubg.magnifier_current = magnifier
 	OutputLogMessage("\nCurrent magnifier: " .. magnifier .. "\n")
-}
+end
 
 --[[ G key command binding ]]
 function pubg.runCmd (cmd)
