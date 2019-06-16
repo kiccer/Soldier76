@@ -63,11 +63,11 @@ userInfo = {
 		["lalt + G4"] = "",
 		["lalt + G5"] = "",
 		["lalt + G6"] = "magnifierX1",
-		["lalt + G7"] = "magnifierX8",
-		["lalt + G8"] = "magnifierX4",
+		["lalt + G7"] = "magnifierX3",
+		["lalt + G8"] = "magnifierX6",
 		["lalt + G9"] = "magnifierX2",
 		["lalt + G10"] = "",
-		["lalt + G11"] = "",
+		["lalt + G11"] = "magnifierX4",
 		-- lctrl + G
 		["lctrl + G3"] = "",
 		["lctrl + G4"] = "",
@@ -145,10 +145,10 @@ pubg = {
 	prevTime = 0, -- 记录上一轮脚本运行时间戳
 	magnifierX0 = 0.95, -- 腰射压枪倍率
 	magnifierX1 = 1, -- 开镜压枪倍率 (基瞄、红点、全息、侧瞄)
-	magnifierX2 = 0, -- 二倍压枪倍率
+	magnifierX2 = 1.3, -- 二倍压枪倍率
+	magnifierX3 = 1.3, -- 四倍压枪倍率
 	magnifierX4 = 3.9, -- 四倍压枪倍率
-	magnifierX6 = 0, -- 六倍压枪倍率
-	magnifierX8 = 0, -- 八倍压枪倍率
+	magnifierX6 = 2.3, -- 六倍压枪倍率
 	magnifier_current = "magnifierX1", -- 当前使用倍镜
 	xLengthForDebug = 60 * userInfo.InGameSightingSensitivity / 100, -- 调试模式下的水平移动单元长度
 	isEffective = "2020-01-01 00:00:00", -- 有效期
@@ -163,7 +163,7 @@ function pubg.isAimingState (modeIndex)
 			if userInfo.AimingSettings == "recommend" then
 				return IsMouseButtonPressed(3) and not IsModifierPressed("lshift")
 			elseif userInfo.AimingSettings == "default" then
-				return not IsModifierPressed("lshift")
+				return not IsModifierPressed("lshift") and not IsModifierPressed("lalt")
 			elseif userInfo.AimingSettings == "custom" then
 				-- 自定义设置判断条件 (布尔型)
 				-- Customize Setting Judgment Conditions...{Type: Boolean}
@@ -605,9 +605,11 @@ function pubg.runCmd (cmd)
 
 		["magnifierX2"] = pubg.setMagnifier,
 
+		["magnifierX3"] = pubg.setMagnifier,
+
 		["magnifierX4"] = pubg.setMagnifier,
 
-		["magnifierX8"] = pubg.setMagnifier,
+		["magnifierX6"] = pubg.setMagnifier,
 
 		["first"] = function ()
 			pubg.gunIndex = 1
