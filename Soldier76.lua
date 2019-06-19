@@ -4,11 +4,6 @@
 -- 推荐边查阅帮助文档，边对下列内容进行修改。
 -- 参考地址: https://github.com/kiccer/Soldier76#%E5%88%9D%E6%AC%A1%E4%BD%BF%E7%94%A8
 userInfo = {
-	-- “开镜”压枪灵敏度微调
-	-- inGameSightingSensitivity = 103,
-
-	-- “腰射”压枪灵敏度微调
-	-- inGameAimSensitivity = 103,
 
 	-- 灵敏度调整
 	sensitivity = {
@@ -180,7 +175,6 @@ pubg = {
 	scopeX6 = userInfo.sensitivity.scopeX6, -- 六倍压枪倍率
 	scope_current = "scopeX1", -- 当前使用倍镜
 	generalSensitivityRatio = userInfo.sensitivity.Aim / 100, -- 按比例调整灵敏度
-	-- xLengthForDebug = 60 * userInfo.sensitivity.Aim / 100, -- 调试模式下的水平移动单元长度
 	isEffective = "2020-01-01 00:00:00", -- 有效期
 }
 
@@ -590,11 +584,9 @@ function pubg.getRealY (y)
 	local realY = y
 
 	if pubg.isAimingState("Aim") then
-		-- realY = y * (IsModifierPressed("lalt") and { pubg.scopeX4 } or { 1 })[1]
 		realY = y * pubg[pubg.scope_current]
 
 	elseif pubg.isAimingState("ADS") then
-		-- realY = y * pubg.scopeX0 * userInfo.inGameAimSensitivity / 100
 		realY = y * userInfo.sensitivity.ADS * pubg.generalSensitivityRatio
 
 	end
