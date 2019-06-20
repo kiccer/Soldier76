@@ -615,36 +615,65 @@ function pubg.setScope (scope)
 	OutputLogMessage("\nCurrent scope: " .. scope .. "\n")
 end
 
+--[[ set current gun ]]
+function pubg.setGun (gunName)
+
+	local forList = { ".45", "9mm", "5.56", "7.62" }
+
+	for i = 1, #forList do
+
+		local type = forList[i]
+		local gunIndex = 0
+		local selected = false
+
+		for j = 1, #userInfo.canUse[type] do
+			if userInfo.canUse[type][j][2] == 1 then
+				gunIndex = gunIndex + 1
+				if userInfo.canUse[type][j][1] == gunName then
+					pubg.bulletType = type
+					pubg.gunIndex = gunIndex
+					selected = true
+					break
+				end
+			end
+		end
+
+		if selected then break end
+
+	end
+
+	pubg.outputLogGunInfo()
+end
+
 --[[ G key command binding ]]
 function pubg.runCmd (cmd)
 	if cmd == "" then cmd = "none" end
 	local switch = {
-
 		["none"] = function () end,
-
 		[".45"] = pubg.setBulletType,
-
 		["9mm"] = pubg.setBulletType,
-
 		["5.56"] = pubg.setBulletType,
-
 		["7.62"] = pubg.setBulletType,
-
 		["scopeX1"] = pubg.setScope,
-
 		["scopeX2"] = pubg.setScope,
-
 		["scopeX3"] = pubg.setScope,
-
 		["scopeX4"] = pubg.setScope,
-
 		["scopeX6"] = pubg.setScope,
-
+		["UMP45"] = pubg.setGun,
+		["Tommy Gun"] = pubg.setGun,
+		["Vector"] = pubg.setGun,
+		["Micro UZI"] = pubg.setGun,
+		["M416"] = pubg.setGun,
+		["SCAR-L"] = pubg.setGun,
+		["QBZ"] = pubg.setGun,
+		["G36C"] = pubg.setGun,
+		["AKM"] = pubg.setGun,
+		["Beryl M762"] = pubg.setGun,
+		["DP-28"] = pubg.setGun,
 		["first"] = function ()
 			pubg.gunIndex = 1
 			pubg.outputLogGunInfo()
 		end,
-
 		["next"] = function ()
 			if pubg.gunIndex < #pubg.gun[pubg.bulletType] then
 				pubg.gunIndex = pubg.gunIndex + 1
@@ -656,12 +685,10 @@ function pubg.runCmd (cmd)
 			-- end
 			pubg.outputLogGunInfo()
 		end,
-
 		["last"] = function ()
 			pubg.gunIndex = #pubg.gun[pubg.bulletType]
 			pubg.outputLogGunInfo()
 		end,
-
 	}
 
 	switch[cmd](cmd)
