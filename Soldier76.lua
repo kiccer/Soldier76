@@ -4,23 +4,48 @@
 -- 推荐边查阅帮助文档，边对下列内容进行修改。
 -- 参考地址: https://github.com/kiccer/Soldier76#%E5%88%9D%E6%AC%A1%E4%BD%BF%E7%94%A8
 userInfo = {
-	-- “开镜”压枪灵敏度微调
-	InGameSightingSensitivity = 103,
 
-	-- “腰射”压枪灵敏度微调
-	InGameAimSensitivity = 103,
+	-- 灵敏度调整
+	sensitivity = {
+		-- 开镜
+		Aim = 103,
+		-- 腰射
+		ADS = 0.95,
+		-- 二倍
+		scopeX2 = 1.3,
+		-- 三倍
+		scopeX3 = 1.3,
+		-- 四倍
+		scopeX4 = 3.9,
+		-- 六倍
+		scopeX6 = 2.3,
+	},
 
 	-- 是否腰射压枪 (腰射开启自动压枪 1 - 开启， 0 - 关闭)
-	AimAutoControl = 1,
+	aimAutoControl = 1,
 
-	-- 是否自动连发 (单发模式变全自动 1 - 开启， 0 - 关闭，需要设置好 FireKeySetting 参数)
-	AutoContinuousFiring = 0, -- 默认为 0，不推荐使用
+	-- 是否自动连发 (单发模式变全自动 1 - 开启， 0 - 关闭，需要设置好 fireKeySetting 参数)
+	autoContinuousFiring = 0, -- 默认为 0，不推荐使用
 
 	-- 开火按键设置 (需设置为键盘上的按键) 默认 tilde -> ~ (注意，游戏内需要设置相同键位作为开火键)
-	FireKeySetting = "tilde",
+	fireKeySetting = "tilde",
 
 	-- 瞄准设置 (default - 使用游戏默认设置 | recommend - 使用脚本推荐设置 | custom - 自定义设置)
-	AimingSettings = "recommend",
+	aimingSettings = "recommend",
+
+	-- 当 aimingSettings = "custom" ，需要在此处设置自定义判断条件，通常配合 IsMouseButtonPressed 或 IsModifierPressed 使用，使用方法请查阅 G-series Lua API 参考文档.docx
+	customAimingSettings = {
+		-- 开镜判断
+		Aim = function ()
+			OutputLogMessage("\nUse Aim custom settings\n")
+			return false -- 判断条件，返回值为布尔型
+		end,
+		-- 腰射判断
+		ADS = function ()
+			OutputLogMessage("\nUse ADS custom settings\n")
+			return false -- 判断条件，返回值为布尔型
+		end,
+	},
 
 	-- 支持的枪械，排列顺序即是配置顺序，可以自行调整，不需要的枪械请设置为0，需要的设置为1。
 	canUse = {
@@ -62,12 +87,12 @@ userInfo = {
 		["lalt + G3"] = "",
 		["lalt + G4"] = "",
 		["lalt + G5"] = "",
-		["lalt + G6"] = "magnifierX1",
-		["lalt + G7"] = "magnifierX3",
-		["lalt + G8"] = "magnifierX6",
-		["lalt + G9"] = "magnifierX2",
+		["lalt + G6"] = "scopeX1",
+		["lalt + G7"] = "scopeX3",
+		["lalt + G8"] = "scopeX6",
+		["lalt + G9"] = "scopeX2",
 		["lalt + G10"] = "",
-		["lalt + G11"] = "magnifierX4",
+		["lalt + G11"] = "scopeX4",
 		-- lctrl + G
 		["lctrl + G3"] = "",
 		["lctrl + G4"] = "",
@@ -143,50 +168,47 @@ pubg = {
 	sleepRandom = { 0, 1 }, -- 防检测随机延迟
 	startTime = 0, -- 鼠标按下时记录脚本运行时间戳
 	prevTime = 0, -- 记录上一轮脚本运行时间戳
-	magnifierX0 = 0.95, -- 腰射压枪倍率
-	magnifierX1 = 1, -- 基瞄压枪倍率 (裸镜、红点、全息、侧瞄)
-	magnifierX2 = 1.3, -- 二倍压枪倍率
-	magnifierX3 = 1.3, -- 三倍压枪倍率
-	magnifierX4 = 3.9, -- 四倍压枪倍率
-	magnifierX6 = 2.3, -- 六倍压枪倍率
-	magnifier_current = "magnifierX1", -- 当前使用倍镜
-	xLengthForDebug = 60 * userInfo.InGameSightingSensitivity / 100, -- 调试模式下的水平移动单元长度
+	scopeX1 = 1, -- 基瞄压枪倍率 (裸镜、红点、全息、侧瞄)
+	scopeX2 = userInfo.sensitivity.scopeX2, -- 二倍压枪倍率
+	scopeX3 = userInfo.sensitivity.scopeX3, -- 三倍压枪倍率
+	scopeX4 = userInfo.sensitivity.scopeX4, -- 四倍压枪倍率
+	scopeX6 = userInfo.sensitivity.scopeX6, -- 六倍压枪倍率
+	scope_current = "scopeX1", -- 当前使用倍镜
+	generalSensitivityRatio = userInfo.sensitivity.Aim / 100, -- 按比例调整灵敏度
 	isEffective = "2020-01-01 00:00:00", -- 有效期
 }
 
--- 射击准备
-function pubg.isAimingState (modeIndex)
+pubg.xLengthForDebug = pubg.generalSensitivityRatio * 60 -- 调试模式下的水平移动单元长度
+
+-- 是否开镜或瞄准
+function pubg.isAimingState (mode)
 	local switch = {
 
 		-- 开镜
-		[1] = function ()
-			if userInfo.AimingSettings == "recommend" then
+		["Aim"] = function ()
+			if userInfo.aimingSettings == "recommend" then
 				return IsMouseButtonPressed(3) and not IsModifierPressed("lshift")
-			elseif userInfo.AimingSettings == "default" then
+			elseif userInfo.aimingSettings == "default" then
 				return not IsModifierPressed("lshift") and not IsModifierPressed("lalt")
-			elseif userInfo.AimingSettings == "custom" then
-				-- 自定义设置判断条件 (布尔型)
-				-- Customize Setting Judgment Conditions...{Type: Boolean}
-				return false -- or true
+			elseif userInfo.aimingSettings == "custom" then
+				return userInfo.customAimingSettings.Aim()
 			end
 		end,
 
 		-- 腰射
-		[2] = function ()
-			if userInfo.AimingSettings == "recommend" then
-				return userInfo.AimAutoControl == 1 and IsModifierPressed("lctrl")
-			elseif userInfo.AimingSettings == "default" then
+		["ADS"] = function ()
+			if userInfo.aimingSettings == "recommend" then
+				return userInfo.aimAutoControl == 1 and IsModifierPressed("lctrl")
+			elseif userInfo.aimingSettings == "default" then
 				return IsMouseButtonPressed(3)
-			elseif userInfo.AimingSettings == "custom" then
-				-- 自定义设置判断条件 (布尔型)
-				-- Customize Setting Judgment Conditions...{Type: Boolean}
-				return false -- or true
+			elseif userInfo.aimingSettings == "custom" then
+				return userInfo.customAimingSettings.ADS()
 			end
 		end,
 
 	}
 
-	return switch[modeIndex]()
+	return switch[mode]()
 end
 
 pubg["SCAR-L"] = function ()
@@ -405,7 +427,7 @@ function pubg.execOptions (options)
 		end
 		for j = 1, nextCount do
 			ballisticConfig1[ballisticIndex] =
-				options.ballistic[i][2] * userInfo.InGameSightingSensitivity / 100
+				options.ballistic[i][2] * pubg.generalSensitivityRatio
 			ballisticIndex = ballisticIndex + 1
 		end
 	end
@@ -522,9 +544,9 @@ function pubg.auto (options)
 			local realY = pubg.getRealY(y)
 			-- OutputLogMessage(time .. "\n")
 			-- Whether to issue automatically or not
-			if userInfo.AutoContinuousFiring == 1 then
+			if userInfo.autoContinuousFiring == 1 then
 				-- PressAndReleaseMouseButton(1)
-				PressAndReleaseKey(userInfo.FireKeySetting)
+				PressAndReleaseKey(userInfo.fireKeySetting)
 			end
 
 			-- Real-time operation parameters
@@ -561,12 +583,11 @@ end
 function pubg.getRealY (y)
 	local realY = y
 
-	if pubg.isAimingState(1) then
-		-- realY = y * (IsModifierPressed("lalt") and { pubg.magnifierX4 } or { 1 })[1]
-		realY = y * pubg[pubg.magnifier_current]
+	if pubg.isAimingState("Aim") then
+		realY = y * pubg[pubg.scope_current]
 
-	elseif pubg.isAimingState(2) then
-		realY = y * pubg.magnifierX0 * userInfo.InGameAimSensitivity / 100
+	elseif pubg.isAimingState("ADS") then
+		realY = y * userInfo.sensitivity.ADS * pubg.generalSensitivityRatio
 
 	end
 
@@ -580,10 +601,10 @@ function pubg.setBulletType (bulletType)
 	pubg.outputLogGunInfo()
 end
 
---[[ set current magnifier ]]
-function pubg.setMagnifier (magnifier)
-	pubg.magnifier_current = magnifier
-	OutputLogMessage("\nCurrent magnifier: " .. magnifier .. "\n")
+--[[ set current scope ]]
+function pubg.setScope (scope)
+	pubg.scope_current = scope
+	OutputLogMessage("\nCurrent scope: " .. scope .. "\n")
 end
 
 --[[ G key command binding ]]
@@ -601,15 +622,15 @@ function pubg.runCmd (cmd)
 
 		["7.62"] = pubg.setBulletType,
 
-		["magnifierX1"] = pubg.setMagnifier,
+		["scopeX1"] = pubg.setScope,
 
-		["magnifierX2"] = pubg.setMagnifier,
+		["scopeX2"] = pubg.setScope,
 
-		["magnifierX3"] = pubg.setMagnifier,
+		["scopeX3"] = pubg.setScope,
 
-		["magnifierX4"] = pubg.setMagnifier,
+		["scopeX4"] = pubg.setScope,
 
-		["magnifierX6"] = pubg.setMagnifier,
+		["scopeX6"] = pubg.setScope,
 
 		["first"] = function ()
 			pubg.gunIndex = 1
@@ -658,7 +679,7 @@ function OnEvent (event, arg, family)
 	-- Automatic press gun
 	if event == "MOUSE_BUTTON_PRESSED" and arg == 1 and family == "mouse" then
 		ClearLog()
-		if pubg.isAimingState(1) or pubg.isAimingState(2) then
+		if pubg.isAimingState("Aim") or pubg.isAimingState("ADS") then
 			pubg.auto(pubg.gunOptions[pubg.bulletType][pubg.gunIndex]) -- Injecting Firearms Data into Automatic Pressure Gun Function
 		end
 	end
@@ -694,3 +715,8 @@ pubg.GD = GetDate -- Setting aliases
 pubg.init() -- Script initialization
 
 --[[ Script End ]]
+
+--[[
+	访问链接即可加入交流群，群内免费提供鼠标宏脚本，且不收取任何费用
+	https://shang.qq.com/wpa/qunwpa?idkey=50ba821dfa48ace4965375851706103b818a1120e6521efc30d740bc866302d4
+]]
