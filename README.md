@@ -114,7 +114,7 @@ G键 | 功能
 :--: | ---
 **default** | 使用游戏初始默认的设置，即点击右键开镜，长按右键瞄准。(单纯点击操作时需要按住左shift)
 **recommend** | 使用此脚本推荐设置，即长按右键开镜，长按左ctrl瞄准。
-**custom** | 自定义设置，使用在 `pubg.isAimingState` 方法的自定义区域中设置的判断条件。
+**custom** | 自定义设置，使用在 `customAimingSettings` 中设置的判断条件。
 
 ### 初次使用
 1. 按照 [#安装教程](https://github.com/kiccer/Soldier76#%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B) 安装脚本
