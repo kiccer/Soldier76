@@ -8,9 +8,9 @@ userInfo = {
 	-- 灵敏度调整
 	sensitivity = {
 		-- 开镜
-		Aim = 103,
+		ADS = 103,
 		-- 腰射
-		ADS = 0.95,
+		Aim = 0.95,
 		-- 二倍
 		scopeX2 = 1.3,
 		-- 三倍
@@ -36,13 +36,13 @@ userInfo = {
 	-- 当 aimingSettings = "custom" ，需要在此处设置自定义判断条件，通常配合 IsMouseButtonPressed 或 IsModifierPressed 使用，使用方法请查阅 G-series Lua API 参考文档.docx
 	customAimingSettings = {
 		-- 开镜判断
-		Aim = function ()
-			OutputLogMessage("\nUse Aim custom settings\n")
+		ADS = function ()
+			OutputLogMessage("\nUse ADS custom settings\n")
 			return false -- 判断条件，返回值为布尔型
 		end,
 		-- 腰射判断
-		ADS = function ()
-			OutputLogMessage("\nUse ADS custom settings\n")
+		Aim = function ()
+			OutputLogMessage("\nUse Aim custom settings\n")
 			return false -- 判断条件，返回值为布尔型
 		end,
 	},
@@ -174,7 +174,7 @@ pubg = {
 	scopeX4 = userInfo.sensitivity.scopeX4, -- 四倍压枪倍率
 	scopeX6 = userInfo.sensitivity.scopeX6, -- 六倍压枪倍率
 	scope_current = "scopeX1", -- 当前使用倍镜
-	generalSensitivityRatio = userInfo.sensitivity.Aim / 100, -- 按比例调整灵敏度
+	generalSensitivityRatio = userInfo.sensitivity.ADS / 100, -- 按比例调整灵敏度
 	isEffective = "2020-01-01 00:00:00", -- 有效期
 }
 
@@ -185,24 +185,24 @@ function pubg.isAimingState (mode)
 	local switch = {
 
 		-- 开镜
-		["Aim"] = function ()
+		["ADS"] = function ()
 			if userInfo.aimingSettings == "recommend" then
 				return IsMouseButtonPressed(3) and not IsModifierPressed("lshift")
 			elseif userInfo.aimingSettings == "default" then
 				return not IsModifierPressed("lshift") and not IsModifierPressed("lalt")
 			elseif userInfo.aimingSettings == "custom" then
-				return userInfo.customAimingSettings.Aim()
+				return userInfo.customAimingSettings.ADS()
 			end
 		end,
 
 		-- 腰射
-		["ADS"] = function ()
+		["Aim"] = function ()
 			if userInfo.aimingSettings == "recommend" then
 				return userInfo.aimAutoControl == 1 and IsModifierPressed("lctrl")
 			elseif userInfo.aimingSettings == "default" then
 				return IsMouseButtonPressed(3)
 			elseif userInfo.aimingSettings == "custom" then
-				return userInfo.customAimingSettings.ADS()
+				return userInfo.customAimingSettings.Aim()
 			end
 		end,
 
@@ -583,11 +583,11 @@ end
 function pubg.getRealY (y)
 	local realY = y
 
-	if pubg.isAimingState("Aim") then
+	if pubg.isAimingState("ADS") then
 		realY = y * pubg[pubg.scope_current]
 
-	elseif pubg.isAimingState("ADS") then
-		realY = y * userInfo.sensitivity.ADS * pubg.generalSensitivityRatio
+	elseif pubg.isAimingState("Aim") then
+		realY = y * userInfo.sensitivity.Aim * pubg.generalSensitivityRatio
 
 	end
 
@@ -706,7 +706,7 @@ function OnEvent (event, arg, family)
 	-- Automatic press gun
 	if event == "MOUSE_BUTTON_PRESSED" and arg == 1 and family == "mouse" then
 		ClearLog()
-		if pubg.isAimingState("Aim") or pubg.isAimingState("ADS") then
+		if pubg.isAimingState("ADS") or pubg.isAimingState("Aim") then
 			pubg.auto(pubg.gunOptions[pubg.bulletType][pubg.gunIndex]) -- Injecting Firearms Data into Automatic Pressure Gun Function
 		end
 	end
