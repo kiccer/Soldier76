@@ -33,6 +33,9 @@ userInfo = {
 	-- 瞄准设置 (default - 使用游戏默认设置 | recommend - 使用脚本推荐设置 | custom - 自定义设置)
 	aimingSettings = "recommend",
 
+	-- 启动控制 (capslock - 使用大写锁定键控制 | numlock - 小键盘锁定键控制 | G_bind - 使用指令控制)
+	startControl = "capslock",
+
 	-- 当 aimingSettings = "custom" ，需要在此处设置自定义判断条件，通常配合 IsMouseButtonPressed 或 IsModifierPressed 使用，使用方法请查阅 G-series Lua API 参考文档.docx
 	customAimingSettings = {
 		-- 开镜判断
@@ -176,6 +179,7 @@ pubg = {
 	scope_current = "scopeX1", -- 当前使用倍镜
 	generalSensitivityRatio = userInfo.sensitivity.ADS / 100, -- 按比例调整灵敏度
 	isEffective = "2020-01-01 00:00:00", -- 有效期
+	isStart = false, -- 是否是启动状态
 }
 
 pubg.xLengthForDebug = pubg.generalSensitivityRatio * 60 -- 调试模式下的水平移动单元长度
@@ -500,6 +504,8 @@ function pubg.outputLogGunInfo ()
 	end
 	OutputLogMessage("}\n\n")
 
+	pubg.isStart = true
+
 end
 
 -- SetRandomseed
@@ -642,6 +648,17 @@ function pubg.setGun (gunName)
 	pubg.outputLogGunInfo()
 end
 
+--[[ Script running status ]]
+function pubg.runStatus ()
+	if userInfo.startControl = "capslock" then
+		return IsKeyLockOn("capslock")
+	elseif userInfo.startControl = "numlock" then
+		return IsKeyLockOn("numlock")
+	elseif userInfo.startControl = "G_bind" then
+		return pubg.isStart
+	end
+end
+
 --[[ G key command binding ]]
 function pubg.runCmd (cmd)
 	if cmd == "" then cmd = "none" end
@@ -675,16 +692,14 @@ function pubg.runCmd (cmd)
 			if pubg.gunIndex < #pubg.gun[pubg.bulletType] then
 				pubg.gunIndex = pubg.gunIndex + 1
 			end
-			-- 切换至底部将不再从头开始
-			-- pubg.gunIndex = pubg.gunIndex + 1
-			-- if pubg.gunIndex > #pubg.gun[pubg.bulletType] then
-			-- 	pubg.gunIndex = 1
-			-- end
 			pubg.outputLogGunInfo()
 		end,
 		["last"] = function ()
 			pubg.gunIndex = #pubg.gun[pubg.bulletType]
 			pubg.outputLogGunInfo()
+		end,
+		["off"] = function ()
+			pubg.isStart = false
 		end,
 	}
 
@@ -703,13 +718,14 @@ function OnEvent (event, arg, family)
 	pubg.startTime = GetRunningTime()
 
 	-- Whether to open the capitalization key or not
-	if not IsKeyLockOn("capslock") or not pubg.isEffective then return false end
+	if not pubg.isEffective then return false end
 
 	-- OutputLogMessage("event = %s, arg = %s, family = %s\n", event, arg, family)
 	-- OutputLogMessage("event = " .. event .. ", arg = " .. arg .. ", family = " .. family .. "\n")
 
 	-- Automatic press gun
 	if event == "MOUSE_BUTTON_PRESSED" and arg == 1 and family == "mouse" then
+		if not pubg.runStatus() then return false end
 		ClearLog()
 		if pubg.isAimingState("ADS") or pubg.isAimingState("Aim") then
 			pubg.auto(pubg.gunOptions[pubg.bulletType][pubg.gunIndex]) -- Injecting Firearms Data into Automatic Pressure Gun Function
@@ -718,6 +734,7 @@ function OnEvent (event, arg, family)
 
 	-- Switching arsenals according to different types of ammunition
 	if event == "MOUSE_BUTTON_PRESSED" and family == "mouse" then
+		-- if not pubg.runStatus() and userInfo.startControl ~= "G_bind" then return false end
 		if arg >=3 and arg <= 11 then
 			local modifier = "G"
 			if IsModifierPressed("lalt") then
