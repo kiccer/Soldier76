@@ -650,11 +650,11 @@ end
 
 --[[ Script running status ]]
 function pubg.runStatus ()
-	if userInfo.startControl = "capslock" then
+	if userInfo.startControl == "capslock" then
 		return IsKeyLockOn("capslock")
-	elseif userInfo.startControl = "numlock" then
+	elseif userInfo.startControl == "numlock" then
 		return IsKeyLockOn("numlock")
-	elseif userInfo.startControl = "G_bind" then
+	elseif userInfo.startControl == "G_bind" then
 		return pubg.isStart
 	end
 end
