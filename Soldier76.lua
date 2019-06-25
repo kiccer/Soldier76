@@ -30,11 +30,11 @@ userInfo = {
 	-- 开火按键设置 (需设置为键盘上的按键) 默认 tilde -> ~ (注意，游戏内需要设置相同键位作为开火键)
 	fireKeySetting = "tilde",
 
-	-- 瞄准设置 (default - 使用游戏默认设置 | recommend - 使用脚本推荐设置 | custom - 自定义设置)
-	aimingSettings = "recommend",
-
 	-- 启动控制 (capslock - 使用大写锁定键控制 | numlock - 小键盘锁定键控制 | G_bind - 使用指令控制)
 	startControl = "capslock",
+
+	-- 瞄准设置 (default - 使用游戏默认设置 | recommend - 使用脚本推荐设置 | custom - 自定义设置)
+	aimingSettings = "recommend",
 
 	-- 当 aimingSettings = "custom" ，需要在此处设置自定义判断条件，通常配合 IsMouseButtonPressed 或 IsModifierPressed 使用，使用方法请查阅 G-series Lua API 参考文档.docx
 	customAimingSettings = {
@@ -148,6 +148,34 @@ userInfo = {
 		["rshift + G11"] = "",
 	},
 }
+
+--[[
+
+	stop
+
+	stop
+
+	stop
+
+	停一下，别往下看了
+
+	如果你是普通玩家，那么设置到这里就可以了，再往下不用看了，改不好了可能导致脚本运行报错。
+
+	如果你对脚本有一定的了解了，可以继续往下看，当然也可以自己动手修改。
+
+	第一次使用不知道怎么设置？请看文档： https://github.com/kiccer/Soldier76#%E5%88%9D%E6%AC%A1%E4%BD%BF%E7%94%A8
+
+	看了文档依然解决不了的可以加群问群里大佬： 768483124
+
+	如果你的宏可以使用了，也别兴高采烈的立马关掉网页就去玩游戏了，花点时间创个github帐号，然后页面最右上角的star帮忙点一下，谢谢
+
+	得到支持和肯定，我才更有更新的动力
+
+	还有很重要的一点，这个脚本你只能自己使用，或者修改后分享给别人使用，或者直接分享脚本的github地址，但不要利用这个脚本去赚钱
+
+	我想你知道我说的是什么意思，当然这个只是防君子不防小人
+
+]]
 
 ----------------------------- [[ 以下是脚本核心代码，非专业人士请勿改动 ]] -----------------------------
 pubg = {
