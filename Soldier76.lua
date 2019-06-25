@@ -544,6 +544,7 @@ function pubg.auto (options)
 			IsMouseButtonPressed(1)
 			and time <= options.amount
 			-- and pubg.counter < options.duration
+			and pubg.ok
 		then
 			-- Developer Debugging Mode
 			-- local x = (IsKeyLockOn("scrolllock") and { 1 } or { options.x[time] })[1]
@@ -703,7 +704,7 @@ function pubg.runCmd (cmd)
 		end,
 	}
 
-	switch[cmd](cmd)
+	if pubg.ok then switch[cmd](cmd) end
 end
 
 --[[ Listener method ]]
@@ -718,13 +719,13 @@ function OnEvent (event, arg, family)
 	pubg.startTime = GetRunningTime()
 
 	-- Whether to open the capitalization key or not
-	if not pubg.isEffective then return false end
+	if not pubg.ok then return false end
 
 	-- OutputLogMessage("event = %s, arg = %s, family = %s\n", event, arg, family)
 	-- OutputLogMessage("event = " .. event .. ", arg = " .. arg .. ", family = " .. family .. "\n")
 
 	-- Automatic press gun
-	if event == "MOUSE_BUTTON_PRESSED" and arg == 1 and family == "mouse" then
+	if event == "MOUSE_BUTTON_PRESSED" and arg == 1 and family == "mouse" and pubg.ok then
 		if not pubg.runStatus() then return false end
 		ClearLog()
 		if pubg.isAimingState("ADS") or pubg.isAimingState("Aim") then
@@ -733,7 +734,7 @@ function OnEvent (event, arg, family)
 	end
 
 	-- Switching arsenals according to different types of ammunition
-	if event == "MOUSE_BUTTON_PRESSED" and family == "mouse" then
+	if event == "MOUSE_BUTTON_PRESSED" and family == "mouse" and pubg.ok then
 		-- if not pubg.runStatus() and userInfo.startControl ~= "G_bind" then return false end
 		if arg >=3 and arg <= 11 then
 			local modifier = "G"
@@ -761,6 +762,7 @@ end
 --[[ Other ]]
 EnablePrimaryMouseButtonEvents(true) -- Enable left mouse button event reporting
 pubg.GD = GetDate -- Setting aliases
+pubg.ok = pubg.isEffective
 pubg.init() -- Script initialization
 
 --[[ Script End ]]
