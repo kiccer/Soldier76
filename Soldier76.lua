@@ -28,7 +28,7 @@ userInfo = {
 	autoContinuousFiring = 0, -- 默认为 0，不推荐使用
 
 	-- 开火按键设置 (需设置为键盘上的按键) 默认 tilde -> ~ (注意，游戏内需要设置相同键位作为开火键)
-	fireKeySetting = "tilde",
+	-- fireKeySetting = "tilde",
 
 	-- 启动控制 (capslock - 使用大写锁定键控制 | numlock - 小键盘锁定键控制 | G_bind - 使用指令控制)
 	startControl = "capslock",
@@ -586,7 +586,9 @@ function pubg.auto (options)
 			-- Whether to issue automatically or not
 			if userInfo.autoContinuousFiring == 1 then
 				-- PressAndReleaseMouseButton(1)
-				PressAndReleaseKey(userInfo.fireKeySetting)
+				ReleaseMouseButton(1)
+				PressMouseButton(1)
+				-- PressAndReleaseKey(userInfo.fireKeySetting)
 			end
 
 			-- Real-time operation parameters
