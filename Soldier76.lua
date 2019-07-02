@@ -582,35 +582,18 @@ function pubg.auto (options)
 			-- 4-fold pressure gun mode
 			-- y = y * (IsModifierPressed("lalt") and { 2.8 } or { 1 })[1]
 			local realY = pubg.getRealY(y)
+			MoveMouseRelative(x, realY)
 			-- OutputLogMessage(time .. "\n")
 			-- Whether to issue automatically or not
-			if userInfo.autoContinuousFiring == 1 then
-				-- PressAndReleaseMouseButton(1)
-				ReleaseMouseButton(1)
-				PressMouseButton(1)
-				-- PressAndReleaseKey(userInfo.fireKeySetting)
-			end
+			if userInfo.autoContinuousFiring == 1 then pubg.fire() end
 
 			-- Real-time operation parameters
-			OutputLogMessage(table.concat({
-				"-------------------------------------------------------------------------------------------","\n",
-				"bullet count: ",time,"    target: ",options.ballistic[time],"    last counter: ",pubg.counter,"\n",
-				"D-value: ",options.ballistic[time]," - ",pubg.counter," = ",options.ballistic[time] - pubg.counter,"\n",
-				"move: math.ceil((",now," - ",pubg.startTime,") / (",options.interval," * (",time," - 1)) * ",options.ballistic[time],") - ",pubg.counter," = ",y,"\n",
-			}))
+			pubg.autoLog(options, time, now, y)
 
-			MoveMouseRelative(x, realY)
-			local random = 0
-			if IsKeyLockOn("scrolllock") then
-				-- When debugging mode is turned on, Turn off random delays in preventive testing
-				random = math.random(pubg.sleep, pubg.sleep)
-			else
-				random = math.random(pubg.sleepRandom[1], pubg.sleepRandom[2])
-			end
 			pubg.xCounter = pubg.xCounter + x
 			pubg.counter = pubg.counter + y
-			-- Sleep(10)
-			Sleep(random)
+
+			pubg.autoSleep(IsKeyLockOn("scrolllock"))
 		else
 			pubg.counter = 0 -- Initialization counter
 			pubg.xCounter = 0 -- Initialization xCounter
@@ -619,6 +602,38 @@ function pubg.auto (options)
 		end
 	end
 
+end
+
+--[[ Sleep of pubg.auto ]]
+function pubg.autoSleep (isTest)
+	local random = 0
+	if isTest then
+		-- When debugging mode is turned on, Turn off random delays in preventive testing
+		random = math.random(pubg.sleep, pubg.sleep)
+	else
+		random = math.random(pubg.sleepRandom[1], pubg.sleepRandom[2])
+	end
+	-- Sleep(10)
+	Sleep(random)
+end
+
+--[[ fire ]]
+function pubg.fire ()
+	-- PressAndReleaseMouseButton(1)
+	ReleaseMouseButton(1)
+	PressMouseButton(1)
+	OutputLogMessage(( IsMouseButtonPressed(1) and {"1"} or {"0"} )[1] .. "\n")
+	-- PressAndReleaseKey(userInfo.fireKeySetting)
+end
+
+--[[ log of pubg.auto ]]
+function pubg.autoLog (options, time, now, y)
+	OutputLogMessage(table.concat({
+		"-------------------------------------------------------------------------------------------","\n",
+		"bullet count: ",time,"    target: ",options.ballistic[time],"    last counter: ",pubg.counter,"\n",
+		"D-value: ",options.ballistic[time]," - ",pubg.counter," = ",options.ballistic[time] - pubg.counter,"\n",
+		"move: math.ceil((",now," - ",pubg.startTime,") / (",options.interval," * (",time," - 1)) * ",options.ballistic[time],") - ",pubg.counter," = ",y,"\n",
+	}))
 end
 
 --[[ get real y position ]]
