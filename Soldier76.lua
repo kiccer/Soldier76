@@ -25,7 +25,7 @@ userInfo = {
 	aimAutoControl = 1,
 
 	-- 是否自动连发 (单发模式变全自动 1 - 开启， 0 - 关闭，需要设置好 fireKeySetting 参数)
-	autoContinuousFiring = 0, -- 默认为 0，不推荐使用
+	autoContinuousFiring = 1, -- 默认为 0，不推荐使用
 
 	-- 开火按键设置 (需设置为键盘上的按键) 默认 tilde -> ~ (注意，游戏内需要设置相同键位作为开火键)
 	-- fireKeySetting = "tilde",
@@ -633,11 +633,11 @@ end
 --[[ fire ]]
 function pubg.fire ()
 	-- PressAndReleaseMouseButton(1)
-	if (IsMouseButtonPressed(1) and pubg.forIndex % 10 == 0) {
+	if (IsMouseButtonPressed(1) and pubg.forIndex % 2 == 0) then
 		ReleaseMouseButton(1)
 		PressMouseButton(1)
-	}
-	OutputLogMessage(( IsMouseButtonPressed(1) and {"1"} or {"0"} )[1] .. "\n")
+		OutputLogMessage("\n" .. (IsMouseButtonPressed(1) and {"1"} or {"0"})[1] .. "\n")
+	end
 	-- PressAndReleaseKey(userInfo.fireKeySetting)
 end
 
