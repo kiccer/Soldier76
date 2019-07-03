@@ -193,6 +193,7 @@ pubg = {
 	}, -- 配置库
 	bulletType = "", -- 默认子弹型号
 	gunIndex = 1,	-- 选中枪械下标
+	forIndex = 0, -- pubg.auto 中 for循环回合
 	counter = 0, -- 计数器
 	xCounter = 0, -- x计数器
 	sleep = 1, -- 频率设置 (这里不能设置成0，调试会出BUG)
@@ -211,6 +212,17 @@ pubg = {
 }
 
 pubg.xLengthForDebug = pubg.generalSensitivityRatio * 60 -- 调试模式下的水平移动单元长度
+
+--将字符串转为table
+function GetWordTable (str)
+	local temp = {}
+	for uchar in string.gmatch(str, "[%z\1-\127\194-\244][\128-\191]*") do
+		temp[#temp+1] = uchar
+	end
+	return temp
+end
+
+-- OutputLogMessage(GetWordTable("尝试输出中文123abc....???\n"))
 
 -- 是否开镜或瞄准
 function pubg.isAimingState (mode)
@@ -592,6 +604,7 @@ function pubg.auto (options)
 
 			pubg.xCounter = pubg.xCounter + x
 			pubg.counter = pubg.counter + y
+			pubg.forIndex = pubg.forIndex + 1
 
 			pubg.autoSleep(IsKeyLockOn("scrolllock"))
 		else
@@ -620,8 +633,10 @@ end
 --[[ fire ]]
 function pubg.fire ()
 	-- PressAndReleaseMouseButton(1)
-	ReleaseMouseButton(1)
-	PressMouseButton(1)
+	if (IsMouseButtonPressed(1) and pubg.forIndex % 10 == 0) {
+		ReleaseMouseButton(1)
+		PressMouseButton(1)
+	}
 	OutputLogMessage(( IsMouseButtonPressed(1) and {"1"} or {"0"} )[1] .. "\n")
 	-- PressAndReleaseKey(userInfo.fireKeySetting)
 end
@@ -629,8 +644,8 @@ end
 --[[ log of pubg.auto ]]
 function pubg.autoLog (options, time, now, y)
 	OutputLogMessage(table.concat({
-		"-------------------------------------------------------------------------------------------","\n",
-		"bullet count: ",time,"    target: ",options.ballistic[time],"    last counter: ",pubg.counter,"\n",
+		"-------------------------------------------------------------------------------------------",pubg.forIndex,"\n",
+		"bullet index: ",time,"    target counter: ",options.ballistic[time],"    current counter: ",pubg.counter,"\n",
 		"D-value: ",options.ballistic[time]," - ",pubg.counter," = ",options.ballistic[time] - pubg.counter,"\n",
 		"move: math.ceil((",now," - ",pubg.startTime,") / (",options.interval," * (",time," - 1)) * ",options.ballistic[time],") - ",pubg.counter," = ",y,"\n",
 	}))
