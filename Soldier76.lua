@@ -193,7 +193,7 @@ pubg = {
 	counter = 0, -- 计数器
 	xCounter = 0, -- x计数器
 	sleep = 1, -- 频率设置 (这里不能设置成0，调试会出BUG)
-	sleepRandom = { 0, 1 }, -- 防检测随机延迟
+	sleepRandom = { 1, 2 }, -- 防检测随机延迟
 	startTime = 0, -- 鼠标按下时记录脚本运行时间戳
 	prevTime = 0, -- 记录上一轮脚本运行时间戳
 	scopeX1 = 1, -- 基瞄压枪倍率 (裸镜、红点、全息、侧瞄)
@@ -777,20 +777,15 @@ function OnEvent (event, arg, family)
 
 	if event == "MOUSE_BUTTON_RELEASED" and arg == 1 and family == "mouse" then
 		pubg.G1 = false
+		pubg.counter = 0 -- Initialization counter
+		pubg.xCounter = 0 -- Initialization xCounter
+		pubg.SetRandomseed() -- Reset random number seeds
 	end
 
 	if event == "M_PRESSED" and arg == 1 and pubg.G1 and pubg.ok then
 		-- PressAndReleaseMouseButton(1)
-
 		pubg.auto(pubg.gunOptions[pubg.bulletType][pubg.gunIndex])
-
-		if pubg.G1 then
-			SetMKeyState(1)
-		else
-			pubg.counter = 0 -- Initialization counter
-			pubg.xCounter = 0 -- Initialization xCounter
-			pubg.SetRandomseed() -- Reset random number seeds
-		end
+		SetMKeyState(1)
 	end
 
 	-- Switching arsenals according to different types of ammunition
