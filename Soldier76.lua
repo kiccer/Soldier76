@@ -777,20 +777,15 @@ function OnEvent (event, arg, family)
 
 	if event == "MOUSE_BUTTON_RELEASED" and arg == 1 and family == "mouse" then
 		pubg.G1 = false
+		pubg.counter = 0 -- Initialization counter
+		pubg.xCounter = 0 -- Initialization xCounter
+		pubg.SetRandomseed() -- Reset random number seeds
 	end
 
 	if event == "M_PRESSED" and arg == 1 and pubg.G1 and pubg.ok then
 		-- PressAndReleaseMouseButton(1)
-
 		pubg.auto(pubg.gunOptions[pubg.bulletType][pubg.gunIndex])
-
-		if pubg.G1 then
-			SetMKeyState(1)
-		else
-			pubg.counter = 0 -- Initialization counter
-			pubg.xCounter = 0 -- Initialization xCounter
-			pubg.SetRandomseed() -- Reset random number seeds
-		end
+		SetMKeyState(1)
 	end
 
 	-- Switching arsenals according to different types of ammunition
