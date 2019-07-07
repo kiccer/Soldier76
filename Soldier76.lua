@@ -10,7 +10,7 @@ userInfo = {
 		-- 开镜
 		ADS = 100,
 		-- 腰射
-		Aim = 0.95,
+		Aim = 0.55,
 		-- 二倍
 		scopeX2 = 1.3,
 		-- 三倍
@@ -62,6 +62,7 @@ userInfo = {
 			{ "SCAR-L", 1 }, -- 补偿 + 基础镜 + 直角 + 扩容
 			{ "QBZ", 1 }, -- 补偿 + 基础镜 + 直角 + 扩容
 			{ "G36C", 1 }, -- 补偿 + 基础镜 + 直角 + 扩容
+			{ "M16A4", 1 }, -- 补偿 + 基础镜 + 扩容 + 扩容
 		},
 		["7.62"] = {
 			{ "AKM", 1 }, -- 补偿 + 基础镜 + 扩容
@@ -193,7 +194,7 @@ pubg = {
 	counter = 0, -- 计数器
 	xCounter = 0, -- x计数器
 	sleep = 1, -- 频率设置 (这里不能设置成0，调试会出BUG)
-	sleepRandom = { 1, 2 }, -- 防检测随机延迟
+	sleepRandom = { 5, 10 }, -- 防检测随机延迟
 	startTime = 0, -- 鼠标按下时记录脚本运行时间戳
 	prevTime = 0, -- 记录上一轮脚本运行时间戳
 	scopeX1 = 1, -- 基瞄压枪倍率 (裸镜、红点、全息、侧瞄)
@@ -241,6 +242,25 @@ function pubg.isAimingState (mode)
 	}
 
 	return switch[mode]()
+end
+
+pubg["M16A4"] = function ()
+
+	return pubg.execOptions({
+		interval = 108,
+		ballistic = {
+			{1, 0},
+			{2, 140},
+			{3, 47},
+			{4, 67},
+			{5, 87},
+			{10, 100},
+			{20, 118},
+			{35, 120},
+			{40, 127},
+		}
+	})
+
 end
 
 pubg["SCAR-L"] = function ()
@@ -318,7 +338,7 @@ end
 pubg["Vector"] = function ()
 
 	return pubg.execOptions({
-		interval = 60,
+		interval = 61,
 		ballistic = {
 			{1, 0},
 			{5, 52},
@@ -353,8 +373,8 @@ pubg["UMP45"] = function ()
 		interval = 100,
 		ballistic = {
 			{1, 0},
-			{5, 69},
-			{10, 94},
+			{5, 70},
+			{10, 95},
 			{15, 96},
 			{35, 103},
 		}
@@ -365,12 +385,12 @@ end
 pubg["AKM"] = function ()
 
 	return pubg.execOptions({
-		interval = 104,
+		interval = 107,
 		ballistic = {
 			{1, 0},
 			{2, 160},
-			{5, 92},
-			{10, 90},
+			{5, 98},
+			{10, 100},
 			{40, 129},
 		}
 	})
@@ -380,7 +400,7 @@ end
 pubg["M416"] = function ()
 
 	return pubg.execOptions({
-		interval = 92,
+		interval = 93,
 		ballistic = {
 			{1, 0},
 			{2, 132},
@@ -722,6 +742,7 @@ function pubg.runCmd (cmd)
 		["SCAR-L"] = pubg.setGun,
 		["QBZ"] = pubg.setGun,
 		["G36C"] = pubg.setGun,
+		["M16A4"] = pubg.setGun,
 		["AKM"] = pubg.setGun,
 		["Beryl M762"] = pubg.setGun,
 		["DP-28"] = pubg.setGun,
