@@ -215,6 +215,7 @@ pubg = {
 }
 
 pubg.xLengthForDebug = pubg.generalSensitivityRatio * 60 -- 调试模式下的水平移动单元长度
+pubg.separator = "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n" -- 分割线
 
 -- 是否开镜或瞄准
 function pubg.isAimingState (mode)
@@ -548,18 +549,13 @@ function pubg.init ()
 
 end
 
--- outputLogGunInfo
-function pubg.outputLogGunInfo ()
-
-	local k = pubg.bulletType
-	local i = pubg.gunIndex
-	local gunName = pubg.gun[k][i]
-
-	OutputLogMessage("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n")
-	OutputLogMessage("      canUse_i\t      series_i\t      Series\t      Gun Name\n\n")
-
+--[[ Output switching table ]]
+function pubg.outputLogGunSwitchTable ()
 	local forList = { ".45", "9mm", "5.56", "7.62" }
 	local allCount = 0
+	local resStr = ""
+
+	resStr = table.concat({ resStr, "      canUse_i\t      series_i\t      Series\t      Gun Name\n\n" })
 
 	for i = 1, #forList do
 
@@ -569,29 +565,57 @@ function pubg.outputLogGunInfo ()
 		for j = 1, #userInfo.canUse[type] do
 
 			if userInfo.canUse[type][j][2] == 1 then
-				local gunName2 = userInfo.canUse[type][j][1]
-				local tag = gunName2 == gunName and "=> " or "      "
+				local gunName = userInfo.canUse[type][j][1]
+				local tag = gunName == gunName and "=> " or "      "
 				gunCount = gunCount + 1
 				allCount = allCount + 1
-				OutputLogMessage(tag .. allCount .. "\t" .. tag .. gunCount .. "\t" .. tag .. type .. "\t" .. tag .. gunName2 .. "\n")
+				OutputLogMessage()
+				resStr = table.concat({ resStr, tag, allCount, "\t", tag, gunCount, "\t", tag, type, "\t", tag, gunName, "\n" })
 			end
 		end
 
 	end
 
+	return resStr
+end
+
+--[[ output recoil table log ]]
+function pubg.outputLogRecoilTable ()
+	local k = pubg.bulletType
+	local i = pubg.gunIndex
+	local resStr = "{ "
+
+	for j = 1, #pubg.gunOptions[k][i].ballistic do
+		local num = pubg.gunOptions[k][i].ballistic[j]
+		table.concat({ resStr, num })
+		if j ~= #pubg.gunOptions[k][i].ballistic then
+			table.concat({ resStr, ", " })
+		end
+	end
+
+	table.concat({ resStr, " }\n" })
+
+	return resStr
+end
+
+-- outputLogGunInfo
+function pubg.outputLogGunInfo ()
+
+	local k = pubg.bulletType
+	local i = pubg.gunIndex
+	local gunName = pubg.gun[k][i]
+
 	OutputLogMessage(table.concat({
-		"~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
+		pubg.separator,
+		pubg.outputLogGunSwitchTable(),
+		pubg.separator,
 		"Currently series: [ ", k, " ]\n",
 		"Currently index in series: [ ", i, " / ", #pubg.gun[k], " ]\n",
 		"Currently index in canUse: [ ", pubg.allCanUse_index, " / ", pubg.allCanUse_count, " ]\n",
+		"Recoil table of [ ", gunName, " ]:\n",
+		pubg.outputLogRecoilTable(),
+		pubg.separator, "\n",
 	}))
-
-	OutputLogMessage("Recoil table of [ " .. gunName .. " ]:\n{ ")
-	for j = 1, #pubg.gunOptions[k][i].ballistic do
-		local num = pubg.gunOptions[k][i].ballistic[j]
-		OutputLogMessage(num .. ", ")
-	end
-	OutputLogMessage("}\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n\n")
 
 	pubg.isStart = true
 
@@ -686,14 +710,14 @@ end
 function pubg.autoLog (options, y)
 	ClearLog()
 	OutputLogMessage(table.concat({
-		"~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~", "\n",
-		"------------------------- Automatically counteracting gun recoil -------------------------", "\n",
-		"-----------------------------------------------------------------------------------------------------------", "\n",
+		"~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
+		"------------------------- Automatically counteracting gun recoil -------------------------\n",
+		"-----------------------------------------------------------------------------------------------------------\n",
 		"bullet index: ", pubg.bulletIndex, "    target counter: ", options.ballistic[pubg.bulletIndex], "    current counter: ", pubg.counter, "\n",
-		"D-value: ", options.ballistic[pubg.bulletIndex], " - ", pubg.counter, " = ", options.ballistic[pubg.bulletIndex] - pubg.counter, "\n",
+		"D-value(target - current): ", options.ballistic[pubg.bulletIndex], " - ", pubg.counter, " = ", options.ballistic[pubg.bulletIndex] - pubg.counter, "\n",
 		"move: math.ceil((", pubg.currentTime, " - ", pubg.startTime, ") / (", options.interval, " * (", pubg.bulletIndex, " - 1)) * ", options.ballistic[pubg.bulletIndex], ") - ", pubg.counter, " = ", y, "\n",
-		"-----------------------------------------------------------------------------------------------------------", "\n",
-		"~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~", "\n",
+		"-----------------------------------------------------------------------------------------------------------\n",
+		"~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
 	}))
 end
 
@@ -817,9 +841,9 @@ end
 --[[ invalid ]]
 function pubg.none ()
 	OutputLogMessage(table.concat({
-		"~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~", "\n",
-		"The combination key has not yet bound any instructions.", "\n",
-		"~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~", "\n",
+		pubg.separator,
+		"The combination key has not yet bound any instructions.\n",
+		pubg.separator,
 	}))
 end
 
