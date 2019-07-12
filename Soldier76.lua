@@ -37,12 +37,10 @@ userInfo = {
 	customAimingSettings = {
 		-- 开镜判断
 		ADS = function ()
-			OutputLogMessage("\nUse ADS custom settings\n")
 			return false -- 判断条件，返回值为布尔型
 		end,
 		-- 腰射判断
 		Aim = function ()
-			OutputLogMessage("\nUse Aim custom settings\n")
 			return false -- 判断条件，返回值为布尔型
 		end,
 	},
@@ -147,34 +145,31 @@ userInfo = {
 	},
 }
 
---[[
 
-	stop
 
-	stop
 
-	stop
 
-	停一下，别往下看了
 
-	如果你是普通玩家，那么设置到这里就可以了，再往下不用看了，改不好了可能导致脚本运行报错。
 
-	如果你对脚本有一定的了解了，可以继续往下看，当然也可以自己动手修改。
 
-	第一次使用不知道怎么设置？请看文档： https://github.com/kiccer/Soldier76#%E5%88%9D%E6%AC%A1%E4%BD%BF%E7%94%A8
 
-	看了文档依然解决不了的可以加群问群里大佬： 768483124
 
-	如果你的宏可以使用了，也别兴高采烈的立马关掉网页就去玩游戏了，花点时间创个github帐号，然后页面最右上角的star帮忙点一下，谢谢
 
-	得到支持和肯定，我才更有更新的动力
 
-	还有很重要的一点，这个脚本你只能自己使用，或者修改后分享给别人使用，或者直接分享脚本的github地址，但不要利用这个脚本去赚钱
 
-	我想你知道我说的是什么意思，当然这个只是防君子不防小人
 
-]]
 
+
+
+
+
+
+
+
+
+
+----------------------------- [[ 以下是脚本核心代码，非专业人士请勿改动 ]] -----------------------------
+----------------------------- [[ 以下是脚本核心代码，非专业人士请勿改动 ]] -----------------------------
 ----------------------------- [[ 以下是脚本核心代码，非专业人士请勿改动 ]] -----------------------------
 pubg = {
 	gun = {
@@ -215,6 +210,13 @@ pubg = {
 }
 
 pubg.xLengthForDebug = pubg.generalSensitivityRatio * 60 -- 调试模式下的水平移动单元长度
+-- 渲染节点
+pubg.renderDom = {
+	separator = "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n", -- 分割线
+	combo_key = "G-key", -- 组合键
+	cmd = "", -- 指令
+	autoLog = "No operational data yet.\n", -- 压枪过程产生的数据输出
+}
 
 -- 是否开镜或瞄准
 function pubg.isAimingState (mode)
@@ -512,8 +514,6 @@ end
 --[[ Initialization of firearms database ]]
 function pubg.init ()
 
-	ClearLog()
-
 	-- Clean up the firearms Depot
 	local forList = { ".45", "9mm", "5.56", "7.62" }
 
@@ -544,56 +544,7 @@ function pubg.init ()
 
 	-- Initial setting of random number seeds
 	pubg.SetRandomseed()
-	pubg.outputLogGunInfo()
-
-end
-
--- outputLogGunInfo
-function pubg.outputLogGunInfo ()
-
-	local k = pubg.bulletType
-	local i = pubg.gunIndex
-	local gunName = pubg.gun[k][i]
-
-	OutputLogMessage("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n")
-	OutputLogMessage("      canUse_i\t      series_i\t      Series\t      Gun Name\n\n")
-
-	local forList = { ".45", "9mm", "5.56", "7.62" }
-	local allCount = 0
-
-	for i = 1, #forList do
-
-		local type = forList[i]
-		local gunCount = 0
-
-		for j = 1, #userInfo.canUse[type] do
-
-			if userInfo.canUse[type][j][2] == 1 then
-				local gunName2 = userInfo.canUse[type][j][1]
-				local tag = gunName2 == gunName and "=> " or "      "
-				gunCount = gunCount + 1
-				allCount = allCount + 1
-				OutputLogMessage(tag .. allCount .. "\t" .. tag .. gunCount .. "\t" .. tag .. type .. "\t" .. tag .. gunName2 .. "\n")
-			end
-		end
-
-	end
-
-	OutputLogMessage(table.concat({
-		"~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
-		"Currently series: [ ", k, " ]\n",
-		"Currently index in series: [ ", i, " / ", #pubg.gun[k], " ]\n",
-		"Currently index in canUse: [ ", pubg.allCanUse_index, " / ", pubg.allCanUse_count, " ]\n",
-	}))
-
-	OutputLogMessage("Recoil table of [ " .. gunName .. " ]:\n{ ")
-	for j = 1, #pubg.gunOptions[k][i].ballistic do
-		local num = pubg.gunOptions[k][i].ballistic[j]
-		OutputLogMessage(num .. ", ")
-	end
-	OutputLogMessage("}\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n\n")
-
-	pubg.isStart = true
+	pubg.outputLogRender()
 
 end
 
@@ -612,8 +563,6 @@ function pubg.SetRandomseed ()
 			tar = tar + ((i == 6 and { 2000 + adm[i] } or { adm[i] })[1] + i) * 10^((i - 1) * 2)
 		end
 
-		-- OutputLogMessage("pubg.isEffective = " .. (now < tar and { "true" } or { "false" })[1] .. " (" .. tar .. ")\n")
-
 		return (math.max(now, tar) .. "" ~= "" and {now < tar} or {now > tar})[1]
 
 	end)(pubg["isEffective"])
@@ -626,46 +575,30 @@ end
 function pubg.auto (options)
 
 	-- Accurate aiming press gun
-	-- for i = 1, 50000 do
-		pubg.currentTime = GetRunningTime()
-		pubg.bulletIndex = math.ceil(((pubg.currentTime - pubg.startTime == 0 and {1} or {pubg.currentTime - pubg.startTime})[1]) / options.interval) + 1
+	pubg.currentTime = GetRunningTime()
+	pubg.bulletIndex = math.ceil(((pubg.currentTime - pubg.startTime == 0 and {1} or {pubg.currentTime - pubg.startTime})[1]) / options.interval) + 1
 
-		if pubg.bulletIndex > options.amount then return false end
-		-- if
-		-- 	IsMouseButtonPressed(1)
-		-- 	and pubg.bulletIndex <= options.amount
-		-- 	-- and pubg.counter < options.duration
-		-- 	and pubg.ok
-		-- then
-			-- Developer Debugging Mode
-			-- local x = (IsKeyLockOn("scrolllock") and { 1 } or { options.x[pubg.bulletIndex] })[1]
-			local d = (IsKeyLockOn("scrolllock") and { (pubg.bulletIndex - 1) * pubg.xLengthForDebug } or { 0 })[1]
-			local x = math.ceil((pubg.currentTime - pubg.startTime) / (options.interval * (pubg.bulletIndex - 1)) * d) - pubg.xCounter
-			local y = math.ceil((pubg.currentTime - pubg.startTime) / (options.interval * (pubg.bulletIndex - 1)) * options.ballistic[pubg.bulletIndex]) - pubg.counter
-			-- 4-fold pressure gun mode
-			-- y = y * (IsModifierPressed("lalt") and { 2.8 } or { 1 })[1]
-			local realY = pubg.getRealY(y)
-			MoveMouseRelative(x, realY)
-			-- OutputLogMessage(pubg.bulletIndex .. "\n")
-			-- Whether to issue automatically or not
-			if userInfo.autoContinuousFiring == 1 then
-				PressAndReleaseMouseButton(1)
-			end
+	if pubg.bulletIndex > options.amount then return false end
+	-- Developer Debugging Mode
+	local d = (IsKeyLockOn("scrolllock") and { (pubg.bulletIndex - 1) * pubg.xLengthForDebug } or { 0 })[1]
+	local x = math.ceil((pubg.currentTime - pubg.startTime) / (options.interval * (pubg.bulletIndex - 1)) * d) - pubg.xCounter
+	local y = math.ceil((pubg.currentTime - pubg.startTime) / (options.interval * (pubg.bulletIndex - 1)) * options.ballistic[pubg.bulletIndex]) - pubg.counter
+	-- 4-fold pressure gun mode
+	local realY = pubg.getRealY(y)
+	MoveMouseRelative(x, realY)
+	-- Whether to issue automatically or not
+	if userInfo.autoContinuousFiring == 1 then
+		PressAndReleaseMouseButton(1)
+	end
 
-			-- Real-time operation parameters
-			pubg.autoLog(options, y)
+	-- Real-time operation parameters
+	pubg.autoLog(options, y)
+	pubg.outputLogRender()
 
-			pubg.xCounter = pubg.xCounter + x
-			pubg.counter = pubg.counter + y
+	pubg.xCounter = pubg.xCounter + x
+	pubg.counter = pubg.counter + y
 
-			pubg.autoSleep(IsKeyLockOn("scrolllock"))
-		-- else
-		-- 	pubg.counter = 0 -- Initialization counter
-		-- 	pubg.xCounter = 0 -- Initialization xCounter
-		-- 	pubg.SetRandomseed() -- Reset random number seeds
-		-- 	break
-		-- end
-	-- end
+	pubg.autoSleep(IsKeyLockOn("scrolllock"))
 
 end
 
@@ -680,21 +613,6 @@ function pubg.autoSleep (isTest)
 	end
 	-- Sleep(10)
 	Sleep(random)
-end
-
---[[ log of pubg.auto ]]
-function pubg.autoLog (options, y)
-	ClearLog()
-	OutputLogMessage(table.concat({
-		"~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~", "\n",
-		"------------------------- Automatically counteracting gun recoil -------------------------", "\n",
-		"-----------------------------------------------------------------------------------------------------------", "\n",
-		"bullet index: ", pubg.bulletIndex, "    target counter: ", options.ballistic[pubg.bulletIndex], "    current counter: ", pubg.counter, "\n",
-		"D-value: ", options.ballistic[pubg.bulletIndex], " - ", pubg.counter, " = ", options.ballistic[pubg.bulletIndex] - pubg.counter, "\n",
-		"move: math.ceil((", pubg.currentTime, " - ", pubg.startTime, ") / (", options.interval, " * (", pubg.bulletIndex, " - 1)) * ", options.ballistic[pubg.bulletIndex], ") - ", pubg.counter, " = ", y, "\n",
-		"-----------------------------------------------------------------------------------------------------------", "\n",
-		"~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~", "\n",
-	}))
 end
 
 --[[ get real y position ]]
@@ -730,13 +648,12 @@ function pubg.setBulletType (bulletType)
 		end
 	end
 
-	pubg.outputLogGunInfo()
+	pubg.isStart = true
 end
 
 --[[ set current scope ]]
 function pubg.setScope (scope)
 	pubg.scope_current = scope
-	OutputLogMessage("\nCurrent scope: " .. scope .. "\n")
 end
 
 --[[ set current gun ]]
@@ -769,7 +686,7 @@ function pubg.setGun (gunName)
 
 	end
 
-	pubg.outputLogGunInfo()
+	pubg.isStart = true
 end
 
 --[[ Consider all available firearms as an entire list ]]
@@ -784,8 +701,8 @@ function pubg.findInCanUse (cmd)
 	elseif "last_in_canUse" == cmd then
 		pubg.allCanUse_index = #pubg.allCanUse
 	end
-	pubg.setGun(pubg.allCanUse[pubg.allCanUse_index])
 
+	pubg.setGun(pubg.allCanUse[pubg.allCanUse_index])
 end
 
 --[[ Switching guns in the same series ]]
@@ -799,7 +716,7 @@ function pubg.findInSeries (cmd)
 	elseif "last" == cmd then
 		pubg.gunIndex = #pubg.gun[pubg.bulletType]
 	end
-	-- pubg.outputLogGunInfo()
+
 	pubg.setGun(pubg.gun[pubg.bulletType][pubg.gunIndex])
 end
 
@@ -814,20 +731,11 @@ function pubg.runStatus ()
 	end
 end
 
---[[ invalid ]]
-function pubg.none ()
-	OutputLogMessage(table.concat({
-		"~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~", "\n",
-		"The combination key has not yet bound any instructions.", "\n",
-		"~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~", "\n",
-	}))
-end
-
 --[[ G key command binding ]]
 function pubg.runCmd (cmd)
 	if cmd == "" then cmd = "none" end
 	local switch = {
-		["none"] = pubg.none,
+		["none"] = function () end,
 		[".45"] = pubg.setBulletType,
 		["9mm"] = pubg.setBulletType,
 		["5.56"] = pubg.setBulletType,
@@ -861,6 +769,99 @@ function pubg.runCmd (cmd)
 	}
 
 	if pubg.ok then switch[cmd](cmd) end
+end
+
+--[[ autputLog render ]]
+function pubg.outputLogRender ()
+	ClearLog()
+	OutputLogMessage(table.concat({
+		"\n>> [\"", pubg.renderDom.combo_key, "\"] = \"", pubg.renderDom.cmd, "\" <<\n",
+		pubg.renderDom.separator,
+		pubg.outputLogGunSwitchTable(),
+		pubg.renderDom.separator,
+		pubg.outputLogGunInfo(),
+		pubg.renderDom.separator,
+		pubg.renderDom.autoLog,
+		pubg.renderDom.separator,
+	}))
+end
+
+--[[ Output switching table ]]
+function pubg.outputLogGunSwitchTable ()
+	local forList = { ".45", "9mm", "5.56", "7.62" }
+	local allCount = 0
+	local resStr = "      canUse_i\t      series_i\t      Series\t      Gun Name\n\n"
+
+	for i = 1, #forList do
+		local type = forList[i]
+		local gunCount = 0
+
+		for j = 1, #userInfo.canUse[type] do
+			if userInfo.canUse[type][j][2] == 1 then
+				local gunName = userInfo.canUse[type][j][1]
+				local tag = gunName == pubg.gun[pubg.bulletType][pubg.gunIndex] and "=> " or "      "
+				gunCount = gunCount + 1
+				allCount = allCount + 1
+				resStr = table.concat({ resStr, tag, allCount, "\t", tag, gunCount, "\t", tag, type, "\t", tag, gunName, "\n" })
+			end
+		end
+
+	end
+
+	return resStr
+end
+
+-- output Log Gun Info
+function pubg.outputLogGunInfo ()
+	local k = pubg.bulletType
+	local i = pubg.gunIndex
+	local gunName = pubg.gun[k][i]
+	local resStr = ""
+
+	resStr = table.concat({
+		resStr,
+		"Currently scope: [ " .. pubg.scope_current .. " ]\n",
+		"Currently series: [ ", k, " ]\n",
+		"Currently index in series: [ ", i, " / ", #pubg.gun[k], " ]\n",
+		"Currently index in canUse: [ ", pubg.allCanUse_index, " / ", pubg.allCanUse_count, " ]\n",
+		"Recoil table of [ ", gunName, " ]:\n",
+		pubg.outputLogRecoilTable(),
+	})
+
+	return resStr
+end
+
+--[[ output recoil table log ]]
+function pubg.outputLogRecoilTable ()
+	local k = pubg.bulletType
+	local i = pubg.gunIndex
+	local resStr = "{ "
+	for j = 1, #pubg.gunOptions[k][i].ballistic do
+		local num = pubg.gunOptions[k][i].ballistic[j]
+		resStr = table.concat({ resStr, num })
+		if j ~= #pubg.gunOptions[k][i].ballistic then
+			resStr = table.concat({ resStr, ", " })
+		end
+	end
+
+	resStr = table.concat({ resStr, " }\n" })
+
+	return resStr
+end
+
+--[[ log of pubg.auto ]]
+function pubg.autoLog (options, y)
+	local resStr = ""
+	resStr = table.concat({
+		resStr,
+		"----------------------------------- Automatically counteracting gun recoil -----------------------------------\n",
+		"------------------------------------------------------------------------------------------------------------------------------\n",
+		"bullet index: ", pubg.bulletIndex, "    target counter: ", options.ballistic[pubg.bulletIndex], "    current counter: ", pubg.counter, "\n",
+		"D-value(target - current): ", options.ballistic[pubg.bulletIndex], " - ", pubg.counter, " = ", options.ballistic[pubg.bulletIndex] - pubg.counter, "\n",
+		"move: math.ceil((", pubg.currentTime, " - ", pubg.startTime, ") / (", options.interval, " * (", pubg.bulletIndex, " - 1)) * ", options.ballistic[pubg.bulletIndex], ") - ", pubg.counter, " = ", y, "\n",
+		"------------------------------------------------------------------------------------------------------------------------------\n",
+	})
+	pubg.renderDom.autoLog = resStr
 end
 
 --[[ Listener method ]]
@@ -899,7 +900,6 @@ function OnEvent (event, arg, family)
 	-- Switching arsenals according to different types of ammunition
 	if event == "MOUSE_BUTTON_PRESSED" and arg >=3 and arg <= 11 and family == "mouse" and pubg.ok then
 		-- if not pubg.runStatus() and userInfo.startControl ~= "G_bind" then return false end
-		ClearLog()
 		local modifier = "G"
 		if IsModifierPressed("lalt") then
 			modifier = "lalt + " .. modifier
@@ -914,9 +914,11 @@ function OnEvent (event, arg, family)
 		elseif IsModifierPressed("rshift") then
 			modifier = "rshift + " .. modifier
 		end
-		modifier = modifier .. arg
-		OutputLogMessage("\n>> Efficient operation: [ " .. modifier .. " ] <<\n")
-		pubg.runCmd(userInfo.G_bind[modifier])
+		modifier = modifier .. arg -- Get the combination key
+		pubg.renderDom.combo_key = modifier -- Save combination keys
+		pubg.renderDom.cmd = userInfo.G_bind[modifier] -- Save instruction name
+		pubg.runCmd(userInfo.G_bind[modifier]) -- Execution instructions
+		pubg.outputLogRender() -- Call log rendering method to output information
 	end
 
 end
