@@ -215,7 +215,7 @@ pubg.renderDom = {
 	separator = "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n", -- 分割线
 	combo_key = "G-key", -- 组合键
 	cmd = "", -- 指令
-	autoLog = "No operational data yet.", -- 压枪过程产生的数据输出
+	autoLog = "No operational data yet.\n", -- 压枪过程产生的数据输出
 }
 
 -- 是否开镜或瞄准
@@ -775,8 +775,7 @@ end
 function pubg.outputLogRender ()
 	ClearLog()
 	OutputLogMessage(table.concat({
-		-- "\n>> Efficient operation: [ ", pubg.renderDom.combo_key, " ] => [ ", , " ] <<\n",
-		"\n>> Trigger G_bind: [\"", pubg.renderDom.combo_key, "\"] = \"", pubg.renderDom.cmd, "\" <<\n",
+		"\n>> [\"", pubg.renderDom.combo_key, "\"] = \"", pubg.renderDom.cmd, "\" <<\n",
 		pubg.renderDom.separator,
 		pubg.outputLogGunSwitchTable(),
 		pubg.renderDom.separator,
@@ -800,7 +799,7 @@ function pubg.outputLogGunSwitchTable ()
 		for j = 1, #userInfo.canUse[type] do
 			if userInfo.canUse[type][j][2] == 1 then
 				local gunName = userInfo.canUse[type][j][1]
-				local tag = gunName == gunName and "=> " or "      "
+				local tag = gunName == pubg.gun[pubg.bulletType][pubg.gunIndex] and "=> " or "      "
 				gunCount = gunCount + 1
 				allCount = allCount + 1
 				resStr = table.concat({ resStr, tag, allCount, "\t", tag, gunCount, "\t", tag, type, "\t", tag, gunName, "\n" })
@@ -819,8 +818,9 @@ function pubg.outputLogGunInfo ()
 	local gunName = pubg.gun[k][i]
 	local resStr = ""
 
-	resStr = table.concat(resStr, {
-		"Currently scope: [ " .. pubg.scope_current .. " ]\n"
+	resStr = table.concat({
+		resStr,
+		"Currently scope: [ " .. pubg.scope_current .. " ]\n",
 		"Currently series: [ ", k, " ]\n",
 		"Currently index in series: [ ", i, " / ", #pubg.gun[k], " ]\n",
 		"Currently index in canUse: [ ", pubg.allCanUse_index, " / ", pubg.allCanUse_count, " ]\n",
@@ -836,16 +836,15 @@ function pubg.outputLogRecoilTable ()
 	local k = pubg.bulletType
 	local i = pubg.gunIndex
 	local resStr = "{ "
-
 	for j = 1, #pubg.gunOptions[k][i].ballistic do
 		local num = pubg.gunOptions[k][i].ballistic[j]
-		table.concat({ resStr, num })
+		resStr = table.concat({ resStr, num })
 		if j ~= #pubg.gunOptions[k][i].ballistic then
-			table.concat({ resStr, ", " })
+			resStr = table.concat({ resStr, ", " })
 		end
 	end
 
-	table.concat({ resStr, " }\n" })
+	resStr = table.concat({ resStr, " }\n" })
 
 	return resStr
 end
@@ -853,13 +852,14 @@ end
 --[[ log of pubg.auto ]]
 function pubg.autoLog (options, y)
 	local resStr = ""
-	resStr = table.concat(resStr, {
-		"------------------------- Automatically counteracting gun recoil -------------------------\n",
-		"-----------------------------------------------------------------------------------------------------------\n",
+	resStr = table.concat({
+		resStr,
+		"----------------------------------- Automatically counteracting gun recoil -----------------------------------\n",
+		"------------------------------------------------------------------------------------------------------------------------------\n",
 		"bullet index: ", pubg.bulletIndex, "    target counter: ", options.ballistic[pubg.bulletIndex], "    current counter: ", pubg.counter, "\n",
 		"D-value(target - current): ", options.ballistic[pubg.bulletIndex], " - ", pubg.counter, " = ", options.ballistic[pubg.bulletIndex] - pubg.counter, "\n",
 		"move: math.ceil((", pubg.currentTime, " - ", pubg.startTime, ") / (", options.interval, " * (", pubg.bulletIndex, " - 1)) * ", options.ballistic[pubg.bulletIndex], ") - ", pubg.counter, " = ", y, "\n",
-		"-----------------------------------------------------------------------------------------------------------\n",
+		"------------------------------------------------------------------------------------------------------------------------------\n",
 	})
 	pubg.renderDom.autoLog = resStr
 end
