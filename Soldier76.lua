@@ -214,7 +214,7 @@ pubg.xLengthForDebug = pubg.generalSensitivityRatio * 60 -- 调试模式下的�
 pubg.renderDom = {
 	separator = "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n", -- 分割线
 	combo_key = "G-key", -- 组合键
-	cmd = "none", -- 指令
+	cmd = "", -- 指令
 	autoLog = "No operational data yet.", -- 压枪过程产生的数据输出
 }
 
@@ -775,7 +775,8 @@ end
 function pubg.outputLogRender ()
 	ClearLog()
 	OutputLogMessage(table.concat({
-		"\n>> Efficient operation: [ ", pubg.renderDom.combo_key, " ] => [ ", pubg.renderDom.cmd, " ] <<\n",
+		-- "\n>> Efficient operation: [ ", pubg.renderDom.combo_key, " ] => [ ", , " ] <<\n",
+		"\n>> Trigger G_bind: [\"", pubg.renderDom.combo_key, "\"] = \"", pubg.renderDom.cmd, "\" <<\n",
 		pubg.renderDom.separator,
 		pubg.outputLogGunSwitchTable(),
 		pubg.renderDom.separator,
