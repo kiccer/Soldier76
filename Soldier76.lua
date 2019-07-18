@@ -214,7 +214,7 @@ pubg.xLengthForDebug = pubg.generalSensitivityRatio * 60 -- 调试模式下的�
 pubg.renderDom = {
 	separator = "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n", -- 分割线
 	combo_key = "G-key", -- 组合键
-	cmd = "", -- 指令
+	cmd = "cmd", -- 指令
 	autoLog = "No operational data yet.\n", -- 压枪过程产生的数据输出
 }
 
@@ -864,16 +864,8 @@ function pubg.autoLog (options, y)
 	pubg.renderDom.autoLog = resStr
 end
 
---[[ Listener method ]]
-function OnEvent (event, arg, family)
-
-	-- Whether to open the capitalization key or not
-	if not pubg.ok then return false end
-
-	-- OutputLogMessage("event = %s, arg = %s, family = %s\n", event, arg, family)
-	-- OutputLogMessage("event = " .. event .. ", arg = " .. arg .. ", family = " .. family .. "\n")
-
-	-- Automatic press gun
+--[[ Automatic press gun ]]
+function pubg.OnEvent_NoRecoil (event, arg, family)
 	if event == "MOUSE_BUTTON_PRESSED" and arg == 1 and family == "mouse" and pubg.ok then
 		if not pubg.runStatus() then return false end
 		if pubg.isAimingState("ADS") or pubg.isAimingState("Aim") then
@@ -892,10 +884,21 @@ function OnEvent (event, arg, family)
 	end
 
 	if event == "M_PRESSED" and arg == 1 and pubg.G1 and pubg.ok then
-		-- PressAndReleaseMouseButton(1)
 		pubg.auto(pubg.gunOptions[pubg.bulletType][pubg.gunIndex])
 		SetMKeyState(1)
 	end
+end
+
+--[[ Listener method ]]
+function OnEvent (event, arg, family)
+
+	-- Whether to open the capitalization key or not
+	if not pubg.ok then return false end
+
+	-- OutputLogMessage("event = %s, arg = %s, family = %s\n", event, arg, family)
+	-- OutputLogMessage("event = " .. event .. ", arg = " .. arg .. ", family = " .. family .. "\n")
+
+	pubg.OnEvent_NoRecoil(event, arg, family)
 
 	-- Switching arsenals according to different types of ammunition
 	if event == "MOUSE_BUTTON_PRESSED" and arg >=3 and arg <= 11 and family == "mouse" and pubg.ok then
