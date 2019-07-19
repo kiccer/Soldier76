@@ -774,7 +774,7 @@ end
 --[[ autputLog render ]]
 function pubg.outputLogRender ()
 	ClearLog()
-	OutputLogMessage(table.concat({
+	local outputScriptMessage = table.concat({
 		"\n>> [\"", pubg.renderDom.combo_key, "\"] = \"", pubg.renderDom.cmd, "\" <<\n",
 		pubg.renderDom.separator,
 		pubg.outputLogGunSwitchTable(),
@@ -783,7 +783,16 @@ function pubg.outputLogRender ()
 		pubg.renderDom.separator,
 		pubg.renderDom.autoLog,
 		pubg.renderDom.separator,
-	}))
+	})
+	OutputLogMessage(outputScriptMessage)
+
+	-- local file = io.open('C:\\Soldier76_outputScriptMessage.json', 'w+')
+	-- file:write(table.concat({
+	-- 	"{\n",
+	-- 	"\toutputScriptMessage: '", outputScriptMessage, "'\n",
+	-- 	"}\n",
+	-- }))
+	-- file:close()
 end
 
 --[[ Output switching table ]]
