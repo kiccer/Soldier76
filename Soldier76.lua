@@ -143,6 +143,12 @@ userInfo = {
 		["rshift + G10"] = "",
 		["rshift + G11"] = "",
 	},
+
+	-- CPU 负载等级，建议输入 1 ~ 30 之间的数字，不能小于 1 。值越小，压枪效果越好，值越大，帧数越高。(过分掉帧会直接影响压枪效果，请在保证帧数的情况下减小该值)
+	cpuLoad = 5,
+
+	-- 是否输出调试信息，关闭后可以减小 CPU 计算压力。建议调试时开启，调试完毕后关闭。(1 - 开启 | 0 - 关闭)
+	debug = 1,
 }
 
 
@@ -191,8 +197,8 @@ pubg = {
 	gunIndex = 1,	-- 选中枪械下标
 	counter = 0, -- 计数器
 	xCounter = 0, -- x计数器
-	sleep = 1, -- 频率设置 (这里不能设置成0，调试会出BUG)
-	sleepRandom = { 5, 10 }, -- 防检测随机延迟
+	sleep = userInfo.cpuLoad, -- 频率设置 (这里不能设置成0，调试会出BUG)
+	sleepRandom = { userInfo.cpuLoad, userInfo.cpuLoad + 5 }, -- 防检测随机延迟
 	startTime = 0, -- 鼠标按下时记录脚本运行时间戳
 	prevTime = 0, -- 记录上一轮脚本运行时间戳
 	scopeX1 = 1, -- 基瞄压枪倍率 (裸镜、红点、全息、侧瞄)
@@ -773,8 +779,9 @@ end
 
 --[[ autputLog render ]]
 function pubg.outputLogRender ()
+	if userInfo.debug == 0 then return false end
 	ClearLog()
-	local outputScriptMessage = table.concat({
+	OutputLogMessage(table.concat({
 		"\n>> [\"", pubg.renderDom.combo_key, "\"] = \"", pubg.renderDom.cmd, "\" <<\n",
 		pubg.renderDom.separator,
 		pubg.outputLogGunSwitchTable(),
@@ -783,16 +790,7 @@ function pubg.outputLogRender ()
 		pubg.renderDom.separator,
 		pubg.renderDom.autoLog,
 		pubg.renderDom.separator,
-	})
-	OutputLogMessage(outputScriptMessage)
-
-	-- local file = io.open('C:\\Soldier76_outputScriptMessage.json', 'w+')
-	-- file:write(table.concat({
-	-- 	"{\n",
-	-- 	"\toutputScriptMessage: '", outputScriptMessage, "'\n",
-	-- 	"}\n",
-	-- }))
-	-- file:close()
+	}))
 end
 
 --[[ Output switching table ]]
