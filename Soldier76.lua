@@ -218,6 +218,7 @@ pubg = {
 pubg.xLengthForDebug = pubg.generalSensitivityRatio * 60 -- 调试模式下的水平移动单元长度
 -- 渲染节点
 pubg.renderDom = {
+	switchTable = "",
 	separator = "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n", -- 分割线
 	combo_key = "G-key", -- 组合键
 	cmd = "cmd", -- 指令
@@ -780,17 +781,21 @@ end
 --[[ autputLog render ]]
 function pubg.outputLogRender ()
 	if userInfo.debug == 0 then return false end
-	ClearLog()
-	OutputLogMessage(table.concat({
+	if not pubg.G1 then
+		pubg.renderDom.switchTable = pubg.outputLogGunSwitchTable()
+	end
+	local resStr = table.concat({
 		"\n>> [\"", pubg.renderDom.combo_key, "\"] = \"", pubg.renderDom.cmd, "\" <<\n",
 		pubg.renderDom.separator,
-		pubg.outputLogGunSwitchTable(),
+		pubg.renderDom.switchTable,
 		pubg.renderDom.separator,
 		pubg.outputLogGunInfo(),
 		pubg.renderDom.separator,
 		pubg.renderDom.autoLog,
 		pubg.renderDom.separator,
-	}))
+	})
+	ClearLog()
+	OutputLogMessage(resStr)
 end
 
 --[[ Output switching table ]]
