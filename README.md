@@ -43,18 +43,24 @@
   - 当前配置和默认配置中按键绑定的板载宏都有可能会干扰到脚本的正常使用，所以应该 **取消分配**
 
 ### 游戏设置
-* 脚本默认设置 `AimingSettings = "recommend"` ，即脚本推荐设置，需要对游戏内设置做相应改动
-  - 开镜：长按右键
-  - 瞄准：长按左ctrl
-* 如果习惯游戏默认设置，则设置 `AimingSettings = "default"` ，那么你就可以不需要改任何游戏设置
+* **脚本默认** 设置 `AimingSettings = "recommend"` ，即脚本推荐设置，需要对游戏内设置做相应改动
+  - 开镜：**长按** 右键
+  - 瞄准：当 `autoPressAimKey = ""` 时，**长按** `ctrl` 键
+* 如果习惯 **游戏默认** 设置，则设置 `AimingSettings = "default"` ，那么你就可以不需要改任何游戏设置
   - 使用该设置，你的任何点击操作都会被识别为射击，并且会触发自动压枪
   - 如果你只是单纯的想要进行点击操作，则需关闭脚本，或者暂时按住左shift或者左alt也是可以的
-* 如果你的操作习惯比较与众不同，也可以设置 `AimingSettings = "custom"`
+* 如果你的操作习惯比较与众不同，也可以 **自定义** 设置 `AimingSettings = "custom"`
   - 使用该设置需要在 `customAimingSettings` 中做对应的判断
   - 建议对该脚本有一定认识后再使用，或者可以加入交流群获取帮助
-* 最新版脚本默认启用自动连发功能，如需关闭请设置 `autoContinuousFiring = 0`
-  - 最新版连发功能已实现左键连点，不再使用键盘按键开火，提升安全性和实用性
+* 脚本 **默认启用** 自动连发功能，如需关闭请设置 `autoContinuousFiring = 0`
+  - 连发功能已实现左键连点，不再使用键盘按键开火，提升安全性和实用性
   - 如果你认为连发功能不太安全，也可以关掉它，然后使用游戏内的全自动模式
+* 最新版脚本增加 **自动腰射** 功能，设置 `autoPressAimKey = "tilde"` 开启
+  - 需要设置为键盘上的按键，按键名请查询 **G-series Lua API 参考文档.docx**
+  - 如需关闭，请设置 `autoPressAimKey = ""`
+  - 该功能不兼容 `AimingSettings = "default"`
+  - 默认兼容 `AimingSettings = "recommend"`,但是会影响普通点击操作，需要点击操作时请关闭脚本，或暂时按住左alt键
+  - 兼容 `AimingSettings = "custom"` ，需要自己做好兼容设置
 
 参数 | 描述
 :--: | ---
@@ -203,7 +209,7 @@ G键 | 功能
 * **不可将此脚本二次创作后用于商业目的！**
 
 ### 交流群
-* 欢迎加入技术交流QQ群：[![logitech 鼠标宏技术交流](./static/img/group.png)](https://kiccer.github.io/Soldier76/static/join_group.html)
+* 欢迎加入技术交流QQ群：[768483124](https://kiccer.github.io/Soldier76/static/join_group.html) [![logitech 鼠标宏技术交流](./static/img/group.png)](https://kiccer.github.io/Soldier76/static/join_group.html)
 * 十分欢迎愿意给本项目精调弹道的小伙伴
 * 我们也同样欢迎其他项目的小伙伴入驻，一起交流技术话题
 

@@ -27,8 +27,8 @@ userInfo = {
 		scopeX6 = 2.3,
 	},
 
-	-- 是否腰射压枪 (腰射开启自动压枪 1 - 开启， 0 - 关闭)
-	aimAutoControl = 1,
+	-- 自动腰射，不使用自动腰射留空，使用则设置为键盘上按键，默认为 ~ 键
+	autoPressAimKey = "tilde",
 
 	-- 是否自动连发 (单发模式变全自动 1 - 开启， 0 - 关闭)
 	autoContinuousFiring = 1, -- 默认为 1
@@ -243,7 +243,7 @@ function pubg.isAimingState (mode)
 		-- 腰射
 		["Aim"] = function ()
 			if userInfo.aimingSettings == "recommend" then
-				return userInfo.aimAutoControl == 1 and IsModifierPressed("lctrl")
+				return autoPressAimKey == "" and IsModifierPressed("lctrl") or not IsModifierPressed("lalt")
 			elseif userInfo.aimingSettings == "default" then
 				return IsMouseButtonPressed(3)
 			elseif userInfo.aimingSettings == "custom" then
@@ -877,10 +877,23 @@ function pubg.autoLog (options, y)
 	pubg.renderDom.autoLog = resStr
 end
 
+function pubg.PressOrRelaseAimKey (toggle)
+	if userInfo.autoPressAimKey ~= "" then
+		if toggle then
+			PressKey(userInfo.autoPressAimKey)
+		else
+			ReleaseKey(userInfo.autoPressAimKey)
+		end
+	end
+end
+
 --[[ Automatic press gun ]]
 function pubg.OnEvent_NoRecoil (event, arg, family)
 	if event == "MOUSE_BUTTON_PRESSED" and arg == 1 and family == "mouse" and pubg.ok then
 		if not pubg.runStatus() then return false end
+		if userInfo.aimingSettings ~= "default" and not IsMouseButtonPressed(3) then
+			pubg.PressOrRelaseAimKey(true)
+		end
 		if pubg.isAimingState("ADS") or pubg.isAimingState("Aim") then
 			-- pubg.auto(pubg.gunOptions[pubg.bulletType][pubg.gunIndex]) -- Injecting Firearms Data into Automatic Pressure Gun Function
 			pubg.startTime = GetRunningTime()
@@ -890,6 +903,7 @@ function pubg.OnEvent_NoRecoil (event, arg, family)
 	end
 
 	if event == "MOUSE_BUTTON_RELEASED" and arg == 1 and family == "mouse" then
+		pubg.PressOrRelaseAimKey(false)
 		pubg.G1 = false
 		pubg.counter = 0 -- Initialization counter
 		pubg.xCounter = 0 -- Initialization xCounter
@@ -935,6 +949,11 @@ function OnEvent (event, arg, family)
 		pubg.renderDom.cmd = userInfo.G_bind[modifier] -- Save instruction name
 		pubg.runCmd(userInfo.G_bind[modifier]) -- Execution instructions
 		pubg.outputLogRender() -- Call log rendering method to output information
+	end
+
+	-- Script deactivated event
+	if event == "PROFILE_DEACTIVATED" then
+		pubg.PressOrRelaseAimKey(false)
 	end
 
 end
