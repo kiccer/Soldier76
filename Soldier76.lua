@@ -243,7 +243,7 @@ function pubg.isAimingState (mode)
 		-- 腰射
 		["Aim"] = function ()
 			if userInfo.aimingSettings == "recommend" then
-				return IsModifierPressed("tilde")
+				return autoPressAimKey == "" and IsModifierPressed("lctrl") or not IsModifierPressed("lalt")
 			elseif userInfo.aimingSettings == "default" then
 				return IsMouseButtonPressed(3)
 			elseif userInfo.aimingSettings == "custom" then
@@ -891,7 +891,7 @@ end
 function pubg.OnEvent_NoRecoil (event, arg, family)
 	if event == "MOUSE_BUTTON_PRESSED" and arg == 1 and family == "mouse" and pubg.ok then
 		if not pubg.runStatus() then return false end
-		if userInfo.aimingSettings ~= "default" then
+		if userInfo.aimingSettings ~= "default" and not IsMouseButtonPressed(3) then
 			pubg.PressOrRelaseAimKey(true)
 		end
 		if pubg.isAimingState("ADS") or pubg.isAimingState("Aim") then
