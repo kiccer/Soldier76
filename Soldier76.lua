@@ -112,7 +112,7 @@ userInfo = {
 		["lshift + G3"] = "",
 		["lshift + G4"] = "",
 		["lshift + G5"] = "",
-		["lshift + G6"] = "",
+		["lshift + G6"] = "fast_pickup",
 		["lshift + G7"] = "",
 		["lshift + G8"] = "",
 		["lshift + G9"] = "",
@@ -744,6 +744,31 @@ function pubg.runStatus ()
 	end
 end
 
+--[[ 一键拾取功能 ]]
+function pubg.fastPickup ()
+	PressAndReleaseKey("lshift")
+	PressAndReleaseKey("lctrl")
+	PressAndReleaseKey("lalt")
+	PressAndReleaseKey("rshift")
+	PressAndReleaseKey("rctrl")
+	PressAndReleaseKey("ralt")
+	PressAndReleaseKey("tab")
+	Sleep(10 + pubg.sleep)
+	local lastItemCp = {
+		300 / 2560 * 65535,
+		1210 / 1440 * 65535
+	}
+	local itemHeight = 83 / 1440 * 65535
+	for i = 1, 13 do
+		MoveMouseTo(lastItemCp[1], lastItemCp[2] - itemHeight * (i - 1))
+		PressMouseButton(1)
+		MoveMouseTo(32767, 32767)
+		ReleaseMouseButton(1)
+		-- Sleep(pubg.sleep)
+	end
+	PressAndReleaseKey("tab")
+end
+
 --[[ G key command binding ]]
 function pubg.runCmd (cmd)
 	if cmd == "" then cmd = "none" end
@@ -776,6 +801,7 @@ function pubg.runCmd (cmd)
 		["first_in_canUse"] = pubg.findInCanUse,
 		["next_in_canUse"] = pubg.findInCanUse,
 		["last_in_canUse"] = pubg.findInCanUse,
+		["fast_pickup"] = pubg.fastPickup,
 		["off"] = function ()
 			pubg.isStart = false
 		end,
