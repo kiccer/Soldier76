@@ -59,7 +59,7 @@
   - 需要设置为键盘上的按键，按键名请查询 **G-series Lua API 参考文档.docx**
   - 如需关闭，请设置 `autoPressAimKey = ""`
   - 该功能不兼容 `AimingSettings = "default"`
-  - 默认兼容 `AimingSettings = "recommend"`,但是会影响普通点击操作，需要点击操作时请关闭脚本，或暂时按住左alt键
+  - 默认兼容 `AimingSettings = "recommend"`,但是会影响普通点击操作，需要点击操作时请关闭脚本，或者暂时按住左shift或左alt键
   - 兼容 `AimingSettings = "custom"` ，需要自己做好兼容设置
 
 参数 | 描述
