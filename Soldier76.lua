@@ -27,7 +27,7 @@ userInfo = {
 		scopeX6 = 2.3,
 	},
 
-	-- 自动腰射，不使用自动腰射留空，使用则设置为键盘上按键，默认为 ~ 键
+	-- 自动腰射，不使用自动腰射留空，使用则设置为键盘上按键，默认为 tilde -> ~ 键
 	autoPressAimKey = "tilde",
 
 	-- 是否自动连发 (单发模式变全自动 1 - 开启， 0 - 关闭)
@@ -243,7 +243,11 @@ function pubg.isAimingState (mode)
 		-- 腰射
 		["Aim"] = function ()
 			if userInfo.aimingSettings == "recommend" then
-				return autoPressAimKey == "" and IsModifierPressed("lctrl") or not IsModifierPressed("lalt")
+				if userInfo.autoPressAimKey == "" then
+					return IsModifierPressed("lctrl")
+				else
+					return not IsModifierPressed("lshift") and not IsModifierPressed("lalt")
+				end
 			elseif userInfo.aimingSettings == "default" then
 				return IsMouseButtonPressed(3)
 			elseif userInfo.aimingSettings == "custom" then
@@ -896,7 +900,6 @@ function pubg.OnEvent_NoRecoil (event, arg, family)
 			pubg.PressOrRelaseAimKey(true)
 		end
 		if pubg.isAimingState("ADS") or pubg.isAimingState("Aim") then
-			-- pubg.auto(pubg.gunOptions[pubg.bulletType][pubg.gunIndex]) -- Injecting Firearms Data into Automatic Pressure Gun Function
 			pubg.startTime = GetRunningTime()
 			pubg.G1 = true
 			SetMKeyState(1)
