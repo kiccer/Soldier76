@@ -28,7 +28,7 @@ userInfo = {
 	},
 
 	-- 自动腰射，不使用自动腰射留空，使用则设置为键盘上按键，默认为 tilde -> ~ 键
-	autoPressAimKey = "tilde",
+	autoPressAimKey = "",
 
 	-- 是否自动连发 (单发模式变全自动 1 - 开启， 0 - 关闭)
 	autoContinuousFiring = 1, -- 默认为 1
@@ -754,6 +754,7 @@ function pubg.fastPickup ()
 	PressAndReleaseKey("ralt")
 	PressAndReleaseKey("tab")
 	Sleep(10 + pubg.sleep)
+	PressAndReleaseMouseButton(1)
 	local lastItemCp = {
 		300 / 2560 * 65535,
 		1210 / 1440 * 65535
@@ -764,8 +765,8 @@ function pubg.fastPickup ()
 		PressMouseButton(1)
 		MoveMouseTo(32767, 32767)
 		ReleaseMouseButton(1)
-		-- Sleep(pubg.sleep)
 	end
+	MoveMouseTo(lastItemCp[1], lastItemCp[2])
 	PressAndReleaseKey("tab")
 end
 
@@ -983,7 +984,12 @@ function OnEvent (event, arg, family)
 
 	-- Script deactivated event
 	if event == "PROFILE_DEACTIVATED" then
-		pubg.PressOrRelaseAimKey(false)
+		ReleaseKey("lshift")
+		ReleaseKey("lctrl")
+		ReleaseKey("lalt")
+		ReleaseKey("rshift")
+		ReleaseKey("rctrl")
+		ReleaseKey("ralt")
 	end
 
 end
