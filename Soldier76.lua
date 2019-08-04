@@ -126,8 +126,8 @@ userInfo = {
 		["ralt + G7"] = "",
 		["ralt + G8"] = "",
 		["ralt + G9"] = "",
-		["ralt + G10"] = "last_in_canUse",
-		["ralt + G11"] = "next_in_canUse",
+		["ralt + G10"] = "",
+		["ralt + G11"] = "",
 		-- rctrl + G
 		["rctrl + G3"] = "",
 		["rctrl + G4"] = "",
@@ -148,6 +148,19 @@ userInfo = {
 		["rshift + G9"] = "",
 		["rshift + G10"] = "",
 		["rshift + G11"] = "",
+		-- 非鼠标G键，可以使键盘或者耳机上的G键，默认使用键盘G键，请确保你使用的是可编程的罗技键盘 | F1~12 (Non-mouse G-key)
+		["F1"] = "",
+		["F2"] = "",
+		["F3"] = "",
+		["F4"] = "",
+		["F5"] = "",
+		["F6"] = "",
+		["F7"] = "",
+		["F8"] = "",
+		["F9"] = "",
+		["F10"] = "",
+		["F11"] = "",
+		["F12"] = "",
 	},
 }
 
@@ -960,21 +973,24 @@ function OnEvent (event, arg, family)
 
 	-- Switching arsenals according to different types of ammunition
 	if event == "MOUSE_BUTTON_PRESSED" and arg >=3 and arg <= 11 and family == "mouse" and pubg.ok then
-		-- if not pubg.runStatus() and userInfo.startControl ~= "G_bind" then return false end
 		local modifier = "G"
-		if IsModifierPressed("lalt") then
-			modifier = "lalt + " .. modifier
-		elseif IsModifierPressed("lctrl") then
-			modifier = "lctrl + " .. modifier
-		elseif IsModifierPressed("lshift") then
-			modifier = "lshift + " .. modifier
-		elseif IsModifierPressed("ralt") then
-			modifier = "ralt + " .. modifier
-		elseif IsModifierPressed("rctrl") then
-			modifier = "rctrl + " .. modifier
-		elseif IsModifierPressed("rshift") then
-			modifier = "rshift + " .. modifier
+		local list = { "lalt", "lctrl", "lshift", "ralt", "rctrl", "rshift" }
+		for i = 1, #list do
+			if IsModifierPressed(list[i]) then
+				modifier = list[i] .. " + " .. modifier
+				break
+			end
 		end
+		modifier = modifier .. arg -- Get the combination key
+		pubg.renderDom.combo_key = modifier -- Save combination keys
+		pubg.renderDom.cmd = userInfo.G_bind[modifier] -- Save instruction name
+		pubg.runCmd(userInfo.G_bind[modifier]) -- Execution instructions
+		pubg.outputLogRender() -- Call log rendering method to output information
+	end
+
+	if event == "G_PRESSED" and arg >=1 and arg <= 12 and pubg.ok then
+		-- if not pubg.runStatus() and userInfo.startControl ~= "G_bind" then return false end
+		local modifier = "F"
 		modifier = modifier .. arg -- Get the combination key
 		pubg.renderDom.combo_key = modifier -- Save combination keys
 		pubg.renderDom.cmd = userInfo.G_bind[modifier] -- Save instruction name
