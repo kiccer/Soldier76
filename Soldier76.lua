@@ -276,6 +276,7 @@ end
 pubg["M16A4"] = function ()
 
 	return pubg.execOptions({
+		ratio = 1,
 		interval = 108,
 		ballistic = {
 			{1, 0},
@@ -295,6 +296,7 @@ end
 pubg["SCAR-L"] = function ()
 
 	return pubg.execOptions({
+		ratio = 1,
 		interval = 102,
 		ballistic = {
 			{1, 0},
@@ -315,6 +317,7 @@ end
 pubg["Beryl M762"] = function ()
 
 	return pubg.execOptions({
+		ratio = 1,
 		interval = 93,
 		ballistic = {
 			{1, 0},
@@ -336,6 +339,7 @@ end
 pubg["Tommy Gun"] = function ()
 
 	return pubg.execOptions({
+		ratio = 1,
 		interval = 94,
 		ballistic = {
 			{1, 0},
@@ -351,6 +355,7 @@ end
 pubg["G36C"] = function ()
 
 	return pubg.execOptions({
+		ratio = 1,
 		interval = 91,
 		ballistic = {
 			{1, 0},
@@ -368,6 +373,7 @@ end
 pubg["Vector"] = function ()
 
 	return pubg.execOptions({
+		ratio = 1,
 		interval = 61,
 		ballistic = {
 			{1, 0},
@@ -383,6 +389,7 @@ end
 pubg["Micro UZI"] = function ()
 
 	return pubg.execOptions({
+		ratio = 1,
 		interval = 56,
 		ballistic = {
 			{1, 0},
@@ -400,6 +407,7 @@ end
 pubg["UMP45"] = function ()
 
 	return pubg.execOptions({
+		ratio = 1,
 		interval = 100,
 		ballistic = {
 			{1, 0},
@@ -415,6 +423,7 @@ end
 pubg["AKM"] = function ()
 
 	return pubg.execOptions({
+		ratio = 1,
 		interval = 107,
 		ballistic = {
 			{1, 0},
@@ -431,6 +440,7 @@ end
 pubg["M416"] = function ()
 
 	return pubg.execOptions({
+		ratio = 1,
 		interval = 93,
 		ballistic = {
 			{1, 0},
@@ -449,6 +459,7 @@ end
 pubg["QBZ"] = function ()
 
 	return pubg.execOptions({
+		ratio = 1,
 		interval = 99,
 		ballistic = {
 			{1, 0},
@@ -467,6 +478,7 @@ end
 pubg["DP-28"] = function ()
 
 	return pubg.execOptions({
+		ratio = 1,
 		interval = 116,
 		ballistic = {
 			{1, 0},
@@ -515,7 +527,7 @@ function pubg.execOptions (options)
 		end
 		for j = 1, nextCount do
 			ballisticConfig1[ballisticIndex] =
-				options.ballistic[i][2] * pubg.generalSensitivityRatio
+				options.ballistic[i][2] * pubg.generalSensitivityRatio * options.ratio
 			ballisticIndex = ballisticIndex + 1
 		end
 	end
