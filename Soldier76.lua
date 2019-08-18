@@ -540,6 +540,11 @@ function pubg.execOptions (options)
 		end
 	end
 
+	-- 取整
+	for i = 1, #ballisticConfig2 do
+		ballisticConfig2[i] = math.ceil(ballisticConfig2[i])
+	end
+
 	return {
 		duration = options.interval * #ballisticConfig2, -- Time of duration
 		amount = #ballisticConfig2, -- Number of bullets
