@@ -98,7 +98,11 @@
 1. `ctrl+s` 保存脚本后，可以在编辑器里尝试切换配置，切换配置时会有对应的文本信息输出，你可以在这里确认是否和心里预期的配置信息相同。
 1. 最后一步，寻找队友，然后尽情装逼吧~
 
-> 注意代码中的注释，已经明确标出了玩家自定义区域，和脚本核心区域，请不要修改脚本核心区域中的代码。
+<p style="color: red; font-weight: bold;">* 注意代码中的注释，已经明确标出了玩家自定义区域，和脚本核心区域，请不要修改脚本核心区域中的代码。</p>
+
+### 其他设置(非必要)
+* 所有枪械单独设置系数 `ratio`
+* [扩展开发教程：增加一把新的枪械/修改一把枪械的数据](https://github.com/kiccer/Soldier76/issues/24)
 
 ### 什么是切换配置？
 > 很多人没搞清楚切换是什么意思，这是我们脚本与众不同的地方。
@@ -210,12 +214,12 @@ G键 | 功能
 * **不可将此脚本二次创作后用于商业目的！**
 
 ### 交流群
-* 欢迎加入技术交流QQ群：[768483124](https://kiccer.github.io/Soldier76/static/join_group.html) [![logitech 鼠标宏技术交流](./static/img/group.png)](https://kiccer.github.io/Soldier76/static/join_group.html)
+* 欢迎加入技术交流QQ群：[![logitech 鼠标宏技术交流](./static/img/group.png)](https://kiccer.github.io/Soldier76/static/join_group.html) ([768483124](https://kiccer.github.io/Soldier76/static/join_group.html))
 * 十分欢迎愿意给本项目精调弹道的小伙伴
 * 我们也同样欢迎其他项目的小伙伴入驻，一起交流技术话题
 
 ### 问题反馈
-* 使用脚本时有任何疑问，或脚本存在不足之处可以在 [`issues`](https://github.com/kiccer/Soldier76/issues) 反馈给我
+* 使用脚本时有任何疑问，或脚本存在不足之处可以在 [`Issues`](https://github.com/kiccer/Soldier76/issues) 反馈给我
 
 ### 关于宏
 * 宏就像是一个心灵手巧的瞎子

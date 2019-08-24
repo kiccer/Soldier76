@@ -541,9 +541,9 @@ function pubg.execOptions (options)
 	end
 
 	-- 取整
-	for i = 1, #ballisticConfig2 do
-		ballisticConfig2[i] = math.ceil(ballisticConfig2[i])
-	end
+	-- for i = 1, #ballisticConfig2 do
+	-- 	ballisticConfig2[i] = math.ceil(ballisticConfig2[i])
+	-- end
 
 	return {
 		duration = options.interval * #ballisticConfig2, -- Time of duration
@@ -673,6 +673,18 @@ function pubg.getRealY (y)
 	return realY
 end
 
+--[[ change pubg isStart status ]]
+function pubg.changeIsStart (isTrue)
+	pubg.isStart = isTrue
+	if isTrue then
+		SetBacklightColor(0, 255, 150, "kb")
+		SetBacklightColor(0, 255, 150, "mouse")
+	else
+		SetBacklightColor(255, 0, 90, "kb")
+		SetBacklightColor(255, 0, 90, "mouse")
+	end
+end
+
 --[[ set bullet type ]]
 function pubg.setBulletType (bulletType)
 	pubg.bulletType = bulletType
@@ -691,7 +703,7 @@ function pubg.setBulletType (bulletType)
 		end
 	end
 
-	pubg.isStart = true
+	pubg.changeIsStart(true)
 end
 
 --[[ set current scope ]]
@@ -729,7 +741,7 @@ function pubg.setGun (gunName)
 
 	end
 
-	pubg.isStart = true
+	pubg.changeIsStart(true)
 end
 
 --[[ Consider all available firearms as an entire list ]]
@@ -834,7 +846,7 @@ function pubg.runCmd (cmd)
 		["last_in_canUse"] = pubg.findInCanUse,
 		["fast_pickup"] = pubg.fastPickup,
 		["off"] = function ()
-			pubg.isStart = false
+			pubg.changeIsStart(false)
 		end,
 	}
 
