@@ -278,6 +278,7 @@ pubg["M16A4"] = function ()
 	return pubg.execOptions({
 		ratio = 1,
 		interval = 108,
+		autoContinuousFiring = 1,
 		ballistic = {
 			{1, 0},
 			{2, 140},
@@ -298,6 +299,7 @@ pubg["SCAR-L"] = function ()
 	return pubg.execOptions({
 		ratio = 1,
 		interval = 102,
+		autoContinuousFiring = 1,
 		ballistic = {
 			{1, 0},
 			{2, 140},
@@ -319,6 +321,7 @@ pubg["Beryl M762"] = function ()
 	return pubg.execOptions({
 		ratio = 1,
 		interval = 93,
+		autoContinuousFiring = 1,
 		ballistic = {
 			{1, 0},
 			{2, 140},
@@ -341,6 +344,7 @@ pubg["Tommy Gun"] = function ()
 	return pubg.execOptions({
 		ratio = 1,
 		interval = 94,
+		autoContinuousFiring = 1,
 		ballistic = {
 			{1, 0},
 			{5, 71},
@@ -357,6 +361,7 @@ pubg["G36C"] = function ()
 	return pubg.execOptions({
 		ratio = 1,
 		interval = 91,
+		autoContinuousFiring = 1,
 		ballistic = {
 			{1, 0},
 			{2, 135},
@@ -375,6 +380,7 @@ pubg["Vector"] = function ()
 	return pubg.execOptions({
 		ratio = 1,
 		interval = 61,
+		autoContinuousFiring = 1,
 		ballistic = {
 			{1, 0},
 			{5, 52},
@@ -391,6 +397,7 @@ pubg["Micro UZI"] = function ()
 	return pubg.execOptions({
 		ratio = 1,
 		interval = 56,
+		autoContinuousFiring = 1,
 		ballistic = {
 			{1, 0},
 			{2, 80},
@@ -409,6 +416,7 @@ pubg["UMP45"] = function ()
 	return pubg.execOptions({
 		ratio = 1,
 		interval = 100,
+		autoContinuousFiring = 1,
 		ballistic = {
 			{1, 0},
 			{5, 69},
@@ -425,6 +433,7 @@ pubg["AKM"] = function ()
 	return pubg.execOptions({
 		ratio = 1,
 		interval = 107,
+		autoContinuousFiring = 1,
 		ballistic = {
 			{1, 0},
 			{2, 157},
@@ -442,6 +451,7 @@ pubg["M416"] = function ()
 	return pubg.execOptions({
 		ratio = 1,
 		interval = 93,
+		autoContinuousFiring = 1,
 		ballistic = {
 			{1, 0},
 			{2, 132},
@@ -461,6 +471,7 @@ pubg["QBZ"] = function ()
 	return pubg.execOptions({
 		ratio = 1,
 		interval = 99,
+		autoContinuousFiring = 1,
 		ballistic = {
 			{1, 0},
 			{2, 125},
@@ -480,6 +491,7 @@ pubg["DP-28"] = function ()
 	return pubg.execOptions({
 		ratio = 1,
 		interval = 116,
+		autoContinuousFiring = 1,
 		ballistic = {
 			{1, 0},
 			{7, 106},
@@ -550,6 +562,7 @@ function pubg.execOptions (options)
 		amount = #ballisticConfig2, -- Number of bullets
 		interval = options.interval, -- Time of each bullet
 		ballistic = ballisticConfig2, -- ballistic data
+		autoContinuousFiring = options.autoContinuousFiring
 	}
 
 end
@@ -630,7 +643,7 @@ function pubg.auto (options)
 	local realY = pubg.getRealY(y)
 	MoveMouseRelative(x, realY)
 	-- Whether to issue automatically or not
-	if userInfo.autoContinuousFiring == 1 then
+	if userInfo.autoContinuousFiring == 1 and options.autoContinuousFiring == 1 then
 		PressAndReleaseMouseButton(1)
 	end
 
