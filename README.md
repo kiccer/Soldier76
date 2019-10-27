@@ -102,7 +102,9 @@
 
 ### 其他设置(非必要)
 * 所有枪械单独设置系数 `ratio`
+* 所有枪械单独设置连发 `autoContinuousFiring`
 * [扩展开发教程：增加一把新的枪械/修改一把枪械的数据](https://github.com/kiccer/Soldier76/issues/24)
+* [扩展开发教程：设置自定义瞄准判断条件](https://github.com/kiccer/Soldier76/issues/52)
 
 ### 什么是切换配置？
 > 很多人没搞清楚切换是什么意思，这是我们脚本与众不同的地方。
@@ -202,6 +204,9 @@ G键 | 功能
 ["G9"] = ".45",
 ["G10"] = "last",
 ["G11"] = "next",
+-- v4.4 版本新增支持绑定一组指令，使用 | 分隔
+["rctrl + G5"] = "M416|scopeX1",
+["rctrl + G6"] = "AKM|scopeX4",
 ```
 
 ### 硬件条件

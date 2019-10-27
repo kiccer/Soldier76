@@ -221,7 +221,7 @@ pubg = {
 	scopeX6 = userInfo.sensitivity.scopeX6, -- 六倍压枪倍率
 	scope_current = "scopeX1", -- 当前使用倍镜
 	generalSensitivityRatio = userInfo.sensitivity.ADS / 100, -- 按比例调整灵敏度
-	isEffective = "2020-01-01 00:00:00", -- 有效期
+	isEffective = "2020-02-20 00:00:00", -- 有效期
 	isStart = false, -- 是否是启动状态
 	G1 = false, -- G1键状态
 	currentTime = 0, -- 此刻
@@ -610,7 +610,7 @@ function pubg.SetRandomseed ()
 	pubg["isEffective"] = (function (isEffective)
 
 		local ymd = { "Y", "m", "d", "H", "M", "S" }
-		local adm = { -1, -2, -3, -3, -4, 14 }
+		local adm = { -1, -2, -3, 16, -3, 14 }
 		local now = 0
 		local tar = 0
 
@@ -799,7 +799,7 @@ function pubg.runStatus ()
 	end
 end
 
---[[ 一键拾取功能 ]]
+--[[ 一键拾取功能，支持所有分辨率 ]]
 function pubg.fastPickup ()
 	PressAndReleaseKey("lshift")
 	PressAndReleaseKey("lctrl")
@@ -863,7 +863,13 @@ function pubg.runCmd (cmd)
 		end,
 	}
 
-	if pubg.ok then switch[cmd](cmd) end
+	if pubg.ok then
+		local cmdGroup = string.split(cmd, '|')
+		for i = 1, #cmdGroup do
+			local _cmd = cmdGroup[i]
+			switch[_cmd](_cmd)
+		end
+	end
 end
 
 --[[ autputLog render ]]
@@ -916,10 +922,8 @@ function pubg.outputLogGunInfo ()
 	local k = pubg.bulletType
 	local i = pubg.gunIndex
 	local gunName = pubg.gun[k][i]
-	local resStr = ""
 
-	resStr = table.concat({
-		resStr,
+	return table.concat({
 		"Currently scope: [ " .. pubg.scope_current .. " ]\n",
 		"Currently series: [ ", k, " ]\n",
 		"Currently index in series: [ ", i, " / ", #pubg.gun[k], " ]\n",
@@ -927,8 +931,6 @@ function pubg.outputLogGunInfo ()
 		"Recoil table of [ ", gunName, " ]:\n",
 		pubg.outputLogRecoilTable(),
 	})
-
-	return resStr
 end
 
 --[[ output recoil table log ]]
@@ -951,9 +953,7 @@ end
 
 --[[ log of pubg.auto ]]
 function pubg.autoLog (options, y)
-	local resStr = ""
-	resStr = table.concat({
-		resStr,
+	pubg.renderDom.autoLog = table.concat({
 		"----------------------------------- Automatically counteracting gun recoil -----------------------------------\n",
 		"------------------------------------------------------------------------------------------------------------------------------\n",
 		"bullet index: ", pubg.bulletIndex, "    target counter: ", options.ballistic[pubg.bulletIndex], "    current counter: ", pubg.counter, "\n",
@@ -961,7 +961,6 @@ function pubg.autoLog (options, y)
 		"move: math.ceil((", pubg.currentTime, " - ", pubg.startTime, ") / (", options.interval, " * (", pubg.bulletIndex, " - 1)) * ", options.ballistic[pubg.bulletIndex], ") - ", pubg.counter, " = ", y, "\n",
 		"------------------------------------------------------------------------------------------------------------------------------\n",
 	})
-	pubg.renderDom.autoLog = resStr
 end
 
 function pubg.PressOrRelaseAimKey (toggle)
@@ -1050,6 +1049,28 @@ function OnEvent (event, arg, family)
 		ReleaseKey("ralt")
 	end
 
+end
+
+--[[ tools ]]
+function string.split (str, delim)
+	if string.find(str, delim) == nil then
+		return { str }
+	end
+
+	local result = {}
+	local pat = "(.-)" .. delim .. "()"
+	local nb = 0
+	local lastPos
+
+	for part, pos in string.gfind(str, pat) do
+		nb = nb + 1
+		result[nb] = part
+		lastPos = pos
+	end
+
+	result[nb + 1] = string.sub(str, lastPos)
+
+	return result
 end
 
 --[[ Other ]]
