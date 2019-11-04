@@ -22,7 +22,7 @@
 ---
 
 ### 下载脚本
-* 选择一个版本然后[下载](https://github.com/kiccer/Soldier76/releases)，推荐使用[镜像下载](https://gitee.com/kiccer/Soldier76/tags)
+* 选择一个版本然后[下载](https://github.com/kiccer/Soldier76/releases)，国内玩家推荐使用[镜像下载](https://gitee.com/kiccer/Soldier76/tags)
 * 如果使用镜像下载，请注意版本号是否和github上一致，镜像项目由于需要手动同步进行更新，所以不一定是最新版本。
 
 ### 安装教程
