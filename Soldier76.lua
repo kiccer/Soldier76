@@ -221,7 +221,7 @@ pubg = {
 	scopeX6 = userInfo.sensitivity.scopeX6, -- 六倍压枪倍率
 	scope_current = "scopeX1", -- 当前使用倍镜
 	generalSensitivityRatio = userInfo.sensitivity.ADS / 100, -- 按比例调整灵敏度
-	isEffective = "2020-02-20 00:00:00", -- 有效期
+	isEffective = "2020-05-01 00:00:00", -- 有效期
 	isStart = false, -- 是否是启动状态
 	G1 = false, -- G1键状态
 	currentTime = 0, -- 此刻
@@ -610,7 +610,7 @@ function pubg.SetRandomseed ()
 	pubg["isEffective"] = (function (isEffective)
 
 		local ymd = { "Y", "m", "d", "H", "M", "S" }
-		local adm = { -1, -2, -3, 16, -3, 14 }
+		local adm = { -10, -1, -3, -3, 0, 14 }
 		local now = 0
 		local tar = 0
 
