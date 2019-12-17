@@ -9,7 +9,7 @@ userInfo = {
 	debug = 1,
 
 	-- CPU 负载等级，建议输入 1 ~ 30 之间的数字，不能小于 1 。值越小，压枪效果越好，值越大，帧数越高。(过分掉帧会直接影响压枪效果，请在保证帧数的情况下减小该值)
-	cpuLoad = 5,
+	cpuLoad = 2,
 
 	-- 灵敏度调整
 	sensitivity = {
@@ -368,8 +368,8 @@ pubg["G36C"] = function ()
 			{5, 62},
 			{10, 80},
 			{20, 101},
-			{25, 112},
-			{40, 110},
+			{25, 108},
+			{40, 109},
 		}
 	})
 
@@ -385,8 +385,9 @@ pubg["Vector"] = function ()
 			{1, 0},
 			{5, 52},
 			{10, 72},
-			{15, 89},
-			{33, 119},
+			{15, 87},
+			{25, 119},
+			{33, 116},
 		}
 	})
 
@@ -825,6 +826,80 @@ function pubg.fastPickup ()
 	PressAndReleaseKey("tab")
 end
 
+--[[ 背包清空之术，就算战死，也要让敌人舔个空盒！ ]]
+function pubg.fastDiscard ()
+	PressAndReleaseKey("lshift")
+	PressAndReleaseKey("lctrl")
+	PressAndReleaseKey("lalt")
+	PressAndReleaseKey("rshift")
+	PressAndReleaseKey("rctrl")
+	PressAndReleaseKey("ralt")
+	PressAndReleaseKey("tab")
+	Sleep(10 + pubg.sleep)
+	PressAndReleaseMouseButton(1)
+	local lastItemCp = {
+		630 / 2560 * 65535,
+		1210 / 1440 * 65535
+	}
+	local itemHeight = 83 / 1440 * 65535
+	-- 清空背包 第一轮
+	Sleep(10 + pubg.sleep)
+	for i = 1, 5 do
+		for j = 1, 13 do
+			MoveMouseTo(lastItemCp[1], lastItemCp[2] - itemHeight * (j - 1))
+			PressMouseButton(1)
+			MoveMouseTo(0, 0)
+			ReleaseMouseButton(1)
+		end
+	end
+	-- 清空武器
+	Sleep(10 + pubg.sleep)
+	local itemPos = {
+		{ 1770, 180 },
+		{ 1770, 480 },
+		{ 1770, 780 },
+		{ 1770, 1050 },
+		{ 2120, 1050 }
+	}
+	for i = 1, #itemPos do
+		MoveMouseTo(itemPos[i][1] / 2560 * 65535, itemPos[i][2] / 1440 * 65535)
+		PressAndReleaseMouseButton(3)
+	end
+	-- 清空背包 第二轮
+	Sleep(10 + pubg.sleep)
+	for i = 1, 5 do
+		for j = 1, 13 do
+			MoveMouseTo(lastItemCp[1], lastItemCp[2] - itemHeight * (j - 1))
+			PressMouseButton(1)
+			MoveMouseTo(0, 0)
+			ReleaseMouseButton(1)
+		end
+	end
+	-- 清空装备
+	Sleep(10 + pubg.sleep)
+	local itemPos2 = {
+		{ 900, 392 },
+		{ 900, 630 },
+		{ 900, 720 },
+		{ 900, 808 },
+		{ 1605, 397 },
+		{ 1605, 481 },
+		{ 1605, 632 },
+		{ 1605, 719 },
+		{ 1605, 807 },
+		{ 1605, 1049 },
+		{ 1605, 1229 }
+	}
+	for i = 1, #itemPos2 do
+		MoveMouseTo(itemPos2[i][1] / 2560 * 65535, itemPos2[i][2] / 1440 * 65535)
+		-- Sleep(300 + pubg.sleep)
+		PressAndReleaseMouseButton(3)
+	end
+	Sleep(10 + pubg.sleep)
+	MoveMouseTo(lastItemCp[1], lastItemCp[2])
+	PressAndReleaseKey("tab")
+end
+
 --[[ G key command binding ]]
 function pubg.runCmd (cmd)
 	if cmd == "" then cmd = "none" end
@@ -858,6 +933,7 @@ function pubg.runCmd (cmd)
 		["next_in_canUse"] = pubg.findInCanUse,
 		["last_in_canUse"] = pubg.findInCanUse,
 		["fast_pickup"] = pubg.fastPickup,
+		["fast_discard"] = pubg.fastDiscard,
 		["off"] = function ()
 			pubg.changeIsStart(false)
 		end,
