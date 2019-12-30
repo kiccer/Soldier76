@@ -941,10 +941,14 @@ function pubg.runCmd (cmd)
 
 	if pubg.ok then
 		local cmdGroup = string.split(cmd, '|')
+
 		for i = 1, #cmdGroup do
 			local _cmd = cmdGroup[i]
-			switch[_cmd](_cmd)
+			if switch[_cmd] then
+				switch[_cmd](_cmd)
+			end
 		end
+
 	end
 end
 
@@ -1077,6 +1081,18 @@ function pubg.OnEvent_NoRecoil (event, arg, family)
 	end
 end
 
+-- [[ processing instruction ]]
+function pubg.modifierHandle (modifier)
+	local binds = userInfo.G_bind[modifier]
+
+	if (binds) then
+		pubg.renderDom.combo_key = modifier -- Save combination keys
+		pubg.renderDom.cmd = userInfo.G_bind[modifier] -- Save instruction name
+		pubg.runCmd(userInfo.G_bind[modifier]) -- Execution instructions
+		pubg.outputLogRender() -- Call log rendering method to output information
+	end
+end
+
 --[[ Listener method ]]
 function OnEvent (event, arg, family)
 
@@ -1090,7 +1106,7 @@ function OnEvent (event, arg, family)
 
 	-- Switching arsenals according to different types of ammunition
 	if event == "MOUSE_BUTTON_PRESSED" and arg >=3 and arg <= 11 and family == "mouse" and pubg.ok then
-		local modifier = "G"
+		local modifier = "G" .. arg
 		local list = { "lalt", "lctrl", "lshift", "ralt", "rctrl", "rshift" }
 		for i = 1, #list do
 			if IsModifierPressed(list[i]) then
@@ -1098,21 +1114,23 @@ function OnEvent (event, arg, family)
 				break
 			end
 		end
-		modifier = modifier .. arg -- Get the combination key
-		pubg.renderDom.combo_key = modifier -- Save combination keys
-		pubg.renderDom.cmd = userInfo.G_bind[modifier] -- Save instruction name
-		pubg.runCmd(userInfo.G_bind[modifier]) -- Execution instructions
-		pubg.outputLogRender() -- Call log rendering method to output information
+		-- modifier = modifier .. arg -- Get the combination key
+		-- pubg.renderDom.combo_key = modifier -- Save combination keys
+		-- pubg.renderDom.cmd = userInfo.G_bind[modifier] -- Save instruction name
+		-- pubg.runCmd(userInfo.G_bind[modifier]) -- Execution instructions
+		-- pubg.outputLogRender() -- Call log rendering method to output information
+		pubg.modifierHandle(modifier)
 	end
 
 	if event == "G_PRESSED" and arg >=1 and arg <= 12 and pubg.ok then
 		-- if not pubg.runStatus() and userInfo.startControl ~= "G_bind" then return false end
-		local modifier = "F"
-		modifier = modifier .. arg -- Get the combination key
-		pubg.renderDom.combo_key = modifier -- Save combination keys
-		pubg.renderDom.cmd = userInfo.G_bind[modifier] -- Save instruction name
-		pubg.runCmd(userInfo.G_bind[modifier]) -- Execution instructions
-		pubg.outputLogRender() -- Call log rendering method to output information
+		local modifier = "F" .. arg
+		-- modifier = modifier .. arg -- Get the combination key
+		-- pubg.renderDom.combo_key = modifier -- Save combination keys
+		-- pubg.renderDom.cmd = userInfo.G_bind[modifier] -- Save instruction name
+		-- pubg.runCmd(userInfo.G_bind[modifier]) -- Execution instructions
+		-- pubg.outputLogRender() -- Call log rendering method to output information
+		pubg.modifierHandle(modifier)
 	end
 
 	-- Script deactivated event
