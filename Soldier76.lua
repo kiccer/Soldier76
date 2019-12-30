@@ -54,28 +54,28 @@ userInfo = {
 	-- 支持的枪械，排列顺序即是配置顺序，可以自行调整，不需要的枪械请设置为 0 ，需要的设置为 1 ，需要单独启用自动连发的设置为 2
 	canUse = {
 		[".45"] = {
-			{ "UMP45", 1 }, -- 基础镜 + 扩容，Bizon (基础镜即可)，Vector (补偿 + 基础镜 + 扩容) | Reddot + Mag，Bizon (Reddot)，Vector (Komp + Reddot + Mag)
-			{ "Tommy Gun", 1 }, -- 扩容 | Mag
+			{ "UMP45", 2 }, -- 基础镜 + 扩容，Bizon (基础镜即可)，Vector (补偿 + 基础镜 + 扩容) | Reddot + Mag，Bizon (Reddot)，Vector (Komp + Reddot + Mag)
+			{ "Tommy Gun", 2 }, -- 扩容 | Mag
 		},
 		["9mm"] = {
-			{ "Vector", 1 }, -- 基础镜 + 扩容 | Reddot + Mag
-			{ "Micro UZI", 1 }, -- 扩容 | Mag
+			{ "Vector", 2 }, -- 基础镜 + 扩容 | Reddot + Mag
+			{ "Micro UZI", 2 }, -- 扩容 | Mag
 		},
 		["5.56"] = {
-			{ "M416", 1 }, -- 补偿 + 基础镜 + 直角 + 枪托 + 扩容 | Komp + Reddot + Triangular grip + Gunstock + Mag
-			{ "SCAR-L", 1 }, -- 补偿 + 基础镜 + 直角 + 扩容 | Komp + Reddot + Triangular grip + Mag
-			{ "QBZ", 1 }, -- 补偿 + 基础镜 + 直角 + 扩容 | Komp + Reddot + Triangular grip + Mag
-			{ "G36C", 1 }, -- 补偿 + 基础镜 + 直角 + 扩容 | Komp + Reddot + Triangular grip + Mag
+			{ "M416", 2 }, -- 补偿 + 基础镜 + 直角 + 枪托 + 扩容 | Komp + Reddot + Triangular grip + Gunstock + Mag
+			{ "SCAR-L", 2 }, -- 补偿 + 基础镜 + 直角 + 扩容 | Komp + Reddot + Triangular grip + Mag
+			{ "QBZ", 2 }, -- 补偿 + 基础镜 + 直角 + 扩容 | Komp + Reddot + Triangular grip + Mag
+			{ "G36C", 2 }, -- 补偿 + 基础镜 + 直角 + 扩容 | Komp + Reddot + Triangular grip + Mag
 			{ "M16A4", 2 }, -- 补偿 + 基础镜 + 枪托 + 扩容 | Komp + Reddot + Gunstock + Mag
 		},
 		["7.62"] = {
-			{ "AKM", 1 }, -- 补偿 + 基础镜 + 扩容 | Komp + Reddot + Mag
-			{ "Beryl M762", 1 }, -- 补偿 + 基础镜 + 直角 + 扩容 | Komp + Reddot + Triangular grip + Mag
-			{ "DP-28", 1 }, -- 基础镜 | Reddot
+			{ "AKM", 2 }, -- 补偿 + 基础镜 + 扩容 | Komp + Reddot + Mag
+			{ "Beryl M762", 2 }, -- 补偿 + 基础镜 + 直角 + 扩容 | Komp + Reddot + Triangular grip + Mag
+			{ "DP-28", 2 }, -- 基础镜 | Reddot
 		},
 	},
 
-	-- G键自定义绑定
+	-- G键自定义绑定，多余的组合键可以删除
 	-- 可绑定指令请参考: https://github.com/kiccer/Soldier76#%E6%8C%87%E4%BB%A4%E5%88%97%E8%A1%A8
 	G_bind = {
 		-- G
@@ -92,12 +92,12 @@ userInfo = {
 		["lalt + G3"] = "",
 		["lalt + G4"] = "",
 		["lalt + G5"] = "",
-		["lalt + G6"] = "scopeX1",
-		["lalt + G7"] = "scopeX3",
-		["lalt + G8"] = "scopeX4",
-		["lalt + G9"] = "scopeX2",
+		["lalt + G6"] = "",
+		["lalt + G7"] = "",
+		["lalt + G8"] = "",
+		["lalt + G9"] = "",
 		["lalt + G10"] = "",
-		["lalt + G11"] = "scopeX6",
+		["lalt + G11"] = "",
 		-- lctrl + G
 		["lctrl + G3"] = "",
 		["lctrl + G4"] = "",
@@ -142,7 +142,7 @@ userInfo = {
 		["rshift + G3"] = "",
 		["rshift + G4"] = "",
 		["rshift + G5"] = "",
-		["rshift + G6"] = "",
+		["rshift + G6"] = "fast_discard",
 		["rshift + G7"] = "",
 		["rshift + G8"] = "",
 		["rshift + G9"] = "",
@@ -580,16 +580,17 @@ function pubg.init ()
 		local gunCount = 0
 
 		for j = 1, #userInfo.canUse[type] do
+			local gunName = userInfo.canUse[type][j][1]
+			local gunState = userInfo.canUse[type][j][2]
 
-			if userInfo.canUse[type][j][2] == 1 then
-				local gunName = userInfo.canUse[type][j][1]
+			if gunState >= 1 then
 				-- one series
 				gunCount = gunCount + 1 -- Accumulative number of firearms configuration files
 				pubg.gun[type][gunCount] = gunName -- Adding available firearms to the Arsenal
 				pubg.gunOptions[type][gunCount] = pubg[gunName]() -- Get firearms data and add it to the configuration library
 				-- 单独设置连发
-				pubg.gunOptions[type][gunCount].autoContinuousFiring = { 0, 0, 1 }[
-					math.max(1, math.min(userInfo.canUse[type][j][2], 100))
+				pubg.gunOptions[type][gunCount].autoContinuousFiring = ({ 0, 0, 1 })[
+					math.max(1, math.min(gunState, 100)) + 1
 				]
 				-- all canUse
 				pubg.allCanUse_count = pubg.allCanUse_count + 1 -- Total plus one
@@ -742,7 +743,7 @@ function pubg.setGun (gunName)
 		local selected = false
 
 		for j = 1, #userInfo.canUse[type] do
-			if userInfo.canUse[type][j][2] == 1 then
+			if userInfo.canUse[type][j][2] >= 1 then
 				gunIndex = gunIndex + 1
 				allCanUse_index = allCanUse_index + 1
 				if userInfo.canUse[type][j][1] == gunName then
@@ -994,7 +995,7 @@ function pubg.outputLogGunSwitchTable ()
 		local gunCount = 0
 
 		for j = 1, #userInfo.canUse[type] do
-			if userInfo.canUse[type][j][2] == 1 then
+			if userInfo.canUse[type][j][2] >= 1 then
 				local gunName = userInfo.canUse[type][j][1]
 				local tag = gunName == pubg.gun[pubg.bulletType][pubg.gunIndex] and "=> " or "      "
 				gunCount = gunCount + 1
