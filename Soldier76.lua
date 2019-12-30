@@ -31,7 +31,7 @@ userInfo = {
 	autoPressAimKey = "",
 
 	-- 是否自动连发 (单发模式变全自动 1 - 开启， 0 - 关闭)
-	autoContinuousFiring = 1, -- 默认为 1
+	-- autoContinuousFiring = 1, -- 默认为 1
 
 	-- 启动控制 (capslock - 使用大写锁定键控制 | numlock - 小键盘锁定键控制 | G_bind - 使用指令控制)
 	startControl = "capslock",
@@ -51,7 +51,7 @@ userInfo = {
 		end,
 	},
 
-	-- 支持的枪械，排列顺序即是配置顺序，可以自行调整，不需要的枪械请设置为0，需要的设置为1。
+	-- 支持的枪械，排列顺序即是配置顺序，可以自行调整，不需要的枪械请设置为 0 ，需要的设置为 1 ，需要单独启用自动连发的设置为 2
 	canUse = {
 		[".45"] = {
 			{ "UMP45", 1 }, -- 基础镜 + 扩容，Bizon (基础镜即可)，Vector (补偿 + 基础镜 + 扩容) | Reddot + Mag，Bizon (Reddot)，Vector (Komp + Reddot + Mag)
@@ -66,7 +66,7 @@ userInfo = {
 			{ "SCAR-L", 1 }, -- 补偿 + 基础镜 + 直角 + 扩容 | Komp + Reddot + Triangular grip + Mag
 			{ "QBZ", 1 }, -- 补偿 + 基础镜 + 直角 + 扩容 | Komp + Reddot + Triangular grip + Mag
 			{ "G36C", 1 }, -- 补偿 + 基础镜 + 直角 + 扩容 | Komp + Reddot + Triangular grip + Mag
-			{ "M16A4", 1 }, -- 补偿 + 基础镜 + 枪托 + 扩容 | Komp + Reddot + Gunstock + Mag
+			{ "M16A4", 2 }, -- 补偿 + 基础镜 + 枪托 + 扩容 | Komp + Reddot + Gunstock + Mag
 		},
 		["7.62"] = {
 			{ "AKM", 1 }, -- 补偿 + 基础镜 + 扩容 | Komp + Reddot + Mag
@@ -278,7 +278,7 @@ pubg["M16A4"] = function ()
 	return pubg.execOptions({
 		ratio = 1,
 		interval = 108,
-		autoContinuousFiring = 1,
+		-- autoContinuousFiring = 1,
 		ballistic = {
 			{1, 0},
 			{2, 140},
@@ -299,7 +299,7 @@ pubg["SCAR-L"] = function ()
 	return pubg.execOptions({
 		ratio = 1,
 		interval = 102,
-		autoContinuousFiring = 1,
+		-- autoContinuousFiring = 1,
 		ballistic = {
 			{1, 0},
 			{2, 140},
@@ -321,7 +321,7 @@ pubg["Beryl M762"] = function ()
 	return pubg.execOptions({
 		ratio = 1,
 		interval = 93,
-		autoContinuousFiring = 1,
+		-- autoContinuousFiring = 1,
 		ballistic = {
 			{1, 0},
 			{2, 140},
@@ -344,7 +344,7 @@ pubg["Tommy Gun"] = function ()
 	return pubg.execOptions({
 		ratio = 1,
 		interval = 94,
-		autoContinuousFiring = 1,
+		-- autoContinuousFiring = 1,
 		ballistic = {
 			{1, 0},
 			{5, 71},
@@ -361,7 +361,7 @@ pubg["G36C"] = function ()
 	return pubg.execOptions({
 		ratio = 1,
 		interval = 91,
-		autoContinuousFiring = 1,
+		-- autoContinuousFiring = 1,
 		ballistic = {
 			{1, 0},
 			{2, 135},
@@ -380,7 +380,7 @@ pubg["Vector"] = function ()
 	return pubg.execOptions({
 		ratio = 1,
 		interval = 61,
-		autoContinuousFiring = 1,
+		-- autoContinuousFiring = 1,
 		ballistic = {
 			{1, 0},
 			{5, 52},
@@ -398,7 +398,7 @@ pubg["Micro UZI"] = function ()
 	return pubg.execOptions({
 		ratio = 1,
 		interval = 56,
-		autoContinuousFiring = 1,
+		-- autoContinuousFiring = 1,
 		ballistic = {
 			{1, 0},
 			{2, 80},
@@ -417,7 +417,7 @@ pubg["UMP45"] = function ()
 	return pubg.execOptions({
 		ratio = 1,
 		interval = 100,
-		autoContinuousFiring = 1,
+		-- autoContinuousFiring = 1,
 		ballistic = {
 			{1, 0},
 			{5, 69},
@@ -434,7 +434,7 @@ pubg["AKM"] = function ()
 	return pubg.execOptions({
 		ratio = 1,
 		interval = 107,
-		autoContinuousFiring = 1,
+		-- autoContinuousFiring = 1,
 		ballistic = {
 			{1, 0},
 			{2, 157},
@@ -452,7 +452,7 @@ pubg["M416"] = function ()
 	return pubg.execOptions({
 		ratio = 1,
 		interval = 93,
-		autoContinuousFiring = 1,
+		-- autoContinuousFiring = 1,
 		ballistic = {
 			{1, 0},
 			{2, 132},
@@ -472,7 +472,7 @@ pubg["QBZ"] = function ()
 	return pubg.execOptions({
 		ratio = 1,
 		interval = 99,
-		autoContinuousFiring = 1,
+		-- autoContinuousFiring = 1,
 		ballistic = {
 			{1, 0},
 			{2, 125},
@@ -492,7 +492,7 @@ pubg["DP-28"] = function ()
 	return pubg.execOptions({
 		ratio = 1,
 		interval = 116,
-		autoContinuousFiring = 1,
+		-- autoContinuousFiring = 1,
 		ballistic = {
 			{1, 0},
 			{7, 106},
@@ -563,7 +563,7 @@ function pubg.execOptions (options)
 		amount = #ballisticConfig2, -- Number of bullets
 		interval = options.interval, -- Time of each bullet
 		ballistic = ballisticConfig2, -- ballistic data
-		autoContinuousFiring = options.autoContinuousFiring
+		-- autoContinuousFiring = options.autoContinuousFiring
 	}
 
 end
@@ -587,6 +587,10 @@ function pubg.init ()
 				gunCount = gunCount + 1 -- Accumulative number of firearms configuration files
 				pubg.gun[type][gunCount] = gunName -- Adding available firearms to the Arsenal
 				pubg.gunOptions[type][gunCount] = pubg[gunName]() -- Get firearms data and add it to the configuration library
+				-- 单独设置连发
+				pubg.gunOptions[type][gunCount].autoContinuousFiring = { 0, 0, 1 }[
+					math.max(1, math.min(userInfo.canUse[type][j][2], 100))
+				]
 				-- all canUse
 				pubg.allCanUse_count = pubg.allCanUse_count + 1 -- Total plus one
 				pubg.allCanUse[pubg.allCanUse_count] = gunName -- All available firearms
@@ -644,7 +648,7 @@ function pubg.auto (options)
 	local realY = pubg.getRealY(y)
 	MoveMouseRelative(x, realY)
 	-- Whether to issue automatically or not
-	if userInfo.autoContinuousFiring == 1 and options.autoContinuousFiring == 1 then
+	if options.autoContinuousFiring == 1 then
 		PressAndReleaseMouseButton(1)
 	end
 
@@ -1090,14 +1094,17 @@ end
 
 -- [[ processing instruction ]]
 function pubg.modifierHandle (modifier)
-	local binds = userInfo.G_bind[modifier]
+	local cmd = userInfo.G_bind[modifier]
+	pubg.renderDom.combo_key = modifier -- Save combination keys
 
-	if (binds) then
-		pubg.renderDom.combo_key = modifier -- Save combination keys
-		pubg.renderDom.cmd = userInfo.G_bind[modifier] -- Save instruction name
-		pubg.runCmd(userInfo.G_bind[modifier]) -- Execution instructions
-		pubg.outputLogRender() -- Call log rendering method to output information
+	if (cmd) then
+		pubg.renderDom.cmd = cmd -- Save instruction name
+		pubg.runCmd(cmd) -- Execution instructions
+	else
+		pubg.renderDom.cmd = ""
 	end
+
+	pubg.outputLogRender() -- Call log rendering method to output information
 end
 
 --[[ Listener method ]]
