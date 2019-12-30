@@ -31,7 +31,7 @@ userInfo = {
 	autoPressAimKey = "",
 
 	-- 是否自动连发 (单发模式变全自动 1 - 开启， 0 - 关闭)
-	autoContinuousFiring = 1, -- 默认为 1
+	-- autoContinuousFiring = 1, -- 默认为 1
 
 	-- 启动控制 (capslock - 使用大写锁定键控制 | numlock - 小键盘锁定键控制 | G_bind - 使用指令控制)
 	startControl = "capslock",
@@ -51,31 +51,31 @@ userInfo = {
 		end,
 	},
 
-	-- 支持的枪械，排列顺序即是配置顺序，可以自行调整，不需要的枪械请设置为0，需要的设置为1。
+	-- 支持的枪械，排列顺序即是配置顺序，可以自行调整，不需要的枪械请设置为 0 ，需要的设置为 1 ，需要单独启用自动连发的设置为 2
 	canUse = {
 		[".45"] = {
-			{ "UMP45", 1 }, -- 基础镜 + 扩容，Bizon (基础镜即可)，Vector (补偿 + 基础镜 + 扩容) | Reddot + Mag，Bizon (Reddot)，Vector (Komp + Reddot + Mag)
-			{ "Tommy Gun", 1 }, -- 扩容 | Mag
+			{ "UMP45", 2 }, -- 基础镜 + 扩容，Bizon (基础镜即可)，Vector (补偿 + 基础镜 + 扩容) | Reddot + Mag，Bizon (Reddot)，Vector (Komp + Reddot + Mag)
+			{ "Tommy Gun", 2 }, -- 扩容 | Mag
 		},
 		["9mm"] = {
-			{ "Vector", 1 }, -- 基础镜 + 扩容 | Reddot + Mag
-			{ "Micro UZI", 1 }, -- 扩容 | Mag
+			{ "Vector", 2 }, -- 基础镜 + 扩容 | Reddot + Mag
+			{ "Micro UZI", 2 }, -- 扩容 | Mag
 		},
 		["5.56"] = {
-			{ "M416", 1 }, -- 补偿 + 基础镜 + 直角 + 枪托 + 扩容 | Komp + Reddot + Triangular grip + Gunstock + Mag
-			{ "SCAR-L", 1 }, -- 补偿 + 基础镜 + 直角 + 扩容 | Komp + Reddot + Triangular grip + Mag
-			{ "QBZ", 1 }, -- 补偿 + 基础镜 + 直角 + 扩容 | Komp + Reddot + Triangular grip + Mag
-			{ "G36C", 1 }, -- 补偿 + 基础镜 + 直角 + 扩容 | Komp + Reddot + Triangular grip + Mag
-			{ "M16A4", 1 }, -- 补偿 + 基础镜 + 枪托 + 扩容 | Komp + Reddot + Gunstock + Mag
+			{ "M416", 2 }, -- 补偿 + 基础镜 + 直角 + 枪托 + 扩容 | Komp + Reddot + Triangular grip + Gunstock + Mag
+			{ "SCAR-L", 2 }, -- 补偿 + 基础镜 + 直角 + 扩容 | Komp + Reddot + Triangular grip + Mag
+			{ "QBZ", 2 }, -- 补偿 + 基础镜 + 直角 + 扩容 | Komp + Reddot + Triangular grip + Mag
+			{ "G36C", 2 }, -- 补偿 + 基础镜 + 直角 + 扩容 | Komp + Reddot + Triangular grip + Mag
+			{ "M16A4", 2 }, -- 补偿 + 基础镜 + 枪托 + 扩容 | Komp + Reddot + Gunstock + Mag
 		},
 		["7.62"] = {
-			{ "AKM", 1 }, -- 补偿 + 基础镜 + 扩容 | Komp + Reddot + Mag
-			{ "Beryl M762", 1 }, -- 补偿 + 基础镜 + 直角 + 扩容 | Komp + Reddot + Triangular grip + Mag
-			{ "DP-28", 1 }, -- 基础镜 | Reddot
+			{ "AKM", 2 }, -- 补偿 + 基础镜 + 扩容 | Komp + Reddot + Mag
+			{ "Beryl M762", 2 }, -- 补偿 + 基础镜 + 直角 + 扩容 | Komp + Reddot + Triangular grip + Mag
+			{ "DP-28", 2 }, -- 基础镜 | Reddot
 		},
 	},
 
-	-- G键自定义绑定
+	-- G键自定义绑定，多余的组合键可以删除
 	-- 可绑定指令请参考: https://github.com/kiccer/Soldier76#%E6%8C%87%E4%BB%A4%E5%88%97%E8%A1%A8
 	G_bind = {
 		-- G
@@ -92,12 +92,12 @@ userInfo = {
 		["lalt + G3"] = "",
 		["lalt + G4"] = "",
 		["lalt + G5"] = "",
-		["lalt + G6"] = "scopeX1",
-		["lalt + G7"] = "scopeX3",
-		["lalt + G8"] = "scopeX4",
-		["lalt + G9"] = "scopeX2",
+		["lalt + G6"] = "",
+		["lalt + G7"] = "",
+		["lalt + G8"] = "",
+		["lalt + G9"] = "",
 		["lalt + G10"] = "",
-		["lalt + G11"] = "scopeX6",
+		["lalt + G11"] = "",
 		-- lctrl + G
 		["lctrl + G3"] = "",
 		["lctrl + G4"] = "",
@@ -142,7 +142,7 @@ userInfo = {
 		["rshift + G3"] = "",
 		["rshift + G4"] = "",
 		["rshift + G5"] = "",
-		["rshift + G6"] = "",
+		["rshift + G6"] = "fast_discard",
 		["rshift + G7"] = "",
 		["rshift + G8"] = "",
 		["rshift + G9"] = "",
@@ -278,7 +278,7 @@ pubg["M16A4"] = function ()
 	return pubg.execOptions({
 		ratio = 1,
 		interval = 108,
-		autoContinuousFiring = 1,
+		-- autoContinuousFiring = 1,
 		ballistic = {
 			{1, 0},
 			{2, 140},
@@ -299,7 +299,7 @@ pubg["SCAR-L"] = function ()
 	return pubg.execOptions({
 		ratio = 1,
 		interval = 102,
-		autoContinuousFiring = 1,
+		-- autoContinuousFiring = 1,
 		ballistic = {
 			{1, 0},
 			{2, 140},
@@ -321,7 +321,7 @@ pubg["Beryl M762"] = function ()
 	return pubg.execOptions({
 		ratio = 1,
 		interval = 93,
-		autoContinuousFiring = 1,
+		-- autoContinuousFiring = 1,
 		ballistic = {
 			{1, 0},
 			{2, 140},
@@ -344,7 +344,7 @@ pubg["Tommy Gun"] = function ()
 	return pubg.execOptions({
 		ratio = 1,
 		interval = 94,
-		autoContinuousFiring = 1,
+		-- autoContinuousFiring = 1,
 		ballistic = {
 			{1, 0},
 			{5, 71},
@@ -361,7 +361,7 @@ pubg["G36C"] = function ()
 	return pubg.execOptions({
 		ratio = 1,
 		interval = 91,
-		autoContinuousFiring = 1,
+		-- autoContinuousFiring = 1,
 		ballistic = {
 			{1, 0},
 			{2, 135},
@@ -380,7 +380,7 @@ pubg["Vector"] = function ()
 	return pubg.execOptions({
 		ratio = 1,
 		interval = 61,
-		autoContinuousFiring = 1,
+		-- autoContinuousFiring = 1,
 		ballistic = {
 			{1, 0},
 			{5, 52},
@@ -398,7 +398,7 @@ pubg["Micro UZI"] = function ()
 	return pubg.execOptions({
 		ratio = 1,
 		interval = 56,
-		autoContinuousFiring = 1,
+		-- autoContinuousFiring = 1,
 		ballistic = {
 			{1, 0},
 			{2, 80},
@@ -417,7 +417,7 @@ pubg["UMP45"] = function ()
 	return pubg.execOptions({
 		ratio = 1,
 		interval = 100,
-		autoContinuousFiring = 1,
+		-- autoContinuousFiring = 1,
 		ballistic = {
 			{1, 0},
 			{5, 69},
@@ -434,7 +434,7 @@ pubg["AKM"] = function ()
 	return pubg.execOptions({
 		ratio = 1,
 		interval = 107,
-		autoContinuousFiring = 1,
+		-- autoContinuousFiring = 1,
 		ballistic = {
 			{1, 0},
 			{2, 157},
@@ -452,7 +452,7 @@ pubg["M416"] = function ()
 	return pubg.execOptions({
 		ratio = 1,
 		interval = 93,
-		autoContinuousFiring = 1,
+		-- autoContinuousFiring = 1,
 		ballistic = {
 			{1, 0},
 			{2, 132},
@@ -472,7 +472,7 @@ pubg["QBZ"] = function ()
 	return pubg.execOptions({
 		ratio = 1,
 		interval = 99,
-		autoContinuousFiring = 1,
+		-- autoContinuousFiring = 1,
 		ballistic = {
 			{1, 0},
 			{2, 125},
@@ -492,7 +492,7 @@ pubg["DP-28"] = function ()
 	return pubg.execOptions({
 		ratio = 1,
 		interval = 116,
-		autoContinuousFiring = 1,
+		-- autoContinuousFiring = 1,
 		ballistic = {
 			{1, 0},
 			{7, 106},
@@ -563,7 +563,7 @@ function pubg.execOptions (options)
 		amount = #ballisticConfig2, -- Number of bullets
 		interval = options.interval, -- Time of each bullet
 		ballistic = ballisticConfig2, -- ballistic data
-		autoContinuousFiring = options.autoContinuousFiring
+		-- autoContinuousFiring = options.autoContinuousFiring
 	}
 
 end
@@ -580,13 +580,18 @@ function pubg.init ()
 		local gunCount = 0
 
 		for j = 1, #userInfo.canUse[type] do
+			local gunName = userInfo.canUse[type][j][1]
+			local gunState = userInfo.canUse[type][j][2]
 
-			if userInfo.canUse[type][j][2] == 1 then
-				local gunName = userInfo.canUse[type][j][1]
+			if gunState >= 1 then
 				-- one series
 				gunCount = gunCount + 1 -- Accumulative number of firearms configuration files
 				pubg.gun[type][gunCount] = gunName -- Adding available firearms to the Arsenal
 				pubg.gunOptions[type][gunCount] = pubg[gunName]() -- Get firearms data and add it to the configuration library
+				-- 单独设置连发
+				pubg.gunOptions[type][gunCount].autoContinuousFiring = ({ 0, 0, 1 })[
+					math.max(1, math.min(gunState, 100)) + 1
+				]
 				-- all canUse
 				pubg.allCanUse_count = pubg.allCanUse_count + 1 -- Total plus one
 				pubg.allCanUse[pubg.allCanUse_count] = gunName -- All available firearms
@@ -644,7 +649,7 @@ function pubg.auto (options)
 	local realY = pubg.getRealY(y)
 	MoveMouseRelative(x, realY)
 	-- Whether to issue automatically or not
-	if userInfo.autoContinuousFiring == 1 and options.autoContinuousFiring == 1 then
+	if options.autoContinuousFiring == 1 then
 		PressAndReleaseMouseButton(1)
 	end
 
@@ -738,7 +743,7 @@ function pubg.setGun (gunName)
 		local selected = false
 
 		for j = 1, #userInfo.canUse[type] do
-			if userInfo.canUse[type][j][2] == 1 then
+			if userInfo.canUse[type][j][2] >= 1 then
 				gunIndex = gunIndex + 1
 				allCanUse_index = allCanUse_index + 1
 				if userInfo.canUse[type][j][1] == gunName then
@@ -811,17 +816,24 @@ function pubg.fastPickup ()
 	PressAndReleaseKey("tab")
 	Sleep(10 + pubg.sleep)
 	PressAndReleaseMouseButton(1)
+
 	local lastItemCp = {
 		300 / 2560 * 65535,
 		1210 / 1440 * 65535
 	}
 	local itemHeight = 83 / 1440 * 65535
-	for i = 1, 13 do
-		MoveMouseTo(lastItemCp[1], lastItemCp[2] - itemHeight * (i - 1))
-		PressMouseButton(1)
-		MoveMouseTo(32767, 32767)
-		ReleaseMouseButton(1)
+
+	-- 重复 3 次动作，强化拾取成功率
+	for i = 1, 3 do
+		for j = 1, 13 do
+			MoveMouseTo(lastItemCp[1], lastItemCp[2] - itemHeight * (j - 1))
+			PressMouseButton(1)
+			MoveMouseTo(32767, 32767)
+			ReleaseMouseButton(1)
+		end
 	end
+
+	Sleep(10 + pubg.sleep)
 	MoveMouseTo(lastItemCp[1], lastItemCp[2])
 	PressAndReleaseKey("tab")
 end
@@ -941,10 +953,14 @@ function pubg.runCmd (cmd)
 
 	if pubg.ok then
 		local cmdGroup = string.split(cmd, '|')
+
 		for i = 1, #cmdGroup do
 			local _cmd = cmdGroup[i]
-			switch[_cmd](_cmd)
+			if switch[_cmd] then
+				switch[_cmd](_cmd)
+			end
 		end
+
 	end
 end
 
@@ -979,7 +995,7 @@ function pubg.outputLogGunSwitchTable ()
 		local gunCount = 0
 
 		for j = 1, #userInfo.canUse[type] do
-			if userInfo.canUse[type][j][2] == 1 then
+			if userInfo.canUse[type][j][2] >= 1 then
 				local gunName = userInfo.canUse[type][j][1]
 				local tag = gunName == pubg.gun[pubg.bulletType][pubg.gunIndex] and "=> " or "      "
 				gunCount = gunCount + 1
@@ -1077,6 +1093,21 @@ function pubg.OnEvent_NoRecoil (event, arg, family)
 	end
 end
 
+-- [[ processing instruction ]]
+function pubg.modifierHandle (modifier)
+	local cmd = userInfo.G_bind[modifier]
+	pubg.renderDom.combo_key = modifier -- Save combination keys
+
+	if (cmd) then
+		pubg.renderDom.cmd = cmd -- Save instruction name
+		pubg.runCmd(cmd) -- Execution instructions
+	else
+		pubg.renderDom.cmd = ""
+	end
+
+	pubg.outputLogRender() -- Call log rendering method to output information
+end
+
 --[[ Listener method ]]
 function OnEvent (event, arg, family)
 
@@ -1090,7 +1121,7 @@ function OnEvent (event, arg, family)
 
 	-- Switching arsenals according to different types of ammunition
 	if event == "MOUSE_BUTTON_PRESSED" and arg >=3 and arg <= 11 and family == "mouse" and pubg.ok then
-		local modifier = "G"
+		local modifier = "G" .. arg
 		local list = { "lalt", "lctrl", "lshift", "ralt", "rctrl", "rshift" }
 		for i = 1, #list do
 			if IsModifierPressed(list[i]) then
@@ -1098,21 +1129,23 @@ function OnEvent (event, arg, family)
 				break
 			end
 		end
-		modifier = modifier .. arg -- Get the combination key
-		pubg.renderDom.combo_key = modifier -- Save combination keys
-		pubg.renderDom.cmd = userInfo.G_bind[modifier] -- Save instruction name
-		pubg.runCmd(userInfo.G_bind[modifier]) -- Execution instructions
-		pubg.outputLogRender() -- Call log rendering method to output information
+		-- modifier = modifier .. arg -- Get the combination key
+		-- pubg.renderDom.combo_key = modifier -- Save combination keys
+		-- pubg.renderDom.cmd = userInfo.G_bind[modifier] -- Save instruction name
+		-- pubg.runCmd(userInfo.G_bind[modifier]) -- Execution instructions
+		-- pubg.outputLogRender() -- Call log rendering method to output information
+		pubg.modifierHandle(modifier)
 	end
 
 	if event == "G_PRESSED" and arg >=1 and arg <= 12 and pubg.ok then
 		-- if not pubg.runStatus() and userInfo.startControl ~= "G_bind" then return false end
-		local modifier = "F"
-		modifier = modifier .. arg -- Get the combination key
-		pubg.renderDom.combo_key = modifier -- Save combination keys
-		pubg.renderDom.cmd = userInfo.G_bind[modifier] -- Save instruction name
-		pubg.runCmd(userInfo.G_bind[modifier]) -- Execution instructions
-		pubg.outputLogRender() -- Call log rendering method to output information
+		local modifier = "F" .. arg
+		-- modifier = modifier .. arg -- Get the combination key
+		-- pubg.renderDom.combo_key = modifier -- Save combination keys
+		-- pubg.renderDom.cmd = userInfo.G_bind[modifier] -- Save instruction name
+		-- pubg.runCmd(userInfo.G_bind[modifier]) -- Execution instructions
+		-- pubg.outputLogRender() -- Call log rendering method to output information
+		pubg.modifierHandle(modifier)
 	end
 
 	-- Script deactivated event
