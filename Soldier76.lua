@@ -811,17 +811,24 @@ function pubg.fastPickup ()
 	PressAndReleaseKey("tab")
 	Sleep(10 + pubg.sleep)
 	PressAndReleaseMouseButton(1)
+
 	local lastItemCp = {
 		300 / 2560 * 65535,
 		1210 / 1440 * 65535
 	}
 	local itemHeight = 83 / 1440 * 65535
-	for i = 1, 13 do
-		MoveMouseTo(lastItemCp[1], lastItemCp[2] - itemHeight * (i - 1))
-		PressMouseButton(1)
-		MoveMouseTo(32767, 32767)
-		ReleaseMouseButton(1)
+
+	-- 重复 3 次动作，强化拾取成功率
+	for i = 1, 3 do
+		for j = 1, 13 do
+			MoveMouseTo(lastItemCp[1], lastItemCp[2] - itemHeight * (j - 1))
+			PressMouseButton(1)
+			MoveMouseTo(32767, 32767)
+			ReleaseMouseButton(1)
+		end
 	end
+
+	Sleep(10 + pubg.sleep)
 	MoveMouseTo(lastItemCp[1], lastItemCp[2])
 	PressAndReleaseKey("tab")
 end
