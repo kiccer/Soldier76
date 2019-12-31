@@ -30,9 +30,6 @@ userInfo = {
 	-- 自动腰射，不使用自动腰射留空，使用则设置为键盘上按键
 	autoPressAimKey = "",
 
-	-- 是否自动连发 (单发模式变全自动 1 - 开启， 0 - 关闭)
-	-- autoContinuousFiring = 1, -- 默认为 1
-
 	-- 启动控制 (capslock - 使用大写锁定键控制 | numlock - 小键盘锁定键控制 | G_bind - 使用指令控制)
 	startControl = "capslock",
 
@@ -590,7 +587,7 @@ function pubg.init ()
 				pubg.gunOptions[type][gunCount] = pubg[gunName]() -- Get firearms data and add it to the configuration library
 				-- 单独设置连发
 				pubg.gunOptions[type][gunCount].autoContinuousFiring = ({ 0, 0, 1 })[
-					math.max(1, math.min(gunState, 100)) + 1
+					math.max(1, math.min(gunState + 1, 3))
 				]
 				-- all canUse
 				pubg.allCanUse_count = pubg.allCanUse_count + 1 -- Total plus one
@@ -1123,28 +1120,19 @@ function OnEvent (event, arg, family)
 	if event == "MOUSE_BUTTON_PRESSED" and arg >=3 and arg <= 11 and family == "mouse" and pubg.ok then
 		local modifier = "G" .. arg
 		local list = { "lalt", "lctrl", "lshift", "ralt", "rctrl", "rshift" }
+
 		for i = 1, #list do
 			if IsModifierPressed(list[i]) then
 				modifier = list[i] .. " + " .. modifier
 				break
 			end
 		end
-		-- modifier = modifier .. arg -- Get the combination key
-		-- pubg.renderDom.combo_key = modifier -- Save combination keys
-		-- pubg.renderDom.cmd = userInfo.G_bind[modifier] -- Save instruction name
-		-- pubg.runCmd(userInfo.G_bind[modifier]) -- Execution instructions
-		-- pubg.outputLogRender() -- Call log rendering method to output information
-		pubg.modifierHandle(modifier)
-	end
 
-	if event == "G_PRESSED" and arg >=1 and arg <= 12 and pubg.ok then
+		pubg.modifierHandle(modifier)
+	else if event == "G_PRESSED" and arg >=1 and arg <= 12 and pubg.ok then
 		-- if not pubg.runStatus() and userInfo.startControl ~= "G_bind" then return false end
 		local modifier = "F" .. arg
-		-- modifier = modifier .. arg -- Get the combination key
-		-- pubg.renderDom.combo_key = modifier -- Save combination keys
-		-- pubg.renderDom.cmd = userInfo.G_bind[modifier] -- Save instruction name
-		-- pubg.runCmd(userInfo.G_bind[modifier]) -- Execution instructions
-		-- pubg.outputLogRender() -- Call log rendering method to output information
+
 		pubg.modifierHandle(modifier)
 	end
 
