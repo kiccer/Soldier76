@@ -51,24 +51,24 @@ userInfo = {
 	-- 支持的枪械，排列顺序即是配置顺序，可以自行调整，不需要的枪械请设置为 0 ，需要的设置为 1 ，需要单独启用自动连发的设置为 2
 	canUse = {
 		[".45"] = {
-			{ "UMP45", 2 }, -- 基础镜 + 扩容，Bizon (基础镜即可)，Vector (补偿 + 基础镜 + 扩容) | Reddot + Mag，Bizon (Reddot)，Vector (Komp + Reddot + Mag)
-			{ "Tommy Gun", 2 }, -- 扩容 | Mag
+			{ "UMP45", 1 }, -- 基础镜 + 扩容，Bizon (基础镜即可)，Vector (补偿 + 基础镜 + 扩容) | Reddot + Mag，Bizon (Reddot)，Vector (Komp + Reddot + Mag)
+			{ "Tommy Gun", 1 }, -- 扩容 | Mag
 		},
 		["9mm"] = {
-			{ "Vector", 2 }, -- 基础镜 + 扩容 | Reddot + Mag
-			{ "Micro UZI", 2 }, -- 扩容 | Mag
+			{ "Vector", 1 }, -- 基础镜 + 扩容 | Reddot + Mag
+			{ "Micro UZI", 1 }, -- 扩容 | Mag
 		},
 		["5.56"] = {
-			{ "M416", 2 }, -- 补偿 + 基础镜 + 直角 + 枪托 + 扩容 | Komp + Reddot + Triangular grip + Gunstock + Mag
-			{ "SCAR-L", 2 }, -- 补偿 + 基础镜 + 直角 + 扩容 | Komp + Reddot + Triangular grip + Mag
-			{ "QBZ", 2 }, -- 补偿 + 基础镜 + 直角 + 扩容 | Komp + Reddot + Triangular grip + Mag
-			{ "G36C", 2 }, -- 补偿 + 基础镜 + 直角 + 扩容 | Komp + Reddot + Triangular grip + Mag
+			{ "M416", 1 }, -- 补偿 + 基础镜 + 直角 + 枪托 + 扩容 | Komp + Reddot + Triangular grip + Gunstock + Mag
+			{ "SCAR-L", 1 }, -- 补偿 + 基础镜 + 直角 + 扩容 | Komp + Reddot + Triangular grip + Mag
+			{ "QBZ", 1 }, -- 补偿 + 基础镜 + 直角 + 扩容 | Komp + Reddot + Triangular grip + Mag
+			{ "G36C", 1 }, -- 补偿 + 基础镜 + 直角 + 扩容 | Komp + Reddot + Triangular grip + Mag
 			{ "M16A4", 2 }, -- 补偿 + 基础镜 + 枪托 + 扩容 | Komp + Reddot + Gunstock + Mag
 		},
 		["7.62"] = {
-			{ "AKM", 2 }, -- 补偿 + 基础镜 + 扩容 | Komp + Reddot + Mag
-			{ "Beryl M762", 2 }, -- 补偿 + 基础镜 + 直角 + 扩容 | Komp + Reddot + Triangular grip + Mag
-			{ "DP-28", 2 }, -- 基础镜 | Reddot
+			{ "AKM", 1 }, -- 补偿 + 基础镜 + 扩容 | Komp + Reddot + Mag
+			{ "Beryl M762", 1 }, -- 补偿 + 基础镜 + 直角 + 扩容 | Komp + Reddot + Triangular grip + Mag
+			{ "DP-28", 1 }, -- 基础镜 | Reddot
 		},
 	},
 
@@ -187,6 +187,8 @@ userInfo = {
 ----------------------------- [[ 以下是脚本核心代码，非专业人士请勿改动 ]] -----------------------------
 ----------------------------- [[ 以下是脚本核心代码，非专业人士请勿改动 ]] -----------------------------
 ----------------------------- [[ 以下是脚本核心代码，非专业人士请勿改动 ]] -----------------------------
+
+-- internal configuration
 pubg = {
 	gun = {
 		[".45"] = {},
@@ -234,6 +236,11 @@ pubg.renderDom = {
 	cmd = "cmd", -- 指令
 	autoLog = "No operational data yet.\n", -- 压枪过程产生的数据输出
 }
+
+-- alias
+pubg.GD = GetDate -- Setting aliases
+local console = {}
+console.log = function (str) OutputLogMessage(str .. "\n") end
 
 -- 是否开镜或瞄准
 function pubg.isAimingState (mode)
@@ -295,7 +302,7 @@ pubg["SCAR-L"] = function ()
 
 	return pubg.execOptions({
 		ratio = 1,
-		interval = 102,
+		interval = 96,
 		-- autoContinuousFiring = 1,
 		ballistic = {
 			{1, 0},
@@ -303,11 +310,11 @@ pubg["SCAR-L"] = function ()
 			{3, 40},
 			{4, 60},
 			{5, 80},
-			{10, 92},
-			{15, 100},
-			{20, 110},
-			{35, 110},
-			{40, 120},
+			{10, 94},
+			{15, 102},
+			{20, 112},
+			{35, 112},
+			{40, 122},
 		}
 	})
 
@@ -317,20 +324,20 @@ pubg["Beryl M762"] = function ()
 
 	return pubg.execOptions({
 		ratio = 1,
-		interval = 93,
+		interval = 86,
 		-- autoContinuousFiring = 1,
 		ballistic = {
 			{1, 0},
 			{2, 140},
-			{5, 80},
-			{7, 122},
-			{10, 142},
-			{11, 186},
-			{12, 176},
-			{15, 186},
-			{20, 188},
-			{25, 196},
-			{40, 190},
+			{5, 81},
+			{7, 123},
+			{10, 143},
+			{11, 188},
+			{12, 180},
+			{15, 188},
+			{20, 190},
+			{25, 197},
+			{40, 191},
 		}
 	})
 
@@ -340,7 +347,7 @@ pubg["Tommy Gun"] = function ()
 
 	return pubg.execOptions({
 		ratio = 1,
-		interval = 94,
+		interval = 84,
 		-- autoContinuousFiring = 1,
 		ballistic = {
 			{1, 0},
@@ -357,7 +364,7 @@ pubg["G36C"] = function ()
 
 	return pubg.execOptions({
 		ratio = 1,
-		interval = 91,
+		interval = 80,
 		-- autoContinuousFiring = 1,
 		ballistic = {
 			{1, 0},
@@ -376,15 +383,15 @@ pubg["Vector"] = function ()
 
 	return pubg.execOptions({
 		ratio = 1,
-		interval = 61,
+		interval = 55,
 		-- autoContinuousFiring = 1,
 		ballistic = {
 			{1, 0},
 			{5, 52},
 			{10, 72},
-			{15, 87},
-			{25, 119},
-			{33, 116},
+			{15, 90},
+			{25, 122},
+			{33, 124},
 		}
 	})
 
@@ -394,7 +401,7 @@ pubg["Micro UZI"] = function ()
 
 	return pubg.execOptions({
 		ratio = 1,
-		interval = 56,
+		interval = 46,
 		-- autoContinuousFiring = 1,
 		ballistic = {
 			{1, 0},
@@ -413,14 +420,14 @@ pubg["UMP45"] = function ()
 
 	return pubg.execOptions({
 		ratio = 1,
-		interval = 100,
+		interval = 94,
 		-- autoContinuousFiring = 1,
 		ballistic = {
 			{1, 0},
-			{5, 69},
-			{10, 93},
-			{15, 94},
-			{35, 101},
+			{5, 70},
+			{10, 94},
+			{15, 97},
+			{35, 106},
 		}
 	})
 
@@ -430,15 +437,17 @@ pubg["AKM"] = function ()
 
 	return pubg.execOptions({
 		ratio = 1,
-		interval = 107,
+		interval = 99,
 		-- autoContinuousFiring = 1,
 		ballistic = {
 			{1, 0},
-			{2, 157},
-			{5, 91},
-			{10, 100},
-			{35, 126},
-			{40, 124},
+			{2, 149},
+			{5, 93},
+			{10, 104},
+			{15, 140},
+			{25, 145},
+			{35, 146},
+			{40, 147},
 		}
 	})
 
@@ -448,17 +457,19 @@ pubg["M416"] = function ()
 
 	return pubg.execOptions({
 		ratio = 1,
-		interval = 93,
+		interval = 85,
 		-- autoContinuousFiring = 1,
 		ballistic = {
 			{1, 0},
-			{2, 132},
-			{3, 62},
+			{2, 131},
+			{3, 61},
 			{5, 68},
-			{8, 90},
-			{25, 103},
-			{30, 108},
-			{40, 102},
+			{8, 89},
+			{15, 105},
+			{20, 106},
+			{25, 110},
+			{30, 119},
+			{40, 120},
 		}
 	})
 
@@ -468,7 +479,7 @@ pubg["QBZ"] = function ()
 
 	return pubg.execOptions({
 		ratio = 1,
-		interval = 99,
+		interval = 87,
 		-- autoContinuousFiring = 1,
 		ballistic = {
 			{1, 0},
@@ -488,7 +499,7 @@ pubg["DP-28"] = function ()
 
 	return pubg.execOptions({
 		ratio = 1,
-		interval = 116,
+		interval = 100,
 		-- autoContinuousFiring = 1,
 		ballistic = {
 			{1, 0},
@@ -978,7 +989,7 @@ function pubg.outputLogRender ()
 		pubg.renderDom.separator,
 	})
 	ClearLog()
-	OutputLogMessage(resStr)
+	console.log(resStr)
 end
 
 --[[ Output switching table ]]
@@ -1112,7 +1123,7 @@ function OnEvent (event, arg, family)
 	if not pubg.ok then return false end
 
 	-- OutputLogMessage("event = %s, arg = %s, family = %s\n", event, arg, family)
-	-- OutputLogMessage("event = " .. event .. ", arg = " .. arg .. ", family = " .. family .. "\n")
+	-- console.log("event = " .. event .. ", arg = " .. arg .. ", family = " .. family)
 
 	pubg.OnEvent_NoRecoil(event, arg, family)
 
@@ -1129,7 +1140,7 @@ function OnEvent (event, arg, family)
 		end
 
 		pubg.modifierHandle(modifier)
-	else if event == "G_PRESSED" and arg >=1 and arg <= 12 and pubg.ok then
+	elseif event == "G_PRESSED" and arg >=1 and arg <= 12 and pubg.ok then
 		-- if not pubg.runStatus() and userInfo.startControl ~= "G_bind" then return false end
 		local modifier = "F" .. arg
 
@@ -1149,6 +1160,8 @@ function OnEvent (event, arg, family)
 end
 
 --[[ tools ]]
+
+-- split function
 function string.split (str, delim)
 	if string.find(str, delim) == nil then
 		return { str }
@@ -1170,9 +1183,27 @@ function string.split (str, delim)
 	return result
 end
 
+-- Javascript Array.prototype.reduce
+function table.reduce (t, c)
+	local res = c(t[1], t[2])
+	for i = 3, #t do res = c(res, t[i]) end
+	return res
+end
+
+-- Javascript Array.prototype.map
+function table.map (t, c)
+	local res = {}
+	for i = 1, #t do res[i] = c(t[i], i) end
+	return res
+end
+
+-- Javascript Array.prototype.forEach
+function table.forEach (t, c)
+	for i = 1, #t do c(t[i], i) end
+end
+
 --[[ Other ]]
 EnablePrimaryMouseButtonEvents(true) -- Enable left mouse button event reporting
-pubg.GD = GetDate -- Setting aliases
 pubg.ok = pubg.isEffective
 pubg.init() -- Script initialization
 
