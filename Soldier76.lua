@@ -187,6 +187,13 @@ userInfo = {
 ----------------------------- [[ 以下是脚本核心代码，非专业人士请勿改动 ]] -----------------------------
 ----------------------------- [[ 以下是脚本核心代码，非专业人士请勿改动 ]] -----------------------------
 ----------------------------- [[ 以下是脚本核心代码，非专业人士请勿改动 ]] -----------------------------
+
+-- alias
+pubg.GD = GetDate -- Setting aliases
+local console = {}
+console.log = function (str) OutputLogMessage(str .. "\n") end
+
+-- internal configuration
 pubg = {
 	gun = {
 		[".45"] = {},
@@ -978,7 +985,7 @@ function pubg.outputLogRender ()
 		pubg.renderDom.separator,
 	})
 	ClearLog()
-	OutputLogMessage(resStr)
+	console.log(resStr)
 end
 
 --[[ Output switching table ]]
@@ -1112,7 +1119,7 @@ function OnEvent (event, arg, family)
 	if not pubg.ok then return false end
 
 	-- OutputLogMessage("event = %s, arg = %s, family = %s\n", event, arg, family)
-	-- OutputLogMessage("event = " .. event .. ", arg = " .. arg .. ", family = " .. family .. "\n")
+	-- console.log("event = " .. event .. ", arg = " .. arg .. ", family = " .. family)
 
 	pubg.OnEvent_NoRecoil(event, arg, family)
 
@@ -1149,6 +1156,8 @@ function OnEvent (event, arg, family)
 end
 
 --[[ tools ]]
+
+-- split function
 function string.split (str, delim)
 	if string.find(str, delim) == nil then
 		return { str }
@@ -1170,9 +1179,27 @@ function string.split (str, delim)
 	return result
 end
 
+-- Javascript Array.prototype.reduce
+function table.reduce (t, c)
+	local res = c(t[1], t[2])
+	for i = 3, #t do res = c(res, t[i]) end
+	return res
+end
+
+-- Javascript Array.prototype.map
+function table.map (t, c)
+	local res = {}
+	for i = 1, #t do res[i] = c(t[i], i) end
+	return res
+end
+
+-- Javascript Array.prototype.forEach
+function table.forEach (t, c)
+	for i = 1, #t do c(t[i], i) end
+end
+
 --[[ Other ]]
 EnablePrimaryMouseButtonEvents(true) -- Enable left mouse button event reporting
-pubg.GD = GetDate -- Setting aliases
 pubg.ok = pubg.isEffective
 pubg.init() -- Script initialization
 
