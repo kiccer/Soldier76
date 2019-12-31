@@ -1136,7 +1136,7 @@ function OnEvent (event, arg, family)
 		end
 
 		pubg.modifierHandle(modifier)
-	else if event == "G_PRESSED" and arg >=1 and arg <= 12 and pubg.ok then
+	elseif event == "G_PRESSED" and arg >=1 and arg <= 12 and pubg.ok then
 		-- if not pubg.runStatus() and userInfo.startControl ~= "G_bind" then return false end
 		local modifier = "F" .. arg
 
