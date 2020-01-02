@@ -1202,6 +1202,73 @@ function table.forEach (t, c)
 	for i = 1, #t do c(t[i], i) end
 end
 
+--[[
+	* 打印 table
+	* @param  {any} val     传入值
+	* @return {str}         格式化后的文本
+]]
+function table.print (val)
+	if type(val) == "nil" then return type(val) end
+
+	local function loop (val, keyType, _indent)
+		if not val then return end
+		_indent = _indent or 1
+		keyType = keyType or "string"
+		local res = ""
+		local indentStr = "     " -- 缩进空格
+		local indent = string.rep(indentStr, _indent)
+		local end_indent = string.rep(indentStr, _indent - 1)
+		local putline = function (...)
+			res = table.concat({ res, ... })
+		end
+
+		if type(val) == "table" then
+			putline("{ ")
+
+			if #val > 0 then
+				local index = 0
+				for k, v in pairs(val) do
+					index = index + 1
+					if type(v) == "table" then
+						if index == 1 then putline("\n") end
+						putline(indent, loop(v, type(k), _indent + 1), "\n")
+						if index == #val then putline(end_indent) end
+					else
+						putline(loop(v, type(k), _indent + 1))
+					end
+				end
+			else
+				putline("\n")
+				for k, v in pairs(val) do
+					putline(indent, k, " = ", loop(v, type(k), _indent + 1), "\n")
+				end
+				putline(end_indent)
+			end
+
+			putline("}, ")
+		elseif type(val) == "string" then
+			putline("\"", val, "\", ")
+		elseif type(val) == "boolean" then
+			putline((val and {"true"} or {"false"})[1], ", ")
+		elseif type(val) == "function" then
+			putline(tostring(val), ", ")
+		elseif type(val) == "nil" then
+			putline("nil, ")
+		else
+			putline(val, ", ")
+		end
+
+		return res
+	end
+
+	local res = loop(val)
+	res = string.gsub(res, ",(%s*})", "%1")
+	res = string.gsub(res, ",(%s*)$", "%1")
+	res = string.gsub(res, "{$s+}", "{}")
+
+	return res
+end
+
 --[[ Other ]]
 EnablePrimaryMouseButtonEvents(true) -- Enable left mouse button event reporting
 pubg.ok = pubg.isEffective
