@@ -1264,7 +1264,7 @@ function table.print (val)
 	local res = loop(val)
 	res = string.gsub(res, ",(%s*})", "%1")
 	res = string.gsub(res, ",(%s*)$", "%1")
-	res = string.gsub(res, "{$s+}", "{}")
+	res = string.gsub(res, "{%s+}", "{}")
 
 	return res
 end
