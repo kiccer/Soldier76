@@ -237,11 +237,6 @@ pubg.renderDom = {
 	autoLog = "No operational data yet.\n", -- 压枪过程产生的数据输出
 }
 
--- alias
-pubg.GD = GetDate -- Setting aliases
-local console = {}
-console.log = function (str) OutputLogMessage(str .. "\n") end
-
 -- 是否开镜或瞄准
 function pubg.isAimingState (mode)
 	local switch = {
@@ -282,7 +277,6 @@ pubg["M16A4"] = function ()
 	return pubg.execOptions({
 		ratio = 1,
 		interval = 108,
-		-- autoContinuousFiring = 1,
 		ballistic = {
 			{1, 0},
 			{2, 140},
@@ -303,7 +297,6 @@ pubg["SCAR-L"] = function ()
 	return pubg.execOptions({
 		ratio = 1,
 		interval = 96,
-		-- autoContinuousFiring = 1,
 		ballistic = {
 			{1, 0},
 			{2, 140},
@@ -312,8 +305,6 @@ pubg["SCAR-L"] = function ()
 			{5, 80},
 			{10, 94},
 			{15, 102},
-			{20, 112},
-			{35, 112},
 			{40, 122},
 		}
 	})
@@ -325,7 +316,6 @@ pubg["Beryl M762"] = function ()
 	return pubg.execOptions({
 		ratio = 1,
 		interval = 86,
-		-- autoContinuousFiring = 1,
 		ballistic = {
 			{1, 0},
 			{2, 140},
@@ -348,7 +338,6 @@ pubg["Tommy Gun"] = function ()
 	return pubg.execOptions({
 		ratio = 1,
 		interval = 84,
-		-- autoContinuousFiring = 1,
 		ballistic = {
 			{1, 0},
 			{5, 71},
@@ -365,7 +354,6 @@ pubg["G36C"] = function ()
 	return pubg.execOptions({
 		ratio = 1,
 		interval = 80,
-		-- autoContinuousFiring = 1,
 		ballistic = {
 			{1, 0},
 			{2, 135},
@@ -384,7 +372,6 @@ pubg["Vector"] = function ()
 	return pubg.execOptions({
 		ratio = 1,
 		interval = 55,
-		-- autoContinuousFiring = 1,
 		ballistic = {
 			{1, 0},
 			{5, 52},
@@ -402,7 +389,6 @@ pubg["Micro UZI"] = function ()
 	return pubg.execOptions({
 		ratio = 1,
 		interval = 46,
-		-- autoContinuousFiring = 1,
 		ballistic = {
 			{1, 0},
 			{2, 80},
@@ -421,7 +407,6 @@ pubg["UMP45"] = function ()
 	return pubg.execOptions({
 		ratio = 1,
 		interval = 94,
-		-- autoContinuousFiring = 1,
 		ballistic = {
 			{1, 0},
 			{5, 70},
@@ -438,7 +423,6 @@ pubg["AKM"] = function ()
 	return pubg.execOptions({
 		ratio = 1,
 		interval = 99,
-		-- autoContinuousFiring = 1,
 		ballistic = {
 			{1, 0},
 			{2, 149},
@@ -458,7 +442,6 @@ pubg["M416"] = function ()
 	return pubg.execOptions({
 		ratio = 1,
 		interval = 85,
-		-- autoContinuousFiring = 1,
 		ballistic = {
 			{1, 0},
 			{2, 131},
@@ -480,7 +463,6 @@ pubg["QBZ"] = function ()
 	return pubg.execOptions({
 		ratio = 1,
 		interval = 87,
-		-- autoContinuousFiring = 1,
 		ballistic = {
 			{1, 0},
 			{2, 125},
@@ -500,7 +482,6 @@ pubg["DP-28"] = function ()
 	return pubg.execOptions({
 		ratio = 1,
 		interval = 100,
-		-- autoContinuousFiring = 1,
 		ballistic = {
 			{1, 0},
 			{7, 106},
@@ -1155,6 +1136,7 @@ function OnEvent (event, arg, family)
 		ReleaseKey("rshift")
 		ReleaseKey("rctrl")
 		ReleaseKey("ralt")
+		ClearLog()
 	end
 
 end
@@ -1162,25 +1144,23 @@ end
 --[[ tools ]]
 
 -- split function
-function string.split (str, delim)
-	if string.find(str, delim) == nil then
-		return { str }
+function string.split (str, s)
+	if string.find(str, s) == nil then return { str } end
+
+	local res = {}
+	local reg = "(.-)" .. s .. "()"
+	local index = 0
+	local last_i
+
+	for n, i in string.gfind(str, reg) do
+		index = index + 1
+		res[index] = n
+		last_i = i
 	end
 
-	local result = {}
-	local pat = "(.-)" .. delim .. "()"
-	local nb = 0
-	local lastPos
+	res[index + 1] = string.sub(str, last_i)
 
-	for part, pos in string.gfind(str, pat) do
-		nb = nb + 1
-		result[nb] = part
-		lastPos = pos
-	end
-
-	result[nb + 1] = string.sub(str, lastPos)
-
-	return result
+	return res
 end
 
 -- Javascript Array.prototype.reduce
@@ -1269,8 +1249,15 @@ function table.print (val)
 	return res
 end
 
+-- console
+local console = {}
+function console.log (str)
+	OutputLogMessage(table.print(str) .. "\n")
+end
+
 --[[ Other ]]
 EnablePrimaryMouseButtonEvents(true) -- Enable left mouse button event reporting
+pubg.GD = GetDate -- Setting aliases
 pubg.ok = pubg.isEffective
 pubg.init() -- Script initialization
 
