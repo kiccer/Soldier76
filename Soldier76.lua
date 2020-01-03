@@ -237,11 +237,6 @@ pubg.renderDom = {
 	autoLog = "No operational data yet.\n", -- 压枪过程产生的数据输出
 }
 
--- alias
-pubg.GD = GetDate -- Setting aliases
-local console = {}
-console.log = function (str) OutputLogMessage(str .. "\n") end
-
 -- 是否开镜或瞄准
 function pubg.isAimingState (mode)
 	local switch = {
@@ -282,7 +277,6 @@ pubg["M16A4"] = function ()
 	return pubg.execOptions({
 		ratio = 1,
 		interval = 108,
-		-- autoContinuousFiring = 1,
 		ballistic = {
 			{1, 0},
 			{2, 140},
@@ -303,7 +297,6 @@ pubg["SCAR-L"] = function ()
 	return pubg.execOptions({
 		ratio = 1,
 		interval = 96,
-		-- autoContinuousFiring = 1,
 		ballistic = {
 			{1, 0},
 			{2, 140},
@@ -312,8 +305,6 @@ pubg["SCAR-L"] = function ()
 			{5, 80},
 			{10, 94},
 			{15, 102},
-			{20, 112},
-			{35, 112},
 			{40, 122},
 		}
 	})
@@ -325,7 +316,6 @@ pubg["Beryl M762"] = function ()
 	return pubg.execOptions({
 		ratio = 1,
 		interval = 86,
-		-- autoContinuousFiring = 1,
 		ballistic = {
 			{1, 0},
 			{2, 140},
@@ -348,7 +338,6 @@ pubg["Tommy Gun"] = function ()
 	return pubg.execOptions({
 		ratio = 1,
 		interval = 84,
-		-- autoContinuousFiring = 1,
 		ballistic = {
 			{1, 0},
 			{5, 71},
@@ -365,7 +354,6 @@ pubg["G36C"] = function ()
 	return pubg.execOptions({
 		ratio = 1,
 		interval = 80,
-		-- autoContinuousFiring = 1,
 		ballistic = {
 			{1, 0},
 			{2, 135},
@@ -384,7 +372,6 @@ pubg["Vector"] = function ()
 	return pubg.execOptions({
 		ratio = 1,
 		interval = 55,
-		-- autoContinuousFiring = 1,
 		ballistic = {
 			{1, 0},
 			{5, 52},
@@ -402,7 +389,6 @@ pubg["Micro UZI"] = function ()
 	return pubg.execOptions({
 		ratio = 1,
 		interval = 46,
-		-- autoContinuousFiring = 1,
 		ballistic = {
 			{1, 0},
 			{2, 80},
@@ -421,7 +407,6 @@ pubg["UMP45"] = function ()
 	return pubg.execOptions({
 		ratio = 1,
 		interval = 94,
-		-- autoContinuousFiring = 1,
 		ballistic = {
 			{1, 0},
 			{5, 70},
@@ -438,7 +423,6 @@ pubg["AKM"] = function ()
 	return pubg.execOptions({
 		ratio = 1,
 		interval = 99,
-		-- autoContinuousFiring = 1,
 		ballistic = {
 			{1, 0},
 			{2, 149},
@@ -458,7 +442,6 @@ pubg["M416"] = function ()
 	return pubg.execOptions({
 		ratio = 1,
 		interval = 85,
-		-- autoContinuousFiring = 1,
 		ballistic = {
 			{1, 0},
 			{2, 131},
@@ -480,7 +463,6 @@ pubg["QBZ"] = function ()
 	return pubg.execOptions({
 		ratio = 1,
 		interval = 87,
-		-- autoContinuousFiring = 1,
 		ballistic = {
 			{1, 0},
 			{2, 125},
@@ -500,7 +482,6 @@ pubg["DP-28"] = function ()
 	return pubg.execOptions({
 		ratio = 1,
 		interval = 100,
-		-- autoContinuousFiring = 1,
 		ballistic = {
 			{1, 0},
 			{7, 106},
@@ -571,7 +552,6 @@ function pubg.execOptions (options)
 		amount = #ballisticConfig2, -- Number of bullets
 		interval = options.interval, -- Time of each bullet
 		ballistic = ballisticConfig2, -- ballistic data
-		-- autoContinuousFiring = options.autoContinuousFiring
 	}
 
 end
@@ -615,6 +595,7 @@ function pubg.init ()
 	-- Initial setting of random number seeds
 	pubg.SetRandomseed()
 	pubg.outputLogRender()
+	-- console.log(pubg)
 
 end
 
@@ -989,7 +970,7 @@ function pubg.outputLogRender ()
 		pubg.renderDom.separator,
 	})
 	ClearLog()
-	console.log(resStr)
+	OutputLogMessage(resStr)
 end
 
 --[[ Output switching table ]]
@@ -1155,6 +1136,7 @@ function OnEvent (event, arg, family)
 		ReleaseKey("rshift")
 		ReleaseKey("rctrl")
 		ReleaseKey("ralt")
+		ClearLog()
 	end
 
 end
@@ -1162,25 +1144,23 @@ end
 --[[ tools ]]
 
 -- split function
-function string.split (str, delim)
-	if string.find(str, delim) == nil then
-		return { str }
+function string.split (str, s)
+	if string.find(str, s) == nil then return { str } end
+
+	local res = {}
+	local reg = "(.-)" .. s .. "()"
+	local index = 0
+	local last_i
+
+	for n, i in string.gfind(str, reg) do
+		index = index + 1
+		res[index] = n
+		last_i = i
 	end
 
-	local result = {}
-	local pat = "(.-)" .. delim .. "()"
-	local nb = 0
-	local lastPos
+	res[index + 1] = string.sub(str, last_i)
 
-	for part, pos in string.gfind(str, pat) do
-		nb = nb + 1
-		result[nb] = part
-		lastPos = pos
-	end
-
-	result[nb + 1] = string.sub(str, lastPos)
-
-	return result
+	return res
 end
 
 -- Javascript Array.prototype.reduce
@@ -1202,8 +1182,91 @@ function table.forEach (t, c)
 	for i = 1, #t do c(t[i], i) end
 end
 
+--[[
+	* 打印 table
+	* @param  {any} val     传入值
+	* @return {str}         格式化后的文本
+]]
+function table.print (val)
+	if type(val) == "nil" then return type(val) end
+
+	local function loop (val, keyType, _indent)
+		if not val then return end
+		_indent = _indent or 1
+		keyType = keyType or "string"
+		local res = ""
+		local indentStr = "     " -- 缩进空格
+		local indent = string.rep(indentStr, _indent)
+		local end_indent = string.rep(indentStr, _indent - 1)
+		local putline = function (...)
+			local arr = { res, ... }
+			for i = 1, #arr do arr[i] = tostring(arr[i]) end
+			res = table.concat(arr)
+		end
+
+		if type(val) == "table" then
+			putline("{ ")
+
+			if #val > 0 then
+				local index = 0
+				for k, v in pairs(val) do
+					index = index + 1
+					if type(v) == "table" then
+						if index == 1 then putline("\n") end
+						putline(indent, loop(v, type(k), _indent + 1), "\n")
+						if index == #val then putline(end_indent) end
+					else
+						putline(loop(v, type(k), _indent + 1))
+					end
+				end
+			else
+				putline("\n")
+				for k, v in pairs(val) do
+					putline(indent, k, " = ", loop(v, type(k), _indent + 1), "\n")
+				end
+				putline(end_indent)
+			end
+
+			putline("}, ")
+		elseif type(val) == "string" then
+			val = string.gsub(val, "\a", "\\a") -- 响铃(BEL)
+			val = string.gsub(val, "\b", "\\b") -- 退格(BS),将当前位置移到前一列
+			val = string.gsub(val, "\f", "\\f") -- 换页(FF),将当前位置移到下页开头
+			val = string.gsub(val, "\n", "\\n") -- 换行(LF),将当前位置移到下一行开头
+			val = string.gsub(val, "\r", "\\r") -- 回车(CR),将当前位置移到本行开头
+			val = string.gsub(val, "\t", "\\t") -- 水平指标(HT),(调用下一个TAB位置)
+			val = string.gsub(val, "\v", "\\v") -- 垂直指标(VT)
+			putline("\"", val, "\", ")
+		elseif type(val) == "boolean" then
+			putline((val and {"true"} or {"false"})[1], ", ")
+		elseif type(val) == "function" then
+			putline(tostring(val), ", ")
+		elseif type(val) == "nil" then
+			putline("nil, ")
+		else
+			putline(val, ", ")
+		end
+
+		return res
+	end
+
+	local res = loop(val)
+	res = string.gsub(res, ",(%s*})", "%1")
+	res = string.gsub(res, ",(%s*)$", "%1")
+	res = string.gsub(res, "{%s+}", "{}")
+
+	return res
+end
+
+-- console
+console = {}
+function console.log (str)
+	OutputLogMessage(table.print(str) .. "\n")
+end
+
 --[[ Other ]]
 EnablePrimaryMouseButtonEvents(true) -- Enable left mouse button event reporting
+pubg.GD = GetDate -- Setting aliases
 pubg.ok = pubg.isEffective
 pubg.init() -- Script initialization
 
