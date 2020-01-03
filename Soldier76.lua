@@ -552,7 +552,6 @@ function pubg.execOptions (options)
 		amount = #ballisticConfig2, -- Number of bullets
 		interval = options.interval, -- Time of each bullet
 		ballistic = ballisticConfig2, -- ballistic data
-		-- autoContinuousFiring = options.autoContinuousFiring
 	}
 
 end
@@ -596,6 +595,7 @@ function pubg.init ()
 	-- Initial setting of random number seeds
 	pubg.SetRandomseed()
 	pubg.outputLogRender()
+	-- console.log(pubg)
 
 end
 
@@ -970,7 +970,7 @@ function pubg.outputLogRender ()
 		pubg.renderDom.separator,
 	})
 	ClearLog()
-	console.log(resStr)
+	OutputLogMessage(resStr)
 end
 
 --[[ Output switching table ]]
@@ -1199,7 +1199,9 @@ function table.print (val)
 		local indent = string.rep(indentStr, _indent)
 		local end_indent = string.rep(indentStr, _indent - 1)
 		local putline = function (...)
-			res = table.concat({ res, ... })
+			local arr = { res, ... }
+			for i = 1, #arr do arr[i] = tostring(arr[i]) end
+			res = table.concat(arr)
 		end
 
 		if type(val) == "table" then
@@ -1227,6 +1229,13 @@ function table.print (val)
 
 			putline("}, ")
 		elseif type(val) == "string" then
+			val = string.gsub(val, "\a", "\\a") -- 响铃(BEL)
+			val = string.gsub(val, "\b", "\\b") -- 退格(BS),将当前位置移到前一列
+			val = string.gsub(val, "\f", "\\f") -- 换页(FF),将当前位置移到下页开头
+			val = string.gsub(val, "\n", "\\n") -- 换行(LF),将当前位置移到下一行开头
+			val = string.gsub(val, "\r", "\\r") -- 回车(CR),将当前位置移到本行开头
+			val = string.gsub(val, "\t", "\\t") -- 水平指标(HT),(调用下一个TAB位置)
+			val = string.gsub(val, "\v", "\\v") -- 垂直指标(VT)
 			putline("\"", val, "\", ")
 		elseif type(val) == "boolean" then
 			putline((val and {"true"} or {"false"})[1], ", ")
@@ -1250,7 +1259,7 @@ function table.print (val)
 end
 
 -- console
-local console = {}
+console = {}
 function console.log (str)
 	OutputLogMessage(table.print(str) .. "\n")
 end
