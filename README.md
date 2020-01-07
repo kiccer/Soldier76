@@ -232,9 +232,22 @@ G键 | 功能
 
 ### 关于宏
 * 宏就像是一个心灵手巧的瞎子
-* 它可以帮你做更复杂细腻的操作
+* 它能帮你做更复杂细腻的操作
 * 但无法根据实时情况进行变通
 * 所以菜的人依旧菜得真实……
+
+### 关于游戏公平性问题
+我赞同 [@liantian-cn](https://github.com/liantian-cn/logitech-pubg/tree/f816d1da3e2d5cf82708bf4225b4cf3f03c06332#q2-%E6%80%8E%E4%B9%88%E7%9C%8B%E5%BE%85%E9%BC%A0%E6%A0%87%E5%AE%8F) 的观点。
+
+> 用4000块的显示器打赢显示器是400块的对手，有人说不公平吗？用一万块的显卡打赢显卡是一千块的对手，有人说不公平吗？为什么用几百块的鼠标打赢鼠标是几十块的对手，就有人要说是不公平，是作弊呢？
+>
+> 明明好的显示器和好的显卡对游戏水平的影响比一个鼠标宏要大的多，为什么偏偏认为是鼠标宏不公平？
+>
+> 杠精会说，你可以用几百块的鼠标，鼠标给你提供了宏的功能，但是你有权不使用。那么我也可以说，4000块的显示器给了你144Hz以及2K甚至4K的显示分辨率，你也有权不使用，你可以改回60Hz和1080p，显卡也是一样。
+>
+> 出于一些人的偏见，我不得不说清楚这些。鼠标宏无罪，菜是原罪。认为别人使用鼠标宏破坏了你的游戏体验的人，请你们尝试过了鼠标宏之后再来回答。它没你们臆想的那么神。
+>
+> **鼠标宏只是你学自行车时的辅助轮**，在你学会了之后只会想把它拆掉，就这么简单。
 
 ### Need help
 My English is not very good, and the translation results of translation software are usually very strange. So I need a translator to help me translate this document into other languages. If you can, please contact me.
