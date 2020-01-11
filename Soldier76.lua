@@ -1130,6 +1130,7 @@ function OnEvent (event, arg, family)
 
 	-- Script deactivated event
 	if event == "PROFILE_DEACTIVATED" then
+		EnablePrimaryMouseButtonEvents(false)
 		ReleaseKey("lshift")
 		ReleaseKey("lctrl")
 		ReleaseKey("lalt")
@@ -1188,10 +1189,8 @@ end
 	* @return {str}         格式化后的文本
 ]]
 function table.print (val)
-	if type(val) == "nil" then return type(val) end
 
 	local function loop (val, keyType, _indent)
-		if not val then return end
 		_indent = _indent or 1
 		keyType = keyType or "string"
 		local res = ""
@@ -1200,7 +1199,9 @@ function table.print (val)
 		local end_indent = string.rep(indentStr, _indent - 1)
 		local putline = function (...)
 			local arr = { res, ... }
-			for i = 1, #arr do arr[i] = tostring(arr[i]) end
+			for i = 1, #arr do
+				if type(arr[i]) ~= "string" then arr[i] = tostring(arr[i]) end
+			end
 			res = table.concat(arr)
 		end
 
@@ -1209,16 +1210,32 @@ function table.print (val)
 
 			if #val > 0 then
 				local index = 0
-				for k, v in pairs(val) do
-					index = index + 1
-					if type(v) == "table" then
-						if index == 1 then putline("\n") end
-						putline(indent, loop(v, type(k), _indent + 1), "\n")
-						if index == #val then putline(end_indent) end
-					else
-						putline(loop(v, type(k), _indent + 1))
+				local block = false
+
+				for i = 1, #val do
+					local n = val[i]
+					if type(n) == "table" or type(n) == "function" then
+						block = true
+						break
 					end
 				end
+
+				if block then
+					for i = 1, #val do
+						local n = val[i]
+						index = index + 1
+						if index == 1 then putline("\n") end
+						putline(indent, loop(n, type(i), _indent + 1), "\n")
+						if index == #val then putline(end_indent) end
+					end
+				else
+					for i = 1, #val do
+						local n = val[i]
+						index = index + 1
+						putline(loop(n, type(i), _indent + 1))
+					end
+				end
+
 			else
 				putline("\n")
 				for k, v in pairs(val) do
@@ -1238,7 +1255,7 @@ function table.print (val)
 			val = string.gsub(val, "\v", "\\v") -- 垂直指标(VT)
 			putline("\"", val, "\", ")
 		elseif type(val) == "boolean" then
-			putline((val and {"true"} or {"false"})[1], ", ")
+			putline(val and "true, " or "false, ")
 		elseif type(val) == "function" then
 			putline(tostring(val), ", ")
 		elseif type(val) == "nil" then
