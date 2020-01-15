@@ -794,6 +794,39 @@ function pubg.runStatus ()
 	end
 end
 
+--[[ 一键舔包，仅拾取进背包的物品，无法拾取需穿戴的物品 ]]
+function pubg.fastLickBox ()
+	PressAndReleaseKey("lshift")
+	PressAndReleaseKey("lctrl")
+	PressAndReleaseKey("lalt")
+	PressAndReleaseKey("rshift")
+	PressAndReleaseKey("rctrl")
+	PressAndReleaseKey("ralt")
+	PressAndReleaseKey("tab")
+	Sleep(10 + pubg.sleep)
+	PressAndReleaseMouseButton(1)
+
+	local lastItemCp = {
+		300 / 2560 * 65535,
+		1210 / 1440 * 65535
+	}
+	local itemHeight = 83 / 1440 * 65535
+
+	-- 重复 3 次动作，强化拾取成功率
+	for i = 1, 3 do
+		for j = 1, 13 do
+			MoveMouseTo(lastItemCp[1], lastItemCp[2] - itemHeight * (j - 1))
+			PressMouseButton(1)
+			-- MoveMouseTo(32767, 32767) -- 修改为背包的坐标
+			ReleaseMouseButton(1)
+		end
+	end
+
+	Sleep(10 + pubg.sleep)
+	MoveMouseTo(lastItemCp[1], lastItemCp[2])
+	PressAndReleaseKey("tab")
+end
+
 --[[ 一键拾取功能，支持所有分辨率 ]]
 function pubg.fastPickup ()
 	PressAndReleaseKey("lshift")
@@ -935,6 +968,7 @@ function pubg.runCmd (cmd)
 		["last_in_canUse"] = pubg.findInCanUse,
 		["fast_pickup"] = pubg.fastPickup,
 		["fast_discard"] = pubg.fastDiscard,
+		["fast_lick_box"] = pubg.fastLickBox,
 		["off"] = function ()
 			pubg.changeIsStart(false)
 		end,
