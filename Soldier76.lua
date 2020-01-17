@@ -828,7 +828,7 @@ function pubg.fastLickBox ()
 		for j = 1, 13 do
 			MoveMouseTo(lastItemCp[1], lastItemCp[2] - itemHeight * (j - 1))
 			PressMouseButton(1)
-			-- MoveMouseTo(32767, 32767) -- 修改为背包的坐标
+			MoveMouseTo(670 / 2560 * 65535, 710 / 1440 * 65535) -- 修改为背包的坐标
 			ReleaseMouseButton(1)
 		end
 	end
