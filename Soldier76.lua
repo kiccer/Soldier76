@@ -3,37 +3,45 @@
 ------------------------------------------ [[ 玩家自定义 ]] ------------------------------------------
 -- 推荐边查阅帮助文档，边对下列内容进行修改。
 -- 参考地址: https://github.com/kiccer/Soldier76#%E5%88%9D%E6%AC%A1%E4%BD%BF%E7%94%A8
+-- It is recommended to review the help documents and modify the following contents.
 userInfo = {
 
 	-- 是否输出调试信息，关闭后可以减小 CPU 计算压力。建议调试时开启，调试完毕后关闭。(1 - 开启 | 0 - 关闭)
+	-- Whether to output debugging information, the CPU calculation pressure can be reduced after close.
+	-- It is recommended to turn it on during debugging and turn it off after debugging.
+	-- (0 - Disable | 1 - Enable)
 	debug = 1,
 
 	-- CPU 负载等级，建议输入 1 ~ 30 之间的数字，不能小于 1 。值越小，压枪效果越好，值越大，帧数越高。(过分掉帧会直接影响压枪效果，请在保证帧数的情况下减小该值)
+	-- CPU load level, It is recommended to enter a number between 1 and 30, cannot be less than 1.
+	-- The lower the value is, the better the effect is, the higher the value, the higher the number of frames.
+	-- (excessive frame dropping will directly affect the gun pressing effect, please reduce the value while ensuring the frame number)
 	cpuLoad = 2,
 
-	-- 灵敏度调整
+	-- 灵敏度调整 | Sensitivity adjustment
 	sensitivity = {
-		-- 开镜
+		-- 开镜 | sighting mirror
 		ADS = 100,
-		-- 腰射
+		-- 腰射 | take aim
 		Aim = 0.55,
-		-- 二倍
+		-- 二倍 | twice scope
 		scopeX2 = 1.3,
-		-- 三倍
+		-- 三倍 | trebling scope
 		scopeX3 = 1.3,
-		-- 四倍
+		-- 四倍 | quadruple scope
 		scopeX4 = 3.9,
-		-- 六倍
+		-- 六倍 | sixfold scope
 		scopeX6 = 2.3,
 	},
 
 	-- 自动腰射，不使用自动腰射留空，使用则设置为键盘上按键
+	-- Auto aim, leave blank without auto aim, set as the key on the keyboard when using.
 	autoPressAimKey = "",
 
-	-- 启动控制 (capslock - 使用大写锁定键控制 | numlock - 小键盘锁定键控制 | G_bind - 使用指令控制)
+	-- 启动控制 (capslock - 使用大写锁定键控制 | numlock - 小键盘锁定键控制 | G_bind - 使用指令控制) | Start up control
 	startControl = "capslock",
 
-	-- 瞄准设置 (default - 使用游戏默认设置 | recommend - 使用脚本推荐设置 | custom - 自定义设置)
+	-- 瞄准设置 (default - 使用游戏默认设置 | recommend - 使用脚本推荐设置 | custom - 自定义设置) | Aiming setting
 	aimingSettings = "recommend",
 
 	-- 当 aimingSettings = "custom" ，需要在此处设置自定义判断条件，通常配合 IsMouseButtonPressed 或 IsModifierPressed 使用，使用方法请查阅 G-series Lua API 参考文档.docx
@@ -48,7 +56,9 @@ userInfo = {
 		end,
 	},
 
-	-- 支持的枪械，排列顺序即是配置顺序，可以自行调整，不需要的枪械请设置为 0 ，需要的设置为 1 ，需要单独启用自动连发的设置为 2
+	-- 支持的枪械，排列顺序即是配置顺序，可以自行调整。启用设置：0 - 不启用 | 1 - 启用 | 2 - 启用并开启连发功能
+	-- The arrangement order is the configuration order, which can be adjusted by yourself.
+	-- 0 - Disable | 1 - Enable | 2 - Enable and turn on the auto fire function
 	canUse = {
 		[".45"] = {
 			{ "UMP45", 1 }, -- 基础镜 + 扩容，Bizon (基础镜即可)，Vector (补偿 + 基础镜 + 扩容) | Reddot + Mag，Bizon (Reddot)，Vector (Komp + Reddot + Mag)
@@ -74,6 +84,7 @@ userInfo = {
 
 	-- G键自定义绑定，多余的组合键可以删除
 	-- 可绑定指令请参考: https://github.com/kiccer/Soldier76#%E6%8C%87%E4%BB%A4%E5%88%97%E8%A1%A8
+	-- 指令绑定演示参考: https://github.com/kiccer/Soldier76#g_bind-%E6%8C%87%E4%BB%A4%E7%BB%91%E5%AE%9A%E6%BC%94%E7%A4%BA
 	G_bind = {
 		-- G
 		["G3"] = "",
@@ -114,7 +125,7 @@ userInfo = {
 		["lshift + G8"] = "",
 		["lshift + G9"] = "",
 		["lshift + G10"] = "",
-		["lshift + G11"] = "",
+		["lshift + G11"] = "fast_lick_box",
 		-- ralt + G
 		["ralt + G3"] = "",
 		["ralt + G4"] = "",
@@ -794,6 +805,39 @@ function pubg.runStatus ()
 	end
 end
 
+--[[ 一键舔包，仅拾取进背包的物品，无法拾取需穿戴的物品 ]]
+function pubg.fastLickBox ()
+	PressAndReleaseKey("lshift")
+	PressAndReleaseKey("lctrl")
+	PressAndReleaseKey("lalt")
+	PressAndReleaseKey("rshift")
+	PressAndReleaseKey("rctrl")
+	PressAndReleaseKey("ralt")
+	PressAndReleaseKey("tab")
+	Sleep(10 + pubg.sleep)
+	PressAndReleaseMouseButton(1)
+
+	local lastItemCp = {
+		300 / 2560 * 65535,
+		1210 / 1440 * 65535
+	}
+	local itemHeight = 83 / 1440 * 65535
+
+	-- 重复 3 次动作，强化拾取成功率
+	for i = 1, 3 do
+		for j = 1, 13 do
+			MoveMouseTo(lastItemCp[1], lastItemCp[2] - itemHeight * (j - 1))
+			PressMouseButton(1)
+			MoveMouseTo(670 / 2560 * 65535, 710 / 1440 * 65535) -- 修改为背包的坐标
+			ReleaseMouseButton(1)
+		end
+	end
+
+	Sleep(10 + pubg.sleep)
+	MoveMouseTo(lastItemCp[1], lastItemCp[2])
+	PressAndReleaseKey("tab")
+end
+
 --[[ 一键拾取功能，支持所有分辨率 ]]
 function pubg.fastPickup ()
 	PressAndReleaseKey("lshift")
@@ -935,6 +979,7 @@ function pubg.runCmd (cmd)
 		["last_in_canUse"] = pubg.findInCanUse,
 		["fast_pickup"] = pubg.fastPickup,
 		["fast_discard"] = pubg.fastDiscard,
+		["fast_lick_box"] = pubg.fastLickBox,
 		["off"] = function ()
 			pubg.changeIsStart(false)
 		end,
