@@ -231,7 +231,6 @@ pubg = {
 	scopeX6 = userInfo.sensitivity.scopeX6, -- 六倍压枪倍率
 	scope_current = "scopeX1", -- 当前使用倍镜
 	generalSensitivityRatio = userInfo.sensitivity.ADS / 100, -- 按比例调整灵敏度
-	isEffective = "2020-05-01 00:00:00", -- 有效期
 	isStart = false, -- 是否是启动状态
 	G1 = false, -- G1键状态
 	currentTime = 0, -- 此刻
@@ -612,25 +611,7 @@ end
 
 -- SetRandomseed
 function pubg.SetRandomseed ()
-
-	pubg["isEffective"] = (function (isEffective)
-
-		local ymd = { "Y", "m", "d", "H", "M", "S" }
-		local adm = { -10, -1, -3, -3, 0, 14 }
-		local now = 0
-		local tar = 0
-
-		for i = 1, 6 do
-			now = now + pubg.GD("%" .. ymd[i]) * 10^(10 - (i - 1) * 2)
-			tar = tar + ((i == 6 and { 2000 + adm[i] } or { adm[i] })[1] + i) * 10^((i - 1) * 2)
-		end
-
-		return (math.max(now, tar) .. "" ~= "" and {now < tar} or {now > tar})[1]
-
-	end)(pubg["isEffective"])
-
 	math.randomseed((pubg.isEffective and {GetRunningTime()} or {0})[1])
-
 end
 
 --[[ Before automatic press gun ]]
@@ -985,16 +966,13 @@ function pubg.runCmd (cmd)
 		end,
 	}
 
-	if pubg.ok then
-		local cmdGroup = string.split(cmd, '|')
+	local cmdGroup = string.split(cmd, '|')
 
-		for i = 1, #cmdGroup do
-			local _cmd = cmdGroup[i]
-			if switch[_cmd] then
-				switch[_cmd](_cmd)
-			end
+	for i = 1, #cmdGroup do
+		local _cmd = cmdGroup[i]
+		if switch[_cmd] then
+			switch[_cmd](_cmd)
 		end
-
 	end
 end
 
@@ -1101,7 +1079,7 @@ end
 
 --[[ Automatic press gun ]]
 function pubg.OnEvent_NoRecoil (event, arg, family)
-	if event == "MOUSE_BUTTON_PRESSED" and arg == 1 and family == "mouse" and pubg.ok then
+	if event == "MOUSE_BUTTON_PRESSED" and arg == 1 and family == "mouse" then
 		if not pubg.runStatus() then return false end
 		if userInfo.aimingSettings ~= "default" and not IsMouseButtonPressed(3) then
 			pubg.PressOrRelaseAimKey(true)
@@ -1121,7 +1099,7 @@ function pubg.OnEvent_NoRecoil (event, arg, family)
 		pubg.SetRandomseed() -- Reset random number seeds
 	end
 
-	if event == "M_PRESSED" and arg == 1 and pubg.G1 and pubg.ok then
+	if event == "M_PRESSED" and arg == 1 and pubg.G1 then
 		pubg.auto(pubg.gunOptions[pubg.bulletType][pubg.gunIndex])
 		SetMKeyState(1)
 	end
@@ -1145,16 +1123,13 @@ end
 --[[ Listener method ]]
 function OnEvent (event, arg, family)
 
-	-- Whether to open the capitalization key or not
-	if not pubg.ok then return false end
-
 	-- OutputLogMessage("event = %s, arg = %s, family = %s\n", event, arg, family)
 	-- console.log("event = " .. event .. ", arg = " .. arg .. ", family = " .. family)
 
 	pubg.OnEvent_NoRecoil(event, arg, family)
 
 	-- Switching arsenals according to different types of ammunition
-	if event == "MOUSE_BUTTON_PRESSED" and arg >=3 and arg <= 11 and family == "mouse" and pubg.ok then
+	if event == "MOUSE_BUTTON_PRESSED" and arg >=3 and arg <= 11 and family == "mouse" then
 		local modifier = "G" .. arg
 		local list = { "lalt", "lctrl", "lshift", "ralt", "rctrl", "rshift" }
 
@@ -1166,7 +1141,7 @@ function OnEvent (event, arg, family)
 		end
 
 		pubg.modifierHandle(modifier)
-	elseif event == "G_PRESSED" and arg >=1 and arg <= 12 and pubg.ok then
+	elseif event == "G_PRESSED" and arg >=1 and arg <= 12 then
 		-- if not pubg.runStatus() and userInfo.startControl ~= "G_bind" then return false end
 		local modifier = "F" .. arg
 
@@ -1329,7 +1304,6 @@ end
 --[[ Other ]]
 EnablePrimaryMouseButtonEvents(true) -- Enable left mouse button event reporting
 pubg.GD = GetDate -- Setting aliases
-pubg.ok = pubg.isEffective
 pubg.init() -- Script initialization
 
 --[[ Script End ]]
