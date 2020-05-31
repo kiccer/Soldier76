@@ -41,7 +41,7 @@ userInfo = {
 	-- 启动控制 (capslock - 使用大写锁定键控制 | numlock - 小键盘锁定键控制 | G_bind - 使用指令控制) | Start up control
 	startControl = "capslock",
 
-	-- 瞄准设置 (default - 使用游戏默认设置 | recommend - 使用脚本推荐设置 | custom - 自定义设置) | Aiming setting
+	-- 瞄准设置 (default - 使用游戏默认设置 | recommend - 使用脚本推荐设置 | custom - 自定义设置 | ctrlmode - 下蹲模式) | Aiming setting
 	aimingSettings = "recommend",
 
 	-- 当 aimingSettings = "custom" ，需要在此处设置自定义判断条件，通常配合 IsMouseButtonPressed 或 IsModifierPressed 使用，使用方法请查阅 G-series Lua API 参考文档.docx
@@ -257,6 +257,8 @@ function pubg.isAimingState (mode)
 				return IsMouseButtonPressed(3) and not IsModifierPressed("lshift")
 			elseif userInfo.aimingSettings == "default" then
 				return not IsModifierPressed("lshift") and not IsModifierPressed("lalt")
+			elseif userInfo.aimingSettings == "ctrlmode" then
+				return IsMouseButtonPressed(3) and not IsModifierPressed("lshift")
 			elseif userInfo.aimingSettings == "custom" then
 				return userInfo.customAimingSettings.ADS()
 			end
@@ -272,6 +274,8 @@ function pubg.isAimingState (mode)
 				end
 			elseif userInfo.aimingSettings == "default" then
 				return IsMouseButtonPressed(3)
+			elseif userInfo.aimingSettings == "ctrlmode" then
+				return false
 			elseif userInfo.aimingSettings == "custom" then
 				return userInfo.customAimingSettings.Aim()
 			end
@@ -420,9 +424,9 @@ pubg["UMP45"] = function ()
 		ballistic = {
 			{1, 0},
 			{5, 70},
-			{10, 94},
-			{15, 97},
-			{35, 106},
+			{10, 97},
+			{15, 100},
+			{35, 109},
 		}
 	})
 
@@ -627,7 +631,7 @@ function pubg.auto (options)
 	local x = math.ceil((pubg.currentTime - pubg.startTime) / (options.interval * (pubg.bulletIndex - 1)) * d) - pubg.xCounter
 	local y = math.ceil((pubg.currentTime - pubg.startTime) / (options.interval * (pubg.bulletIndex - 1)) * options.ballistic[pubg.bulletIndex]) - pubg.counter
 	-- 4-fold pressure gun mode
-	local realY = pubg.getRealY(y)
+	local realY = pubg.getRealY(options, y)
 	MoveMouseRelative(x, realY)
 	-- Whether to issue automatically or not
 	if options.autoContinuousFiring == 1 then
@@ -659,15 +663,17 @@ function pubg.autoSleep (isTest)
 end
 
 --[[ get real y position ]]
-function pubg.getRealY (y)
+function pubg.getRealY (options, y)
 	local realY = y
 
 	if pubg.isAimingState("ADS") then
 		realY = y * pubg[pubg.scope_current]
-
 	elseif pubg.isAimingState("Aim") then
 		realY = y * userInfo.sensitivity.Aim * pubg.generalSensitivityRatio
+	end
 
+	if userInfo.aimingSettings == "ctrlmode" and IsModifierPressed("lctrl") then
+		realY = realY * 0.8
 	end
 
 	return realY
