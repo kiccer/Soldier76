@@ -290,6 +290,7 @@ pubg["M16A4"] = function ()
 
 	return pubg.execOptions({
 		ratio = 1,
+		ctrlmodeRatio = 0.8,
 		interval = 108,
 		ballistic = {
 			{1, 0},
@@ -310,6 +311,7 @@ pubg["SCAR-L"] = function ()
 
 	return pubg.execOptions({
 		ratio = 1,
+		ctrlmodeRatio = 0.8,
 		interval = 96,
 		ballistic = {
 			{1, 0},
@@ -329,6 +331,7 @@ pubg["Beryl M762"] = function ()
 
 	return pubg.execOptions({
 		ratio = 1,
+		ctrlmodeRatio = 0.8,
 		interval = 86,
 		ballistic = {
 			{1, 0},
@@ -351,6 +354,7 @@ pubg["Tommy Gun"] = function ()
 
 	return pubg.execOptions({
 		ratio = 1,
+		ctrlmodeRatio = 0.8,
 		interval = 84,
 		ballistic = {
 			{1, 0},
@@ -367,6 +371,7 @@ pubg["G36C"] = function ()
 
 	return pubg.execOptions({
 		ratio = 1,
+		ctrlmodeRatio = 0.8,
 		interval = 80,
 		ballistic = {
 			{1, 0},
@@ -385,6 +390,7 @@ pubg["Vector"] = function ()
 
 	return pubg.execOptions({
 		ratio = 1,
+		ctrlmodeRatio = 0.8,
 		interval = 55,
 		ballistic = {
 			{1, 0},
@@ -402,6 +408,7 @@ pubg["Micro UZI"] = function ()
 
 	return pubg.execOptions({
 		ratio = 1,
+		ctrlmodeRatio = 0.8,
 		interval = 46,
 		ballistic = {
 			{1, 0},
@@ -420,6 +427,7 @@ pubg["UMP45"] = function ()
 
 	return pubg.execOptions({
 		ratio = 1,
+		ctrlmodeRatio = 0.8,
 		interval = 94,
 		ballistic = {
 			{1, 0},
@@ -436,6 +444,7 @@ pubg["AKM"] = function ()
 
 	return pubg.execOptions({
 		ratio = 1,
+		ctrlmodeRatio = 0.8,
 		interval = 99,
 		ballistic = {
 			{1, 0},
@@ -455,6 +464,7 @@ pubg["M416"] = function ()
 
 	return pubg.execOptions({
 		ratio = 1,
+		ctrlmodeRatio = 0.8,
 		interval = 85,
 		ballistic = {
 			{1, 0},
@@ -476,6 +486,7 @@ pubg["QBZ"] = function ()
 
 	return pubg.execOptions({
 		ratio = 1,
+		ctrlmodeRatio = 0.8,
 		interval = 87,
 		ballistic = {
 			{1, 0},
@@ -495,6 +506,7 @@ pubg["DP-28"] = function ()
 
 	return pubg.execOptions({
 		ratio = 1,
+		ctrlmodeRatio = 0.8,
 		interval = 100,
 		ballistic = {
 			{1, 0},
@@ -566,6 +578,7 @@ function pubg.execOptions (options)
 		amount = #ballisticConfig2, -- Number of bullets
 		interval = options.interval, -- Time of each bullet
 		ballistic = ballisticConfig2, -- ballistic data
+		ctrlmodeRatio = options.ctrlmodeRatio, -- Individual recoil coefficient for each gun when squatting
 	}
 
 end
@@ -590,6 +603,7 @@ function pubg.init ()
 				gunCount = gunCount + 1 -- Accumulative number of firearms configuration files
 				pubg.gun[type][gunCount] = gunName -- Adding available firearms to the Arsenal
 				pubg.gunOptions[type][gunCount] = pubg[gunName]() -- Get firearms data and add it to the configuration library
+
 				-- 单独设置连发
 				pubg.gunOptions[type][gunCount].autoContinuousFiring = ({ 0, 0, 1 })[
 					math.max(1, math.min(gunState + 1, 3))
@@ -673,7 +687,7 @@ function pubg.getRealY (options, y)
 	end
 
 	if userInfo.aimingSettings == "ctrlmode" and IsModifierPressed("lctrl") then
-		realY = realY * 0.8
+		realY = realY * options.ctrlmodeRatio
 	end
 
 	return realY
