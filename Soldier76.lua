@@ -56,29 +56,34 @@ userInfo = {
 		end,
 	},
 
-	-- 支持的枪械，排列顺序即是配置顺序，可以自行调整。启用设置：0 - 不启用 | 1 - 启用 | 2 - 启用并开启连发功能
-	-- The arrangement order is the configuration order, which can be adjusted by yourself.
-	-- 0 - Disable | 1 - Enable | 2 - Enable and turn on the auto fire function
+	-- 支持的枪械，排列顺序即是配置顺序，可以自行调整。
+	-- 模式：0 - 不启用 | 1 - 启用 | 2 - 开启连点
+	-- 系数：枪械自身系数，基于 ADS 进行调整 (ADS为全局系数，此处为自身系数)
+	-- 下蹲系数：下蹲时的系数，基于 ADS 和 自身系数
 	canUse = {
 		[".45"] = {
-			{ "UMP45", 1 }, -- 基础镜 + 扩容，Bizon (基础镜即可)，Vector (补偿 + 基础镜 + 扩容) | Reddot + Mag，Bizon (Reddot)，Vector (Komp + Reddot + Mag)
-			{ "Tommy Gun", 1 }, -- 扩容 | Mag
+			-- 枪械				模式		系数		下蹲系数
+			{ "UMP45",			1,			1,			0.8 }, -- 基础镜 + 扩容，Bizon (基础镜即可)，Vector (补偿 + 基础镜 + 扩容) | Reddot + Mag，Bizon (Reddot)，Vector (Komp + Reddot + Mag)
+			{ "Tommy Gun",		1,			1,			0.8  }, -- 扩容 | Mag
 		},
+			-- 枪械				模式		系数		下蹲系数
 		["9mm"] = {
-			{ "Vector", 1 }, -- 基础镜 + 扩容 | Reddot + Mag
-			{ "Micro UZI", 1 }, -- 扩容 | Mag
+			{ "Vector",			1,			1,			0.8  }, -- 基础镜 + 扩容 | Reddot + Mag
+			{ "Micro UZI",		1,			1,			0.8  }, -- 扩容 | Mag
 		},
 		["5.56"] = {
-			{ "M416", 1 }, -- 补偿 + 基础镜 + 直角 + 枪托 + 扩容 | Komp + Reddot + Triangular grip + Gunstock + Mag
-			{ "SCAR-L", 1 }, -- 补偿 + 基础镜 + 直角 + 扩容 | Komp + Reddot + Triangular grip + Mag
-			{ "QBZ", 1 }, -- 补偿 + 基础镜 + 直角 + 扩容 | Komp + Reddot + Triangular grip + Mag
-			{ "G36C", 1 }, -- 补偿 + 基础镜 + 直角 + 扩容 | Komp + Reddot + Triangular grip + Mag
-			{ "M16A4", 2 }, -- 补偿 + 基础镜 + 枪托 + 扩容 | Komp + Reddot + Gunstock + Mag
+			-- 枪械				模式		系数		下蹲系数
+			{ "M416",			1,			1,			0.8  }, -- 补偿 + 基础镜 + 直角 + 枪托 + 扩容 | Komp + Reddot + Triangular grip + Gunstock + Mag
+			{ "SCAR-L",			1,			1,			0.8  }, -- 补偿 + 基础镜 + 直角 + 扩容 | Komp + Reddot + Triangular grip + Mag
+			{ "QBZ",			1,			1,			0.8  }, -- 补偿 + 基础镜 + 直角 + 扩容 | Komp + Reddot + Triangular grip + Mag
+			{ "G36C",			1,			1,			0.8  }, -- 补偿 + 基础镜 + 直角 + 扩容 | Komp + Reddot + Triangular grip + Mag
+			{ "M16A4",			2,			1,			0.8  }, -- 补偿 + 基础镜 + 枪托 + 扩容 | Komp + Reddot + Gunstock + Mag
 		},
 		["7.62"] = {
-			{ "AKM", 1 }, -- 补偿 + 基础镜 + 扩容 | Komp + Reddot + Mag
-			{ "Beryl M762", 1 }, -- 补偿 + 基础镜 + 直角 + 扩容 | Komp + Reddot + Triangular grip + Mag
-			{ "DP-28", 1 }, -- 基础镜 | Reddot
+			-- 枪械				模式		系数		下蹲系数
+			{ "AKM",			1,			1,			0.8  }, -- 补偿 + 基础镜 + 扩容 | Komp + Reddot + Mag
+			{ "Beryl M762",		1,			1,			0.8  }, -- 补偿 + 基础镜 + 直角 + 扩容 | Komp + Reddot + Triangular grip + Mag
+			{ "DP-28",			1,			1,			0.8  }, -- 基础镜 | Reddot
 		},
 	},
 
@@ -286,11 +291,9 @@ function pubg.isAimingState (mode)
 	return switch[mode]()
 end
 
-pubg["M16A4"] = function ()
+pubg["M16A4"] = function (gunName)
 
-	return pubg.execOptions({
-		ratio = 1,
-		ctrlmodeRatio = 0.8,
+	return pubg.execOptions(gunName, {
 		interval = 108,
 		ballistic = {
 			{1, 0},
@@ -307,11 +310,9 @@ pubg["M16A4"] = function ()
 
 end
 
-pubg["SCAR-L"] = function ()
+pubg["SCAR-L"] = function (gunName)
 
-	return pubg.execOptions({
-		ratio = 1,
-		ctrlmodeRatio = 0.8,
+	return pubg.execOptions(gunName, {
 		interval = 96,
 		ballistic = {
 			{1, 0},
@@ -327,11 +328,9 @@ pubg["SCAR-L"] = function ()
 
 end
 
-pubg["Beryl M762"] = function ()
+pubg["Beryl M762"] = function (gunName)
 
-	return pubg.execOptions({
-		ratio = 1,
-		ctrlmodeRatio = 0.8,
+	return pubg.execOptions(gunName, {
 		interval = 86,
 		ballistic = {
 			{1, 0},
@@ -350,11 +349,9 @@ pubg["Beryl M762"] = function ()
 
 end
 
-pubg["Tommy Gun"] = function ()
+pubg["Tommy Gun"] = function (gunName)
 
-	return pubg.execOptions({
-		ratio = 1,
-		ctrlmodeRatio = 0.8,
+	return pubg.execOptions(gunName, {
 		interval = 84,
 		ballistic = {
 			{1, 0},
@@ -367,11 +364,9 @@ pubg["Tommy Gun"] = function ()
 
 end
 
-pubg["G36C"] = function ()
+pubg["G36C"] = function (gunName)
 
-	return pubg.execOptions({
-		ratio = 1,
-		ctrlmodeRatio = 0.8,
+	return pubg.execOptions(gunName, {
 		interval = 80,
 		ballistic = {
 			{1, 0},
@@ -386,11 +381,9 @@ pubg["G36C"] = function ()
 
 end
 
-pubg["Vector"] = function ()
+pubg["Vector"] = function (gunName)
 
-	return pubg.execOptions({
-		ratio = 1,
-		ctrlmodeRatio = 0.8,
+	return pubg.execOptions(gunName, {
 		interval = 55,
 		ballistic = {
 			{1, 0},
@@ -404,11 +397,9 @@ pubg["Vector"] = function ()
 
 end
 
-pubg["Micro UZI"] = function ()
+pubg["Micro UZI"] = function (gunName)
 
-	return pubg.execOptions({
-		ratio = 1,
-		ctrlmodeRatio = 0.8,
+	return pubg.execOptions(gunName, {
 		interval = 46,
 		ballistic = {
 			{1, 0},
@@ -423,11 +414,9 @@ pubg["Micro UZI"] = function ()
 
 end
 
-pubg["UMP45"] = function ()
+pubg["UMP45"] = function (gunName)
 
-	return pubg.execOptions({
-		ratio = 1,
-		ctrlmodeRatio = 0.8,
+	return pubg.execOptions(gunName, {
 		interval = 94,
 		ballistic = {
 			{1, 0},
@@ -440,11 +429,9 @@ pubg["UMP45"] = function ()
 
 end
 
-pubg["AKM"] = function ()
+pubg["AKM"] = function (gunName)
 
-	return pubg.execOptions({
-		ratio = 1,
-		ctrlmodeRatio = 0.8,
+	return pubg.execOptions(gunName, {
 		interval = 99,
 		ballistic = {
 			{1, 0},
@@ -460,11 +447,9 @@ pubg["AKM"] = function ()
 
 end
 
-pubg["M416"] = function ()
+pubg["M416"] = function (gunName)
 
-	return pubg.execOptions({
-		ratio = 1,
-		ctrlmodeRatio = 0.8,
+	return pubg.execOptions(gunName, {
 		interval = 85,
 		ballistic = {
 			{1, 0},
@@ -482,11 +467,9 @@ pubg["M416"] = function ()
 
 end
 
-pubg["QBZ"] = function ()
+pubg["QBZ"] = function (gunName)
 
-	return pubg.execOptions({
-		ratio = 1,
-		ctrlmodeRatio = 0.8,
+	return pubg.execOptions(gunName, {
 		interval = 87,
 		ballistic = {
 			{1, 0},
@@ -502,11 +485,9 @@ pubg["QBZ"] = function ()
 
 end
 
-pubg["DP-28"] = function ()
+pubg["DP-28"] = function (gunName)
 
-	return pubg.execOptions({
-		ratio = 1,
-		ctrlmodeRatio = 0.8,
+	return pubg.execOptions(gunName, {
 		interval = 100,
 		ballistic = {
 			{1, 0},
@@ -520,8 +501,23 @@ pubg["DP-28"] = function ()
 
 end
 
+-- [[通过枪械名查找在 canuse 中的项]]
+function pubg.canUseFindByGunName (gunName)
+	local forList = { ".45", "9mm", "5.56", "7.62" }
+
+	for i = 1, #forList do
+		local bulletType = forList[i]
+		for j = 1, #userInfo.canUse[bulletType] do
+			local item = userInfo.canUse[bulletType][j]
+			if item[1] == gunName then
+				return item
+			end
+		end
+	end
+end
+
 --[[ FormatFactory ]]
-function pubg.execOptions (options)
+function pubg.execOptions (gunName, options)
 
 	--[[
 
@@ -542,6 +538,8 @@ function pubg.execOptions (options)
 
 	]]
 
+	local gunInfo = pubg.canUseFindByGunName(gunName)
+
 	-- Temporary container
 	local ballisticConfig1 = {}
 	-- Temporary container (v3.0)
@@ -555,7 +553,8 @@ function pubg.execOptions (options)
 		end
 		for j = 1, nextCount do
 			ballisticConfig1[ballisticIndex] =
-				options.ballistic[i][2] * pubg.generalSensitivityRatio * options.ratio
+				-- options.ballistic[i][2] * pubg.generalSensitivityRatio * options.ratio
+				options.ballistic[i][2] * pubg.generalSensitivityRatio * gunInfo[3]
 			ballisticIndex = ballisticIndex + 1
 		end
 	end
@@ -578,7 +577,7 @@ function pubg.execOptions (options)
 		amount = #ballisticConfig2, -- Number of bullets
 		interval = options.interval, -- Time of each bullet
 		ballistic = ballisticConfig2, -- ballistic data
-		ctrlmodeRatio = options.ctrlmodeRatio, -- Individual recoil coefficient for each gun when squatting
+		ctrlmodeRatio = gunInfo[4], -- Individual recoil coefficient for each gun when squatting
 	}
 
 end
@@ -602,7 +601,7 @@ function pubg.init ()
 				-- one series
 				gunCount = gunCount + 1 -- Accumulative number of firearms configuration files
 				pubg.gun[type][gunCount] = gunName -- Adding available firearms to the Arsenal
-				pubg.gunOptions[type][gunCount] = pubg[gunName]() -- Get firearms data and add it to the configuration library
+				pubg.gunOptions[type][gunCount] = pubg[gunName](gunName) -- Get firearms data and add it to the configuration library
 
 				-- 单独设置连发
 				pubg.gunOptions[type][gunCount].autoContinuousFiring = ({ 0, 0, 1 })[
@@ -1020,7 +1019,7 @@ end
 function pubg.outputLogGunSwitchTable ()
 	local forList = { ".45", "9mm", "5.56", "7.62" }
 	local allCount = 0
-	local resStr = "      canUse_i\t      series_i\t      Series\t      Gun Name\n\n"
+	local resStr = "      canUse_i\t      series_i\t      Series\t      ratio\t      ctrl ratio\t      Gun Name\n\n"
 
 	for i = 1, #forList do
 		local type = forList[i]
@@ -1032,7 +1031,7 @@ function pubg.outputLogGunSwitchTable ()
 				local tag = gunName == pubg.gun[pubg.bulletType][pubg.gunIndex] and "=> " or "      "
 				gunCount = gunCount + 1
 				allCount = allCount + 1
-				resStr = table.concat({ resStr, tag, allCount, "\t", tag, gunCount, "\t", tag, type, "\t", tag, gunName, "\n" })
+				resStr = table.concat({ resStr, tag, allCount, "\t", tag, gunCount, "\t", tag, type, "\t", tag, userInfo.canUse[type][j][3], "\t", tag, userInfo.canUse[type][j][4], "\t", tag, gunName, "\n" })
 			end
 		end
 
