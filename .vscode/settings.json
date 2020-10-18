@@ -1,0 +1,26 @@
+{
+    "Lua.diagnostics.globals": [
+        "IsMouseButtonPressed",
+        "IsModifierPressed",
+        "GetRunningTime",
+        "IsKeyLockOn",
+        "MoveMouseRelative",
+        "PressAndReleaseMouseButton",
+        "SetBacklightColor",
+        "PressAndReleaseKey",
+        "Sleep",
+        "MoveMouseTo",
+        "PressMouseButton",
+        "ReleaseMouseButton",
+        "ClearLog",
+        "OutputLogMessage",
+        "PressKey",
+        "ReleaseKey",
+        "SetMKeyState",
+        "EnablePrimaryMouseButtonEvents",
+        "console",
+        "GetDate",
+        "userInfo",
+        "pubg"
+    ]
+}
