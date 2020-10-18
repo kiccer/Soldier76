@@ -62,28 +62,28 @@ userInfo = {
 	-- 下蹲系数：下蹲时的系数，基于 ADS 和 自身系数
 	canUse = {
 		[".45"] = {
-			-- 枪械				模式		系数		下蹲系数
-			{ "UMP45",			1,			1,			0.8 }, -- 基础镜 + 扩容，Bizon (基础镜即可)，Vector (补偿 + 基础镜 + 扩容) | Reddot + Mag，Bizon (Reddot)，Vector (Komp + Reddot + Mag)
-			{ "Tommy Gun",		1,			1,			0.8  }, -- 扩容 | Mag
+			-- 枪械             模式         系数        下蹲系数
+			{ "UMP45",          1,          1,          0.8 }, -- 基础镜 + 扩容，Bizon (基础镜即可)，Vector (补偿 + 基础镜 + 扩容) | Reddot + Mag，Bizon (Reddot)，Vector (Komp + Reddot + Mag)
+			{ "Tommy Gun",      1,          1,          0.8  }, -- 扩容 | Mag
 		},
-			-- 枪械				模式		系数		下蹲系数
+			-- 枪械             模式         系数        下蹲系数
 		["9mm"] = {
-			{ "Vector",			1,			1,			0.8  }, -- 基础镜 + 扩容 | Reddot + Mag
-			{ "Micro UZI",		1,			1,			0.8  }, -- 扩容 | Mag
+			{ "Vector",         1,          1,          0.8  }, -- 基础镜 + 扩容 | Reddot + Mag
+			{ "Micro UZI",      1,          1,          0.8  }, -- 扩容 | Mag
 		},
 		["5.56"] = {
-			-- 枪械				模式		系数		下蹲系数
-			{ "M416",			1,			1,			0.8  }, -- 补偿 + 基础镜 + 直角 + 枪托 + 扩容 | Komp + Reddot + Triangular grip + Gunstock + Mag
-			{ "SCAR-L",			1,			1,			0.8  }, -- 补偿 + 基础镜 + 直角 + 扩容 | Komp + Reddot + Triangular grip + Mag
-			{ "QBZ",			1,			1,			0.8  }, -- 补偿 + 基础镜 + 直角 + 扩容 | Komp + Reddot + Triangular grip + Mag
-			{ "G36C",			1,			1,			0.8  }, -- 补偿 + 基础镜 + 直角 + 扩容 | Komp + Reddot + Triangular grip + Mag
-			{ "M16A4",			2,			1,			0.8  }, -- 补偿 + 基础镜 + 枪托 + 扩容 | Komp + Reddot + Gunstock + Mag
+			-- 枪械             模式         系数        下蹲系数
+			{ "M416",           1,          1,          0.8  }, -- 补偿 + 基础镜 + 直角 + 枪托 + 扩容 | Komp + Reddot + Triangular grip + Gunstock + Mag
+			{ "SCAR-L",         1,          1,          0.8  }, -- 补偿 + 基础镜 + 直角 + 扩容 | Komp + Reddot + Triangular grip + Mag
+			{ "QBZ",            1,          1,          0.8  }, -- 补偿 + 基础镜 + 直角 + 扩容 | Komp + Reddot + Triangular grip + Mag
+			{ "G36C",           1,          1,          0.8  }, -- 补偿 + 基础镜 + 直角 + 扩容 | Komp + Reddot + Triangular grip + Mag
+			{ "M16A4",          2,          1,          0.8  }, -- 补偿 + 基础镜 + 枪托 + 扩容 | Komp + Reddot + Gunstock + Mag
 		},
 		["7.62"] = {
-			-- 枪械				模式		系数		下蹲系数
-			{ "AKM",			1,			1,			0.8  }, -- 补偿 + 基础镜 + 扩容 | Komp + Reddot + Mag
-			{ "Beryl M762",		1,			1,			0.8  }, -- 补偿 + 基础镜 + 直角 + 扩容 | Komp + Reddot + Triangular grip + Mag
-			{ "DP-28",			1,			1,			0.8  }, -- 基础镜 | Reddot
+			-- 枪械             模式         系数        下蹲系数
+			{ "AKM",            1,          1,          0.8  }, -- 补偿 + 基础镜 + 扩容 | Komp + Reddot + Mag
+			{ "Beryl M762",     1,          1,          0.8  }, -- 补偿 + 基础镜 + 直角 + 扩容 | Komp + Reddot + Triangular grip + Mag
+			{ "DP-28",          1,          1,          0.8  }, -- 基础镜 | Reddot
 		},
 	},
 
