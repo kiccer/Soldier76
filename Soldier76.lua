@@ -1086,7 +1086,7 @@ function pubg.OnEvent_NoRecoil (event, arg, family)
 		if pubg.isAimingState("ADS") or pubg.isAimingState("Aim") then
 			pubg.startTime = GetRunningTime()
 			pubg.G1 = true
-			SetMKeyState(1)
+			SetMKeyState(1, "kb")
 		end
 	end
 
@@ -1100,7 +1100,7 @@ function pubg.OnEvent_NoRecoil (event, arg, family)
 
 	if event == "M_PRESSED" and arg == 1 and pubg.G1 then
 		pubg.auto(pubg.gunOptions[pubg.bulletType][pubg.gunIndex])
-		SetMKeyState(1)
+		SetMKeyState(1, "kb")
 	end
 end
 
