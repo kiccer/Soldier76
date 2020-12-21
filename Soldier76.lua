@@ -18,6 +18,10 @@ userInfo = {
 	-- (excessive frame dropping will directly affect the gun pressing effect, please reduce the value while ensuring the frame number)
 	cpuLoad = 2,
 
+	-- 是否是带鱼屏，此设置会影响一些功能，例如：一键拾取等 (0 - 否 | 1 - 是)
+	-- Whether it is an ultra-wide screen, this setting will affect some functions, such as one-click picking. (0 - No | 1 - Yes)
+	isWideScreen = 0,
+
 	-- 灵敏度调整 | Sensitivity adjustment
 	sensitivity = {
 		-- 开镜 | sighting mirror
@@ -798,17 +802,20 @@ function pubg.fastLickBox ()
 	PressAndReleaseMouseButton(1)
 
 	local lastItemCp = {
-		300 / 2560 * 65535,
-		1210 / 1440 * 65535
+		({300 / 2560, 480 / 2560})[userInfo.isWideScreen + 1] * 65535,
+		({1210 / 1440, 932 / 1080})[userInfo.isWideScreen + 1] * 65535
 	}
-	local itemHeight = 83 / 1440 * 65535
+	local itemHeight = ({83, 61})[userInfo.isWideScreen + 1] / 1440 * 65535
 
 	-- 重复 3 次动作，强化拾取成功率
 	for i = 1, 3 do
 		for j = 1, 13 do
 			MoveMouseTo(lastItemCp[1], lastItemCp[2] - itemHeight * (j - 1))
 			PressMouseButton(1)
-			MoveMouseTo(670 / 2560 * 65535, 710 / 1440 * 65535) -- 修改为背包的坐标
+			MoveMouseTo(
+				({670 / 2560, 811 / 2560})[userInfo.isWideScreen + 1] * 65535,
+				 ({710 / 1440, 241 / 1080})[userInfo.isWideScreen + 1] * 65535
+			) -- 修改为背包的坐标
 			ReleaseMouseButton(1)
 		end
 	end
@@ -831,10 +838,10 @@ function pubg.fastPickup ()
 	PressAndReleaseMouseButton(1)
 
 	local lastItemCp = {
-		300 / 2560 * 65535,
-		1210 / 1440 * 65535
+		({300 / 2560, 480 / 2560})[userInfo.isWideScreen + 1] * 65535,
+		({1210 / 1440, 932 / 1080})[userInfo.isWideScreen + 1] * 65535
 	}
-	local itemHeight = 83 / 1440 * 65535
+	local itemHeight = ({83, 61})[userInfo.isWideScreen + 1] / 1440 * 65535
 
 	-- 重复 3 次动作，强化拾取成功率
 	for i = 1, 3 do
@@ -862,11 +869,13 @@ function pubg.fastDiscard ()
 	PressAndReleaseKey("tab")
 	Sleep(10 + pubg.sleep)
 	PressAndReleaseMouseButton(1)
+
 	local lastItemCp = {
-		630 / 2560 * 65535,
-		1210 / 1440 * 65535
+		({300 / 2560, 480 / 2560})[userInfo.isWideScreen + 1] * 65535,
+		({1210 / 1440, 932 / 1080})[userInfo.isWideScreen + 1] * 65535
 	}
-	local itemHeight = 83 / 1440 * 65535
+	local itemHeight = ({83, 61})[userInfo.isWideScreen + 1] / 1440 * 65535
+
 	-- 清空背包 第一轮
 	Sleep(10 + pubg.sleep)
 	for i = 1, 5 do
@@ -877,6 +886,8 @@ function pubg.fastDiscard ()
 			ReleaseMouseButton(1)
 		end
 	end
+
+	-- TODO 清空武器
 	-- 清空武器
 	Sleep(10 + pubg.sleep)
 	local itemPos = {
@@ -890,6 +901,7 @@ function pubg.fastDiscard ()
 		MoveMouseTo(itemPos[i][1] / 2560 * 65535, itemPos[i][2] / 1440 * 65535)
 		PressAndReleaseMouseButton(3)
 	end
+
 	-- 清空背包 第二轮
 	Sleep(10 + pubg.sleep)
 	for i = 1, 5 do
@@ -900,6 +912,8 @@ function pubg.fastDiscard ()
 			ReleaseMouseButton(1)
 		end
 	end
+
+	-- TODO 清空装备
 	-- 清空装备
 	Sleep(10 + pubg.sleep)
 	local itemPos2 = {
@@ -920,6 +934,7 @@ function pubg.fastDiscard ()
 		-- Sleep(300 + pubg.sleep)
 		PressAndReleaseMouseButton(3)
 	end
+
 	Sleep(10 + pubg.sleep)
 	MoveMouseTo(lastItemCp[1], lastItemCp[2])
 	PressAndReleaseKey("tab")
