@@ -12,10 +12,10 @@
 <div align="center">如果认为游戏体验有提升的话，请给我一颗小星星⭐</div>
 <br>
 <p align="center">
-  <img src="https://img.shields.io/badge/lua-5.1-00007F.svg" alt="lua-5.1">
-  <img src="https://img.shields.io/badge/logitech-✔-A7F079.svg" alt="logitech-✔">
-  <img src="https://img.shields.io/badge/lgs-9.02.65-00B8FC.svg" alt="lgs-9.02.65">
-  <img src="https://img.shields.io/badge/version-latest-29D1E3.svg" alt="version-latest">
+  <img src="https://img.shields.io/badge/lua-5.1-00007F.svg?style=flat-square&logo" alt="lua-5.1">
+  <img src="https://img.shields.io/badge/logitech-✔-A7F079.svg?style=flat-square&logo" alt="logitech-✔">
+  <img src="https://img.shields.io/badge/lgs-9.02.65-00B8FC.svg?style=flat-square&logo" alt="lgs-9.02.65">
+  <img src="https://img.shields.io/badge/version-latest-29D1E3.svg?style=flat-square&logo" alt="version-latest">
 </p>
 <!-- ![lua-5.1](https://img.shields.io/badge/lua-5.1-00007F.svg) ![version-3.x](https://img.shields.io/badge/version-3.x-56B6C2.svg) ![g502-✔](https://img.shields.io/badge/g502-✔-98C379.svg) ![gpw-✖](https://img.shields.io/badge/gpw-✖-E06C75.svg) -->
 
