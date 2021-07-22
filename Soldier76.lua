@@ -1172,6 +1172,7 @@ function string.split (str, s)
 	local index = 0
 	local last_i
 
+	--- @diagnostic disable-next-line: undefined-field
 	for n, i in string.gfind(str, reg) do
 		index = index + 1
 		res[index] = n
