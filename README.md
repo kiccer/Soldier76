@@ -228,7 +228,7 @@ G键 | 功能
 * 十分欢迎愿意给本项目精调弹道的小伙伴
 * 我们也同样欢迎其他项目的小伙伴入驻，一起交流技术话题
 * 群内活动：
-  - 在任意知名论坛内发表 [Soldier76](https://github.com/kiccer/Soldier76) 项目使用心得文章，并附上项目地址链接，截图给群主，可以领取群内专属昵称。
+  - 在任意知名论坛内发表 [Soldier76](https://github.com/kiccer/Soldier76) 宏推广文章，可以获得个人专属昵称，领取页面：[【活动】个人专属昵称获取专区](https://github.com/kiccer/Soldier76/discussions/131)
   - 举报二手贩子可以获得 `夹击妹抖` 专属昵称，领取页面：[【活动】专属昵称 “夹击妹抖” 获取专区](https://github.com/kiccer/Soldier76/discussions/128)
   - 点赞 [Soldier76](https://github.com/kiccer/Soldier76) 项目，可以获得 `⭐` 专属昵称，领取页面：[【活动】专属昵称 ⭐ 获取专区](https://github.com/kiccer/Soldier76/discussions/126)
   - 满足以上多条情况，可以任选其一。
