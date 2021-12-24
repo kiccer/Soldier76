@@ -608,7 +608,7 @@ end
 
 -- SetRandomseed
 function pubg.SetRandomseed ()
-	math.randomseed((pubg.isEffective and {GetRunningTime()} or {0})[1])
+	math.randomseed(GetRunningTime())
 end
 
 --[[ Before automatic press gun ]]
