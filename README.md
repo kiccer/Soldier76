@@ -224,14 +224,16 @@ G键 | 功能
 * **不可将此脚本二次创作后用于商业目的！**
 
 ### 交流群
-* 欢迎加入技术交流QQ群：[![logitech 鼠标宏技术交流](./static/img/group.png)](https://kiccer.github.io/Soldier76/static/join_group.html) ([768483124](https://kiccer.github.io/Soldier76/static/join_group.html))
+* 欢迎加入技术交流QQ群（**以下为指定官方群，其余均为冒名假群！谨防受骗！**）：
+  - [768483124](https://kiccer.github.io/Soldier76/static/join_group.html) (满)
+  - *若暂时群满无法加入，请先移步至[讨论区](https://github.com/kiccer/Soldier76/discussions)，待新群建立后再加入！*
 * 十分欢迎愿意给本项目精调弹道的小伙伴
 * 我们也同样欢迎其他项目的小伙伴入驻，一起交流技术话题
 * 群内活动：
   - 在任意知名论坛内发表 [Soldier76](https://github.com/kiccer/Soldier76) 宏推广文章，可以获得个人专属昵称，领取页面：[【活动】个人专属昵称获取专区](https://github.com/kiccer/Soldier76/discussions/131)
   - 举报二手贩子可以获得 `夹击妹抖` 专属昵称，领取页面：[【活动】专属昵称 “夹击妹抖” 获取专区](https://github.com/kiccer/Soldier76/discussions/128)
   - 点赞 [Soldier76](https://github.com/kiccer/Soldier76) 项目，可以获得 `⭐` 专属昵称，领取页面：[【活动】专属昵称 ⭐ 获取专区](https://github.com/kiccer/Soldier76/discussions/126)
-  - 满足以上多条情况，可以任选其一。
+  - *满足以上多条情况，可以任选其一。*
 
 ### 常见问题
 * Q：毫无反应？
