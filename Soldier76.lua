@@ -785,6 +785,16 @@ function pubg.runStatus ()
 	end
 end
 
+--[[ 随机偏移 ]]
+function pubg.randomOffset (val, offsetScopePx)
+	local offsetScope = (offsetScopePx or 10) / 1080 * 65535
+
+	return math.random(
+		math.ceil(val - offsetScope),
+		math.ceil(val + offsetScope)
+	)
+end
+
 --[[ 一键舔包，仅拾取进背包的物品，无法拾取需穿戴的物品 ]]
 function pubg.fastLickBox ()
 	PressAndReleaseKey("lshift")
@@ -794,7 +804,7 @@ function pubg.fastLickBox ()
 	PressAndReleaseKey("rctrl")
 	PressAndReleaseKey("ralt")
 	PressAndReleaseKey("tab")
-	Sleep(10 + pubg.sleep)
+	Sleep(20 + pubg.sleep)
 	PressAndReleaseMouseButton(1)
 
 	local lastItemCp = {
@@ -806,15 +816,25 @@ function pubg.fastLickBox ()
 	-- 重复 3 次动作，强化拾取成功率
 	for i = 1, 3 do
 		for j = 1, 13 do
-			MoveMouseTo(lastItemCp[1], lastItemCp[2] - itemHeight * (j - 1))
+			MoveMouseTo(
+				pubg.randomOffset(lastItemCp[1]),
+				pubg.randomOffset(lastItemCp[2] - itemHeight * (j - 1))
+			)
 			PressMouseButton(1)
-			MoveMouseTo(670 / 2560 * 65535, 710 / 1440 * 65535) -- 修改为背包的坐标
+			MoveMouseTo(
+				pubg.randomOffset(670 / 2560 * 65535, 50),
+				pubg.randomOffset(710 / 1440 * 65535, 50)
+			) -- 修改为背包的坐标
 			ReleaseMouseButton(1)
+			Sleep(10 + pubg.sleep)
 		end
 	end
 
-	Sleep(10 + pubg.sleep)
-	MoveMouseTo(lastItemCp[1], lastItemCp[2])
+	Sleep(20 + pubg.sleep)
+	MoveMouseTo(
+		pubg.randomOffset(lastItemCp[1]),
+		pubg.randomOffset(lastItemCp[2])
+	)
 	PressAndReleaseKey("tab")
 end
 
@@ -827,7 +847,7 @@ function pubg.fastPickup ()
 	PressAndReleaseKey("rctrl")
 	PressAndReleaseKey("ralt")
 	PressAndReleaseKey("tab")
-	Sleep(10 + pubg.sleep)
+	Sleep(20 + pubg.sleep)
 	PressAndReleaseMouseButton(1)
 
 	local lastItemCp = {
@@ -839,15 +859,25 @@ function pubg.fastPickup ()
 	-- 重复 3 次动作，强化拾取成功率
 	for i = 1, 3 do
 		for j = 1, 13 do
-			MoveMouseTo(lastItemCp[1], lastItemCp[2] - itemHeight * (j - 1))
+			MoveMouseTo(
+				pubg.randomOffset(lastItemCp[1]),
+				pubg.randomOffset(lastItemCp[2] - itemHeight * (j - 1))
+			)
 			PressMouseButton(1)
-			MoveMouseTo(32767, 32767)
+			MoveMouseTo(
+				pubg.randomOffset(32767, 100),
+				pubg.randomOffset(32767, 100)
+			)
 			ReleaseMouseButton(1)
+			Sleep(10 + pubg.sleep)
 		end
 	end
 
-	Sleep(10 + pubg.sleep)
-	MoveMouseTo(lastItemCp[1], lastItemCp[2])
+	Sleep(20 + pubg.sleep)
+	MoveMouseTo(
+		pubg.randomOffset(lastItemCp[1]),
+		pubg.randomOffset(lastItemCp[2])
+	)
 	PressAndReleaseKey("tab")
 end
 
@@ -871,7 +901,10 @@ function pubg.fastDiscard ()
 	Sleep(10 + pubg.sleep)
 	for i = 1, 5 do
 		for j = 1, 13 do
-			MoveMouseTo(lastItemCp[1], lastItemCp[2] - itemHeight * (j - 1))
+			MoveMouseTo(
+				pubg.randomOffset(lastItemCp[1]),
+				pubg.randomOffset(lastItemCp[2] - itemHeight * (j - 1))
+			)
 			PressMouseButton(1)
 			MoveMouseTo(0, 0)
 			ReleaseMouseButton(1)
@@ -887,14 +920,20 @@ function pubg.fastDiscard ()
 		{ 2120, 1050 }
 	}
 	for i = 1, #itemPos do
-		MoveMouseTo(itemPos[i][1] / 2560 * 65535, itemPos[i][2] / 1440 * 65535)
+		MoveMouseTo(
+			pubg.randomOffset(itemPos[i][1] / 2560 * 65535),
+			pubg.randomOffset(itemPos[i][2] / 1440 * 65535)
+		)
 		PressAndReleaseMouseButton(3)
 	end
 	-- 清空背包 第二轮
 	Sleep(10 + pubg.sleep)
 	for i = 1, 5 do
 		for j = 1, 13 do
-			MoveMouseTo(lastItemCp[1], lastItemCp[2] - itemHeight * (j - 1))
+			MoveMouseTo(
+				pubg.randomOffset(lastItemCp[1]),
+				pubg.randomOffset(lastItemCp[2] - itemHeight * (j - 1))
+			)
 			PressMouseButton(1)
 			MoveMouseTo(0, 0)
 			ReleaseMouseButton(1)
@@ -916,12 +955,18 @@ function pubg.fastDiscard ()
 		{ 1605, 1229 }
 	}
 	for i = 1, #itemPos2 do
-		MoveMouseTo(itemPos2[i][1] / 2560 * 65535, itemPos2[i][2] / 1440 * 65535)
+		MoveMouseTo(
+			pubg.randomOffset(itemPos2[i][1] / 2560 * 65535),
+			pubg.randomOffset(itemPos2[i][2] / 1440 * 65535)
+		)
 		-- Sleep(300 + pubg.sleep)
 		PressAndReleaseMouseButton(3)
 	end
 	Sleep(10 + pubg.sleep)
-	MoveMouseTo(lastItemCp[1], lastItemCp[2])
+	MoveMouseTo(
+		pubg.randomOffset(lastItemCp[1]),
+		pubg.randomOffset(lastItemCp[2])
+	)
 	PressAndReleaseKey("tab")
 end
 
