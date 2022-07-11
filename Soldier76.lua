@@ -655,6 +655,12 @@ function pubg.autoSleep (isTest)
 	Sleep(random)
 end
 
+--[[ 四舍五入 #170 ]]
+function math.round (num, digit)
+    local decimalPlaces = 10 ^ (digit or 0)
+    return math.floor((num * decimalPlaces * 10 + 5) / 10) / decimalPlaces
+end
+
 --[[ get real y position ]]
 function pubg.getRealY (options, y)
 	local realY = y
@@ -669,7 +675,7 @@ function pubg.getRealY (options, y)
 		realY = realY * options.ctrlmodeRatio
 	end
 
-	return realY
+	return math.round(realY)
 end
 
 --[[ change pubg isStart status ]]
