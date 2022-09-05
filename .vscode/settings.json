@@ -44,5 +44,8 @@
         "relase",
         "rshift",
         "scrolllock"
+    ],
+    "Lua.diagnostics.disable": [
+        "undefined-field"
     ]
 }
