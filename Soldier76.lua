@@ -63,44 +63,44 @@ userInfo = {
 	canUse = {
 		["5.56"] = {
 			-- 枪械			模式	下蹲系数	灵敏度系数
-			{ "M416",		1,		0.8,		{ Aim = 1.47, scopeX1 = 1, scopeX2 = 1.85, scopeX3 = 1.71, scopeX4 = 3.9, scopeX6 = 2.15} }, -- 补偿 + 基础镜 + 直角 + 枪托 + 扩容
-			{ "SCAR-L",		0,		0.8, 		{ Aim = 0.55, scopeX1 = 1, scopeX2 = 0.8, scopeX3 = 1.11, scopeX4 = 3.9, scopeX6 = 2.15} }, -- 补偿 + 基础镜 + 直角 + 扩容
-			{ "QBZ",		0,		0.8,		{ Aim = 0.55, scopeX1 = 1, scopeX2 = 0.8, scopeX3 = 1.11, scopeX4 = 3.9, scopeX6 = 2.15} }, -- 补偿 + 基础镜 + 直角 + 扩容
-			{ "G36C",		0,		0.8,  		{ Aim = 0.55, scopeX1 = 1, scopeX2 = 0.8, scopeX3 = 1.11, scopeX4 = 3.9, scopeX6 = 2.15} }, -- 补偿 + 基础镜 + 直角 + 扩容
-			{ "M16A4",		2,		0.8,  		{ Aim = 0.55, scopeX1 = 1, scopeX2 = 1.80, scopeX3 = 1.73, scopeX4 = 5.5, scopeX6 = 3.35} }, -- 补偿 + 基础镜 + 枪托 + 扩容
-			{ "M249",		1,		0.8,  		{ Aim = 0.55, scopeX1 = 1, scopeX2 = 1.80, scopeX3 = 1.73, scopeX4 = 5.4, scopeX6 = 3.20} }, -- 补偿 + 基础镜 + 枪托 + 扩容	
+			{ "M416",		1,		0.8,		{ Aim = 1.47, scopeX1 = 1, scopeX2 = 1.85, scopeX3 = 1.71, scopeX4 = 3.90, scopeX6 = 2.15} }, -- 补偿 + 基础镜 + 直角 + 枪托 + 扩容
+			{ "SCAR-L",		0,		0.8, 		{ Aim = 0.55, scopeX1 = 1, scopeX2 = 0.80, scopeX3 = 1.11, scopeX4 = 3.90, scopeX6 = 2.15} }, -- 补偿 + 基础镜 + 直角 + 扩容
+			{ "QBZ",		0,		0.8,		{ Aim = 0.55, scopeX1 = 1, scopeX2 = 0.80, scopeX3 = 1.11, scopeX4 = 3.90, scopeX6 = 2.15} }, -- 补偿 + 基础镜 + 直角 + 扩容
+			{ "G36C",		0,		0.8,  		{ Aim = 0.55, scopeX1 = 1, scopeX2 = 0.80, scopeX3 = 1.11, scopeX4 = 3.90, scopeX6 = 2.15} }, -- 补偿 + 基础镜 + 直角 + 扩容
+			{ "M16A4",		2,		0.8,  		{ Aim = 0.55, scopeX1 = 1, scopeX2 = 1.80, scopeX3 = 1.73, scopeX4 = 5.50, scopeX6 = 3.35} }, -- 补偿 + 基础镜 + 枪托 + 扩容
+			{ "M249",		1,		0.8,  		{ Aim = 0.55, scopeX1 = 1, scopeX2 = 1.80, scopeX3 = 1.73, scopeX4 = 5.40, scopeX6 = 3.20} }, -- 补偿 + 基础镜 + 枪托 + 扩容	
 		},
 		["7.62"] = {
 			-- 枪械			模式	下蹲系数	灵敏度系数	
-			{ "Beryl M762",	1,		0.8,  		{ Aim = 0.58, scopeX1 = 1, scopeX2 = 1.8, scopeX3 = 1.68, scopeX4 = 4.15, scopeX6 = 2.15} }, -- 补偿 + 基础镜 + 直角 + 扩容
-			{ "AKM",		1,		0.8,  		{ Aim = 0.55, scopeX1 = 1, scopeX2 = 1.135, scopeX3 = 1.085, scopeX4 = 3.9, scopeX6 = 2.15} }, -- 补偿 + 基础镜 + 扩容
-			{ "DP-28",		0,		0.8,  		{ Aim = 0.55, scopeX1 = 1, scopeX2 = 0.8, scopeX3 = 1.11, scopeX4 = 3.9, scopeX6 = 2.15} }, -- 基础镜
+			{ "Beryl M762",	1,		0.8,  		{ Aim = 0.58, scopeX1 = 1, scopeX2 = 1.80, scopeX3 = 1.68, scopeX4 = 4.15, scopeX6 = 2.15} }, -- 补偿 + 基础镜 + 直角 + 扩容
+			{ "AKM",		1,		0.8,  		{ Aim = 0.55, scopeX1 = 1, scopeX2 = 1.13, scopeX3 = 1.08, scopeX4 = 3.90, scopeX6 = 2.15} }, -- 补偿 + 基础镜 + 扩容
+			{ "DP-28",		0,		0.8,  		{ Aim = 0.55, scopeX1 = 1, scopeX2 = 0.80, scopeX3 = 1.11, scopeX4 = 3.90, scopeX6 = 2.15} }, -- 基础镜
 		},
 		[".45"] = {
 			-- 枪械			模式	下蹲系数	灵敏度系数	
-			{ "UMP45",		1,		0.8,		{ Aim = 0.55, scopeX1 = 1, scopeX2 = 1.2, scopeX3 = 1.11, scopeX4 = 3.9, scopeX6 = 2.15} }, -- 基础镜 + 扩容，Bizon (基础镜即可)，Vector (补偿 + 基础镜 + 扩容)
-			{ "Tommy Gun",	1,		0.8,		{ Aim = 0.55, scopeX1 = 1, scopeX2 = 0.8, scopeX3 = 1.11, scopeX4 = 3.9, scopeX6 = 2.15} }, -- 扩容
+			{ "UMP45",		1,		0.8,		{ Aim = 0.55, scopeX1 = 1, scopeX2 = 1.20, scopeX3 = 1.11, scopeX4 = 3.90, scopeX6 = 2.15} }, -- 基础镜 + 扩容，Bizon (基础镜即可)，Vector (补偿 + 基础镜 + 扩容)
+			{ "Tommy Gun",	1,		0.8,		{ Aim = 0.55, scopeX1 = 1, scopeX2 = 0.80, scopeX3 = 1.11, scopeX4 = 3.90, scopeX6 = 2.15} }, -- 扩容
 		},
 		["9mm"] = {
 			-- 枪械			模式	下蹲系数	灵敏度系数			
-			{ "Vector",		1,		0.8,		{ Aim = 0.55, scopeX1 = 1, scopeX2 = 1.19, scopeX3 = 1.11, scopeX4 = 3.9, scopeX6 = 2.15} }, -- 基础镜 + 扩容
-			{ "Micro UZI",	1,		0.8,		{ Aim = 0.55, scopeX1 = 1, scopeX2 = 0.8, scopeX3 = 1.11, scopeX4 = 3.9, scopeX6 = 2.15} }, -- 扩容
+			{ "Vector",		1,		0.8,		{ Aim = 0.55, scopeX1 = 1, scopeX2 = 1.19, scopeX3 = 1.11, scopeX4 = 3.90, scopeX6 = 2.15} }, -- 基础镜 + 扩容
+			{ "Micro UZI",	1,		0.8,		{ Aim = 0.55, scopeX1 = 1, scopeX2 = 0.80, scopeX3 = 1.11, scopeX4 = 3.90, scopeX6 = 2.15} }, -- 扩容
 		},
 
 		["DMR 7.62"] = {
 			-- 枪械			模式	下蹲系数	灵敏度系数	
-			{ "SKS",		3,		0.8,		{ Aim = 0.55, scopeX1 = 1, scopeX2 = 2.0, scopeX3 = 1.11, scopeX4 = 4.0, scopeX6 = 1.95} }, -- 六倍镜 + 消音 + 无握把 + 扩容 + 托腮板
-			{ "SLR",		3,		0.8,		{ Aim = 0.55, scopeX1 = 1, scopeX2 = 1.92, scopeX3 = 1.82, scopeX4 = 4.0, scopeX6 = 2.00} }, -- 六倍镜 + 消音 + 扩容 + 托腮板
-			{ "MK47",		0,		0.8,		{ Aim = 0.75, scopeX1 = 1, scopeX2 = 1.91, scopeX3 = 1.75, scopeX4 = 6.0, scopeX6 = 2.15} }, -- 六倍镜 + 消音 + 无握把 + 扩容 + 枪托
+			{ "SKS",		3,		0.8,		{ Aim = 0.55, scopeX1 = 1, scopeX2 = 2.00, scopeX3 = 1.11, scopeX4 = 4.00, scopeX6 = 1.95} }, -- 六倍镜 + 消音 + 无握把 + 扩容 + 托腮板
+			{ "SLR",		3,		0.8,		{ Aim = 0.55, scopeX1 = 1, scopeX2 = 1.92, scopeX3 = 1.82, scopeX4 = 4.00, scopeX6 = 2.00} }, -- 六倍镜 + 消音 + 扩容 + 托腮板
+			{ "MK47",		0,		0.8,		{ Aim = 0.75, scopeX1 = 1, scopeX2 = 1.91, scopeX3 = 1.75, scopeX4 = 6.00, scopeX6 = 2.15} }, -- 六倍镜 + 消音 + 无握把 + 扩容 + 枪托
 		},
 		["DMR 5.56"] = {
 			-- 枪械			模式	下蹲系数	灵敏度系数		
-			{ "Mini14",		3,		0.8,		{ Aim = 0.55, scopeX1 = 1, scopeX2 = 0.8, scopeX3 = 1.11, scopeX4 = 4.0, scopeX6 = 1.30} }, -- 六倍镜 + 扩容
-			{ "QBU",		3,		0.8,		{ Aim = 0.55, scopeX1 = 1, scopeX2 = 0.8, scopeX3 = 1.11, scopeX4 = 4.0, scopeX6 = 1.60} }, -- 六倍镜 + 扩容
+			{ "Mini14",		3,		0.8,		{ Aim = 0.55, scopeX1 = 1, scopeX2 = 0.80, scopeX3 = 1.11, scopeX4 = 4.00, scopeX6 = 1.30} }, -- 六倍镜 + 扩容
+			{ "QBU",		3,		0.8,		{ Aim = 0.55, scopeX1 = 1, scopeX2 = 0.80, scopeX3 = 1.11, scopeX4 = 4.00, scopeX6 = 1.60} }, -- 六倍镜 + 扩容
 		},
 		["AR"] = {
 			-- 枪械			模式	下蹲系数	灵敏度系数	
-			{ "SingleShot",	3,		0.8,		{ Aim = 0.55, scopeX1 = 1, scopeX2 = 0.8, scopeX3 = 1.11, scopeX4 = 3.9, scopeX6 = 2.15} },
+			{ "SingleShot",	3,		0.8,		{ Aim = 0.55, scopeX1 = 1, scopeX2 = 0.80, scopeX3 = 1.11, scopeX4 = 3.90, scopeX6 = 2.15} },
 		},
 	},
 
