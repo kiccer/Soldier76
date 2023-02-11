@@ -21,7 +21,9 @@
         "console",
         "GetDate",
         "userInfo",
-        "pubg"
+        "pubg",
+        "GetMousePosition",
+        "MoveMouseToVirtual"
     ],
     "cSpell.words": [
         "Bizon",
