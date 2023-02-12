@@ -108,8 +108,9 @@ function Main (event, arg, family)
 
             -- 当鼠标移到底部，距离底部小于安全距离时，调整到顶部 （小于安全距离会影响下一次计算）
             if (y >= 65535 - safeDistance) then
-                MoveMouseTo(x, 1)
-                RunningCache.lastY = 1
+                -- MoveMouseTo(x, 1)
+                -- RunningCache.lastY = 1
+                break
             end
 
             -- ClearLog()
@@ -120,9 +121,12 @@ function Main (event, arg, family)
         RunningCache.deviationPX = 0
         RunningCache.deviationCounterPX = 0
 
+    elseif event == "MOUSE_BUTTON_RELEASED" and arg == 3 and family == "mouse" then
         -- -- 重置鼠标位置
-        -- PressAndReleaseKey('tab')
-        -- PressAndReleaseKey('tab')
+        if (not IsPressed(1) and not IsPressed(3)) then
+            PressAndReleaseKey('tab')
+            PressAndReleaseKey('tab')
+        end
     end
 end
 
