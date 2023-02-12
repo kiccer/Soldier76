@@ -23,7 +23,9 @@ RunningCache = {
     -- 累计偏差像素
     deviationCounterPX = 0,
     -- 上一次的 Y 轴位置
-    lastY = 0
+    lastY = 0,
+    -- 按下右键时的时间戳
+    rightMouseDownTimestamp = 0
 }
 
 -- 是否启动
@@ -120,13 +122,6 @@ function Main (event, arg, family)
         -- 重置缓存
         RunningCache.deviationPX = 0
         RunningCache.deviationCounterPX = 0
-
-    elseif event == "MOUSE_BUTTON_RELEASED" and arg == 3 and family == "mouse" then
-        -- -- 重置鼠标位置
-        if (not IsPressed(1) and not IsPressed(3)) then
-            PressAndReleaseKey('tab')
-            PressAndReleaseKey('tab')
-        end
     end
 end
 
@@ -140,6 +135,22 @@ function OnEvent (event, arg, family)
 
     -- 进入压枪循环
     Main(event, arg, family)
+    -- 右键长按 300ms 以上，认定为开镜了，放开右键后，按下 tab 两次，重置鼠标位置
+    if event == "MOUSE_BUTTON_PRESSED" and arg == 3 and family == "mouse" then
+        RunningCache.rightMouseDownTimestamp = GetRunningTime()
+    end
+
+    if event == "MOUSE_BUTTON_RELEASED" and arg == 3 and family == "mouse" then
+        -- 右键按下时长
+        local rightMouseDownDuration = GetRunningTime() - RunningCache.rightMouseDownTimestamp
+        -- ConsoleLog({ "右键按下时长: ", rightMouseDownDuration, "ms" })
+
+        -- 重置鼠标位置
+        if (rightMouseDownDuration >= 300 and not IsPressed(1)) then
+            PressAndReleaseKey('tab')
+            PressAndReleaseKey('tab')
+        end
+    end
 
     -- 释放所有占用的按键
     if event == "PROFILE_DEACTIVATED" then
