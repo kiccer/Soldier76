@@ -1,7 +1,6 @@
 <div align="center">
   <img src="./static/img/76_logo.png" alt="76_logo">
 </div>
-<br>
 <h1 align="center">
   <a href="./README.md">Soldier76</a> | Lite
 </h1>
