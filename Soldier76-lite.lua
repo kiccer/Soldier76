@@ -109,11 +109,11 @@ function Main (event, arg, family)
             -- ConsoleLog(table.concat({ "底部安全距离: ", safeDistance, "px" }))
 
             -- 当鼠标移到底部，距离底部小于安全距离时，调整到顶部 （小于安全距离会影响下一次计算）
-            if (y >= 65535 - safeDistance) then
-                -- MoveMouseTo(x, 1)
-                -- RunningCache.lastY = 1
-                break
-            end
+            -- if (y >= 65535 - safeDistance) then
+            --     -- MoveMouseTo(x, 1)
+            --     -- RunningCache.lastY = 1
+            --     break
+            -- end
 
             -- ClearLog()
             -- ConsoleLog(RunningCache)
