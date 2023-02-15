@@ -2,6 +2,8 @@
 UserConfig = {
     -- 基础力度
     power = 5,
+    -- 脱敏度
+    desensitize = 50,
     -- 启动控制 (scrolllock, capslock, numlock)
     startControl = "capslock",
     -- 随机偏差范围 (不要设置为0，偏差值越小越容易被检测)
@@ -49,7 +51,7 @@ function Round (num) return math.floor(num + 0.5) end
 
 -- 获取随机力度 (px)
 function GetRandomPower ()
-    return UserConfig.power + RunningCache.deviationPX + Round(RunningCache.deviationCounterPX / 50)
+    return UserConfig.power + RunningCache.deviationPX + Round(RunningCache.deviationCounterPX / UserConfig.desensitize)
 end
 
 -- 主体功能 （压枪循环）
