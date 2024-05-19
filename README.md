@@ -4,8 +4,11 @@
 
 <!-- ***(务必...务必...务必...认真看完，使用说明写的很详细了)*** -->
 
+<div align="center">
+  <img src="./static/img/76_logo.png" alt="76_logo">
+</div>
 <h1 align="center">
-  Soldier76 <img src="./static/img/76_logo.png" alt="76_logo">
+  Soldier76 | <a href="./README-LITE.md">Lite</a>
 </h1>
 <div align="center">PUBG - Logitech鼠标宏自动压枪脚本使用说明</div>
 <div align="center"><b>(务必...务必...务必...认真看完，使用说明写的很详细了)</b></div>
@@ -20,6 +23,11 @@
 <!-- ![lua-5.1](https://img.shields.io/badge/lua-5.1-00007F.svg) ![version-3.x](https://img.shields.io/badge/version-3.x-56B6C2.svg) ![g502-✔](https://img.shields.io/badge/g502-✔-98C379.svg) ![gpw-✖](https://img.shields.io/badge/gpw-✖-E06C75.svg) -->
 
 ---
+
+<p align="right">
+  Other Languages: 
+  <a href="./README.en.md">English</a>
+</p>
 
 ### 下载脚本
 * 选择一个版本然后[下载](https://github.com/kiccer/Soldier76/releases)，国内玩家推荐使用[镜像下载](https://gitee.com/kiccer/Soldier76/tags)
