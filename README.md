@@ -238,7 +238,7 @@ G键 | 功能
 
 ### 交流群
 * 欢迎加入技术交流QQ群（**以下为指定官方群，其余均为冒名假群！谨防受骗！**）：
-  - [768483124](https://kiccer.github.io/Soldier76/static/join_group.html) (刚清理了一波尸体，要加的赶紧！)
+  - [768483124](https://kiccer.github.io/Soldier76/static/join_group.html)
   - *若暂时群满无法加入，请先移步至[讨论区](https://github.com/kiccer/Soldier76/discussions)，待新群建立后再加入！*
 * 十分欢迎愿意给本项目精调弹道的小伙伴
 * 我们也同样欢迎其他项目的小伙伴入驻，一起交流技术话题
@@ -247,6 +247,11 @@ G键 | 功能
   - 举报二手贩子可以获得 `夹击妹抖` 专属昵称，领取页面：[【活动】专属昵称 “夹击妹抖” 获取专区](https://github.com/kiccer/Soldier76/discussions/128)
   - 点赞 [Soldier76](https://github.com/kiccer/Soldier76) 项目，可以获得 `⭐` 专属昵称，领取页面：[【活动】专属昵称 ⭐ 获取专区](https://github.com/kiccer/Soldier76/discussions/126)
   - *满足以上多条情况，可以任选其一。*
+
+### QQ频道 (新)
+为了解决QQ群人数限制问题，我们开通了QQ频道，欢迎大家加入。
+<!-- ![QQ频道](./static/img/guild_qrcode.png) -->
+<img src="./static/img/guild_qrcode.png" alt="QQ频道" width="200" height="200" />
 
 ### 常见问题
 * Q：毫无反应？
