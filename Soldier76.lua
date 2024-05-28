@@ -10,7 +10,7 @@ userInfo = {
 	-- Whether to output debugging information, the CPU calculation pressure can be reduced after close.
 	-- It is recommended to turn it on during debugging and turn it off after debugging.
 	-- (0 - Disable | 1 - Enable)
-	debug = 1,
+	debug = 0,
 
 	-- CPU 负载等级，建议输入 1 ~ 30 之间的数字，不能小于 1 。值越小，压枪效果越好，值越大，帧数越高。(过分掉帧会直接影响压枪效果，请在保证帧数的情况下减小该值)
 	-- CPU load level, It is recommended to enter a number between 1 and 30, cannot be less than 1.
@@ -63,16 +63,17 @@ userInfo = {
 	canUse = {
 		["5.56"] = {
 			-- 枪械				模式		下蹲系数		灵敏度系数
+			{ "AUG",			1,			0.8,		{ Aim = 0.60, scopeX1 = 1, scopeX2 = 2.1, scopeX3 = 1.07, scopeX4 = 4.7, scopeX6 = 2.15} }, -- 补偿 + 基础镜 + 直角 + 扩容 | Komp + Reddot + Triangular grip + Mag
 			{ "M416",			1,			0.8,		{ Aim = 0.60, scopeX1 = 1, scopeX2 = 1.15, scopeX3 = 1.07, scopeX4 = 3.7, scopeX6 = 2.15} }, -- 补偿 + 基础镜 + 直角 + 枪托 + 扩容 | Komp + Reddot + Triangular grip + Gunstock + Mag
 			{ "SCAR-L",			0,			0.8, 		{ Aim = 0.55, scopeX1 = 1, scopeX2 = 0.8, scopeX3 = 1.11, scopeX4 = 3.9, scopeX6 = 2.15} }, -- 补偿 + 基础镜 + 直角 + 扩容 | Komp + Reddot + Triangular grip + Mag
 			{ "QBZ",			0,			0.8,		{ Aim = 0.55, scopeX1 = 1, scopeX2 = 0.8, scopeX3 = 1.11, scopeX4 = 3.9, scopeX6 = 2.15} }, -- 补偿 + 基础镜 + 直角 + 扩容 | Komp + Reddot + Triangular grip + Mag
 			{ "G36C",			0,			0.8,  		{ Aim = 0.55, scopeX1 = 1, scopeX2 = 0.8, scopeX3 = 1.11, scopeX4 = 3.9, scopeX6 = 2.15} }, -- 补偿 + 基础镜 + 直角 + 扩容 | Komp + Reddot + Triangular grip + Mag
-			{ "M16A4",			2,			0.8,  		{ Aim = 0.55, scopeX1 = 1, scopeX2 = 1.80, scopeX3 = 1.73, scopeX4 = 5.4, scopeX6 = 3.20} }, -- 补偿 + 基础镜 + 枪托 + 扩容 | Komp + Reddot + Gunstock + Mag
+			{ "M16A4",			2,			0.8,  		{ Aim = 0.7, scopeX1 = 1, scopeX2 = 2.2, scopeX3 = 3.55, scopeX4 = 5.4, scopeX6 = 3.20} }, -- 基础镜 + 扩容
 			{ "M249",			1,			0.8,  		{ Aim = 0.55, scopeX1 = 1, scopeX2 = 1.80, scopeX3 = 1.73, scopeX4 = 5.4, scopeX6 = 3.20} }, -- 补偿 + 基础镜 + 枪托 + 扩容 | Komp + Reddot + Gunstock + Mag
 		},
 		["7.62"] = {
 			-- 枪械				模式		下蹲系数		灵敏度系数	
-			{ "Beryl M762",		1,			0.8,  		{ Aim = 0.7, scopeX1 = 1, scopeX2 = 2.3, scopeX3 = 1.06, scopeX4 = 3.68, scopeX6 = 2.15} }, -- 补偿 + 基础镜 + 直角 + 扩容 | Komp + Reddot + Triangular grip + Mag
+			{ "Beryl M762",		1,			0.8,  		{ Aim = 0.7, scopeX1 = 1, scopeX2 = 2.3, scopeX3 = 3.48, scopeX4 = 3.68, scopeX6 = 2.15} }, -- 补偿 + 基础镜 + 直角 + 扩容 | Komp + Reddot + Triangular grip + Mag
 			{ "AKM",			1,			0.8,  		{ Aim = 1.45, scopeX1 = 1, scopeX2 = 1.135, scopeX3 = 1.08, scopeX4 = 3.55, scopeX6 = 2.15} }, -- 补偿 + 基础镜 + 扩容 | Komp + Reddot + Mag
 			{ "DP-28",			0,			0.8,  		{ Aim = 0.55, scopeX1 = 1, scopeX2 = 0.8, scopeX3 = 1.11, scopeX4 = 3.9, scopeX6 = 2.15} }, -- 基础镜 | Reddot
 			{ "MK47",			1,			0.8,		{ Aim = 0.75, scopeX1 = 1, scopeX2 = 1.91, scopeX3 = 1.75, scopeX4 = 4.0, scopeX6 = 2.30} }, -- 六倍镜 + 消音 + 无握把 + 扩容 + 枪托		
@@ -91,7 +92,7 @@ userInfo = {
 		["DMR 7.62"] = {
 			-- 枪械				模式		下蹲系数		灵敏度系数	
 			{ "SKS",			3,			0.8,		{ Aim = 0.55, scopeX1 = 1, scopeX2 = 2.0, scopeX3 = 1.11, scopeX4 = 4.0, scopeX6 = 1.95} }, -- 六倍镜 + 消音 + 无握把 + 扩容 + 托腮板
-			{ "SLR",			3,			0.8,		{ Aim = 0.55, scopeX1 = 1, scopeX2 = 1.92, scopeX3 = 1.82, scopeX4 = 4.0, scopeX6 = 2.00} }, -- 六倍镜 + 消音 + 扩容 + 托腮板
+			{ "SLR",			0,			0.8,		{ Aim = 0.55, scopeX1 = 1, scopeX2 = 1.92, scopeX3 = 1.82, scopeX4 = 4.0, scopeX6 = 2.00} }, -- 六倍镜 + 消音 + 扩容 + 托腮板
 		},
 		["DMR 5.56"] = {
 			-- 枪械				模式		下蹲系数		灵敏度系数		
@@ -112,8 +113,8 @@ userInfo = {
 		["G3"] = "SKS|scopeX6",
 		["G4"] = "Beryl M762|scopeX1",
 		["G5"] = "AKM|scopeX1",
-		["G6"] = "M416|scopeX1",
-		["G7"] = "M16A4|scopeX4",
+		["G6"] = "AUG|scopeX1",
+		["G7"] = "M16A4|scopeX1",
 		["G8"] = "UMP45|scopeX1",
 		["G9"] = "Vector|scopeX1",
 		["G10"] = "last",
@@ -122,7 +123,7 @@ userInfo = {
 		["lalt + G3"] = "",
 		["lalt + G4"] = "scopeX1",
 		["lalt + G5"] = "scopeX2",
-		["lalt + G6"] = "scopeX6",
+		["lalt + G6"] = "M416|scopeX1",
 		["lalt + G7"] = "scopeX3",
 		["lalt + G8"] = "scopeX4",
 		["lalt + G9"] = "",
@@ -130,10 +131,10 @@ userInfo = {
 		["lalt + G11"] = "",
 		-- lctrl + G
 		["lctrl + G3"] = "Mini14|scopeX6",
-		["lctrl + G4"] = "big_jump",
+		["lctrl + G4"] = "	",
 		["lctrl + G5"] = "",
 		["lctrl + G6"] = "",
-		["lctrl + G7"] = "MK47|scopeX6",
+		["lctrl + G7"] = "",
 		["lctrl + G8"] = "",
 		["lctrl + G9"] = "",
 		["lctrl + G10"] = "",
@@ -142,12 +143,12 @@ userInfo = {
 		["lshift + G3"] = "",
 		["lshift + G4"] = "",
 		["lshift + G5"] = "",
-		["lshift + G6"] = "fast_pickup",
+		["lshift + G6"] = "",
 		["lshift + G7"] = "",
 		["lshift + G8"] = "",
 		["lshift + G9"] = "",
 		["lshift + G10"] = "",
-		["lshift + G11"] = "fast_lick_box",
+		["lshift + G11"] = "fast_pickup",
 		-- ralt + G
 		["ralt + G3"] = "",
 		["ralt + G4"] = "",
@@ -302,6 +303,25 @@ end
 
 
 --------------------------------- 5.56--------------------------------
+pubg["AUG"] = function (gunName)
+
+	return pubg.execOptions(gunName, {
+		interval = 85,
+		ballistic = {
+			{1, 0},
+			{2, 133},
+			{5, 60},
+			{10, 105},
+			{14, 134},
+			{20, 145},
+			{25, 148},
+			{30, 148},
+			{40, 148},
+		}
+	})
+
+end
+
 pubg["M416"] = function (gunName)
 
 	return pubg.execOptions(gunName, {
@@ -376,35 +396,33 @@ pubg["G36C"] = function (gunName)
 end
 
 -- 单发
---pubg["M16A4"] = function (gunName)
---	return pubg.execOptions(gunName, {
---		interval = 108,
---		ballistic = {
---			{1, 0},
---			{2, 140},
---			{3, 47},
---			{4, 68},
---			{5, 87},
---			{10, 102},
---			{20, 119},
---			{35, 121},
---			{40, 127},
---		}
---	})
---end
-
---三连发
 pubg["M16A4"] = function (gunName)
 	return pubg.execOptions(gunName, {
-		--interval = 86,
-		interval = 106,
+		interval = 85,
 		ballistic = {
 			{1, 0},
-			{2, 55},
-			{3, 40}
+			{2, 130},
+			{3, 45},
+			{4, 81},
+			{5, 95},
+			{8, 115},
+			{10, 120}
 		}
 	})
 end
+
+-- --三连发
+-- pubg["M16A4"] = function (gunName)
+-- 	return pubg.execOptions(gunName, {
+-- 		--interval = 86,
+-- 		interval = 106,
+-- 		ballistic = {
+-- 			{1, 0},
+-- 			{2, 55},
+-- 			{3, 40}
+-- 		}
+-- 	})
+-- end
 
 pubg["M249"] = function (gunName)
 	return pubg.execOptions(gunName, {
@@ -1292,6 +1310,7 @@ function pubg.runCmd (cmd)
 		["DMR 5.56"] = pubg.setBulletType,
 		["AR"] = pubg.setBulletType,
 		
+		["AUG"] = pubg.setGun,
 		["M416"] = pubg.setGun,
 		["SCAR-L"] = pubg.setGun,
 		["QBZ"] = pubg.setGun,
