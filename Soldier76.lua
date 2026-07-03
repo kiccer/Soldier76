@@ -768,7 +768,9 @@ function pubg.findInSeries (cmd)
 			pubg.gunIndex = pubg.gunIndex + 1
 		end
 	elseif "last" == cmd then
-		pubg.gunIndex = #pubg.gun[pubg.bulletType]
+		if pubg.gunIndex > 1 then
+			pubg.gunIndex = pubg.gunIndex - 1
+		end
 	end
 
 	pubg.setGun(pubg.gun[pubg.bulletType][pubg.gunIndex])
